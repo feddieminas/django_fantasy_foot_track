@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- FILTERS -->
+
+<div class="row my-2">
+    <div class="col-sm-12 col-md-3">
+        <h3>Influence</h3>
+        <p><a href="{% url 'add_influence' %}" class="btn btn-secondary">Create One</a></p>
+    </div>
+
+    <div class="col-sm-12 col-md-4 d-flex flex-row mt-md-4 pt-md-2 text-center">
+        <h6 class="d-flex flex-column mx-2 align-items-center">Low<span class="bg-primary dot d-inline-block"></span></h6>
+        <h6 class="d-flex flex-column mx-2 align-items-center">Medium<span class="bg-secondary dot d-inline-block"></span></h6>
+        <h6 class="d-flex flex-column mx-2 align-items-center">High<span class="bg-success dot d-inline-block"></span></h6> 
+    </div>
+
+    <div class="col-sm-12 col-md-5 mt-md-4 pt-md-3">
+        <div class="row">
+            <form id="searchform" class="form-inline my-2 my-lg-0" method="get" accept-charset="utf-8">
+        	    <div class="col-sm-9 pr-sm-0 col-md-9 pr-md-0">
+                    <input class="form-control mr-sm-2" id="searchbox" name="q" type="text" placeholder="Search">
+                </div>
+                <div class="col-sm-3 pl-sm-1 col-md-2 pl-md-1">
+                    <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+        </div> 
+    </div>    
+</div>
+
+<!-- CARDS -->
+
+<div class="d-flex flex-row flex-wrap justify-content-sm-between">
+    
+    <div class="card mb-3 mr-2 mr-md-0">
+        <h3 class="card-header">Player</h3>
+        <div class="card-body">
+            <h5 class="card-title">Hazard</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">plays few minutes</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><span class="oi oi-eye" title="person" aria-hidden="true"> 0</span></li>
+            <li class="list-group-item"><span class="oi oi-check" title="person" aria-hidden="true"> 10</span></li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">View</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+    
+    <div class="card mb-3 mr-2 mr-md-0">
+        <h3 class="card-header">Player</h3>
+        <div class="card-body">
+            <h5 class="card-title">Hazard</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">plays few minutes</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><span class="oi oi-eye" title="person" aria-hidden="true"> 0</span></li>
+            <li class="list-group-item"><span class="oi oi-check" title="person" aria-hidden="true"> 10</span></li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">View</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+    
+    <div class="card mb-3 mr-2 mr-md-0">
+        <h3 class="card-header">Player</h3>
+        <div class="card-body">
+            <h5 class="card-title">Hazard</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">plays few minutes</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><span class="oi oi-eye" title="person" aria-hidden="true"> 0</span></li>
+            <li class="list-group-item"><span class="oi oi-check" title="person" aria-hidden="true"> 10</span></li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">View</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+    
+    <div class="card mb-3 mr-2 mr-md-0">
+        <h3 class="card-header">Player</h3>
+        <div class="card-body">
+            <h5 class="card-title">Hazard</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">plays few minutes</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><span class="oi oi-eye" title="person" aria-hidden="true"> 0</span></li>
+            <li class="list-group-item"><span class="oi oi-check" title="person" aria-hidden="true"> 10</span></li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="card-link">View</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

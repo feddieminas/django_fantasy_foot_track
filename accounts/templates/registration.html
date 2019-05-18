@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% load bootstrap_tags %}
+
+{% block content %}
+<form method="POST" action="{% url 'registration' %}" class="accountform">
+    <fieldset class="form-group">
+        <legend>Register a new account</legend>    
+        <p>If you have already an account, you can <a href="{% url 'login' %}">sign in</a></p>
+        {% csrf_token %}
+        {{ registration_form | as_bootstrap }}
+        <button type="submit" class="btn btn-primary">Register</button>
+    </fieldset>    
+</form>
+{% endblock %}

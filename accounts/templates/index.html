@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="jumbotron">
+  <h1 class="display-3">Fantasy Football UK Track</h1>
+  <p class="lead">Assist us Data Scientists publicly to enhance player performances and web development features.</p>
+  <hr class="my-4">
+  <p>Post your ideas and knowledge of sport to expand their creativity. Watch out our online community contribution.</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="#" role="button">Plot Charts</a>
+  </p>
+</div>
+
+<div id="index--container--categories" class="d-flex flex-row flex-wrap mx-auto">
+    
+    <div class="d-flex flex-column p-2">
+      <form action="{% url 'index' %}" method="POST">
+        <select name="category" id="dropd-category">
+            <option value="1" selected>PLAYERS</option>
+            <option value="2">FEATURES</option>
+            <option value="3">ALL</option>
+        </select>
+      </form>
+    </div>    
+    
+    <div class="card_index d-flex flex-column m-2 p-3">
+    	<img src="media/images/Influence.jpg" alt="" style="width:100%;">
+    	<div class="d-flex flex-column">
+    		<h2 class="card_index_head">Influence</h2>
+    		<p class="card_index_para">Player's influence on the game and style of play can play a huge role</p>
+    		<p class="card_index_para">LOW : 4 <br /> MEDIUM : 4 <br /> HIGH : 4 </p>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center px-2 py-3" href="#" role="button">View All</a>
+    	</div>
+    </div>
+
+    <div class="card_index d-flex flex-column m-2 p-3">
+    	<img src="media/images/Creativity.jpg" alt="" style="width:100%;">
+    	<div class="d-flex flex-column">
+    		<h2 class="card_index_head">Creativity</h2>
+    		<p class="card_index_para">Player's existing skills or newly created features might bring more public to football fantasy</p>
+    		<p class="card_index_para">LOW : 4 <br /> MEDIUM : 4 <br /> HIGH : 4 </p>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center px-2 py-3" href="#" role="button">View All</a>
+    	</div>
+    </div>
+	
+    <div class="card_index d-flex flex-column m-2 p-3">
+    	<img src="media/images/Threat.jpg" alt="" style="width:100%;">
+    	<div class="d-flex flex-column">
+    		<h2 class="card_index_head">Threat</h2>
+    		<p class="card_index_para">Players or Features can also bring negativity to the public</p>
+    		<p class="card_index_para">LOW : 4 <br /> MEDIUM : 4 <br /> HIGH : 4 </p>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center px-2 py-3" href="#" role="button">View All</a>
+    	</div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block body_end_js %}
+<script>
+  $("#dropd-category").change(function () {
+    var url = "{% url 'index' %}";  
+    var categoryId = $(this).val();  
+
+    $.ajax({                       
+      url: url,                    
+      data: {
+        'category': categoryId       
+      },
+      success: function (data) {   
+        //console.log(categoryId); 
+        //console.log($(data).contents().find(".card_head").text());
+      }
+      
+    });
+
+  });
+</script>
+{% endblock body_end_js %}

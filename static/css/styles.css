@@ -1,0 +1,66 @@
+/* BASE */
+
+body {
+    font-family: Arial;
+}
+
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+
+/* INDEX */
+
+#index--container--categories {
+    box-sizing: border-box;
+    max-width: 1050px;
+}
+
+.card_index {
+    flex: 1;
+	min-width: 240px;
+	background-color: #fff;
+}
+
+.card_index_head{
+	flex: 0;
+}
+
+.card_index_para{
+	flex: 1 0 auto;
+}
+
+.bottom_button{
+	box-sizing: border-box;
+	border-radius: 4px;
+	width: 100%;
+	color: #000000;
+}
+
+/* ACCOUNTS */
+
+.accountform {
+    padding-top: 20px;
+}
+
+
+/* FOOTER */
+
+footer {
+    width: 100%;      
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #5d5a5a;
+}
+
+footer .container {
+    border-top: 1px solid #989696;
+}
+
+footer .fa {
+    color: #5d5a5a;
+    font-size: 24px;
+}
+
+/* MEDIA QUERIES */

@@ -33,8 +33,30 @@
 <!-- CARDS -->
 
 <div class="d-flex flex-row flex-wrap justify-content-sm-between">
+
+    {% for inf in influences %}
+    <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch">
+        <h3 class="card-header">{{ inf.motive|title }}</h3>
+        <div class="card-body">
+            <h5 class="card-title">{{ inf.name|title }}</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{inf.desc | truncatewords:50 }}</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><span class="oi oi-eye" title="person" aria-hidden="true"> {{ inf.views }}</span></li>
+            <li class="list-group-item"><span class="oi oi-check" title="person" aria-hidden="true"> 1</span></li>
+        </ul>
+        <div class="card-body">
+            <a href="{% url 'view_influence' inf.id %}view/" class="card-link">View</a>
+        </div>
+        <div class="card-footer text-muted">
+            2 days ago
+        </div>
+    </div>
+    {% endfor %}    
     
-    <div class="card mb-3 mr-2 mr-md-0">
+    <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch">
         <h3 class="card-header">Player</h3>
         <div class="card-body">
             <h5 class="card-title">Hazard</h5>
@@ -54,7 +76,7 @@
         </div>
     </div>
     
-    <div class="card mb-3 mr-2 mr-md-0">
+    <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch">
         <h3 class="card-header">Player</h3>
         <div class="card-body">
             <h5 class="card-title">Hazard</h5>
@@ -74,27 +96,7 @@
         </div>
     </div>
     
-    <div class="card mb-3 mr-2 mr-md-0">
-        <h3 class="card-header">Player</h3>
-        <div class="card-body">
-            <h5 class="card-title">Hazard</h5>
-        </div>
-        <div class="card-body">
-            <p class="card-text">plays few minutes</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><span class="oi oi-eye" title="person" aria-hidden="true"> 0</span></li>
-            <li class="list-group-item"><span class="oi oi-check" title="person" aria-hidden="true"> 10</span></li>
-        </ul>
-        <div class="card-body">
-            <a href="#" class="card-link">View</a>
-        </div>
-        <div class="card-footer text-muted">
-            2 days ago
-        </div>
-    </div>
-    
-    <div class="card mb-3 mr-2 mr-md-0">
+    <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch">
         <h3 class="card-header">Player</h3>
         <div class="card-body">
             <h5 class="card-title">Hazard</h5>

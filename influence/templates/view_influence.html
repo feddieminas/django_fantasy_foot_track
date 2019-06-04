@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% load tz %}
+
+{% block content %}
+
+<div class="row mt-3">
+    <div class="col-12 mt-1 col-sm-3">
+        <h3>{{ influence.motive | title }}</h3>
+    </div>
+    
+    <div class="col-12 mt-1 col-sm-5 offset-sm-2">
+        <h3>{{ influence.name | title }}</h3>
+    </div>    
+</div>
+
+<div class="row mt-2">
+    <div class="col-2 col-sm-1 arrow-left">
+        <a href="{% url 'all_influences' %}">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 10">
+                <path d="M29.71 4.29l-4-4a1 1 0 0 0-1.42 1.42L26.59 4H1a1 1 0 0 0 0 2h25.59l-2.3 2.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4-4a1 1 0 0 0 0-1.42z"></path>
+            </svg>
+        </a>
+    </div>
+    <div class="col-12 col-sm-5 mt-3 mt-sm-1 offset-sm-3 pl-sm-0 text-sm-center">
+        <h5 style="min-width: 240px;">{{ influence.desc | title }}</h5>
+    </div>     
+</div>
+
+<div class="row mt-2">
+    <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-lg-4 offset-sm-4">
+        <h6 class="text-uppercase font-weight-bold">Status</h6>
+        <div class="row">
+            <div class="col-xs-8 col-sm-10 py-1">
+                {{ influence.status | title }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-lg-4">
+        <h6 class="text-uppercase font-weight-bold">UpVotes</h6>
+        <div class="row py-1">
+            <div class="col-xs-8 col-sm-8 text-sm-center pl-4 pl-sm-4">
+                {{ upvotes_total }}
+            </div>
+        </div>        
+    </div>    
+    <div class="col-xs-4 pt-2 col-sm-3 col-lg-2 mr-lg-4">
+        {% if user_has_upvote %}
+            <p><a href="" class="btn btn-success disabled">UpVote</a></p>
+        {% else %}
+            <p><a href="{% url 'user_upvote' influence.id %}" class="btn btn-success">UpVote</a></p>
+        {% endif %}
+    </div>    
+</div>
+
+<div class="row mt-2 mt-sm-3">
+    <div class="col-xs-4 my-1 pl-3 col-sm-4">
+        <h5 class="font-weight-light">Comments <span>( {{ comments | length }} )</span></h5>
+    </div>
+</div>
+
+<div class="row my-2">
+    <div class="col-xs-4 pl-3 col-sm-3">
+        <p><a href="{% url 'add_influ_comment' influence.id  %}" class="btn btn-secondary">Add Comment</a></p>
+    </div>
+</div>
+
+{% for comment in comments %}
+<div class="row mb-3 commentBox">
+    
+<div class="col-12 col-sm-3 pt-2 pt-sm-3">
+        <p>{{ comment.published_date|localtime }}</p>
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <p>{{ comment.owner | title }}</p>
+            </div>
+        </div>        
+    </div>
+                                             
+    <div class="col-12 col-sm-9 pt-2 pt-sm-3">
+        <div class="row">
+            <div class="col-12 col-sm-12">
+                <p>{{ comment.content | title }}</p>
+            </div>
+        </div>        
+    </div>
+    
+</div>
+{% endfor %}
+
+{% endblock %}

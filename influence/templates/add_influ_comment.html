@@ -3,9 +3,9 @@
 {% load bootstrap_tags %} 
 
 {% block content %}
-<h4 class="my-3">Create Influence</h4>
+<h4 class="my-3">Influence <span class="oi oi-arrow-thick-right pr-1" style="top: 3px;"></span>{{ name | title }}</h4>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %} {{ form | as_bootstrap }}
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock %}

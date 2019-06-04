@@ -10,6 +10,11 @@ body {
   border-radius: 50%;
 }
 
+.arrow-left {
+    transform: scaleX(-1);
+    min-width: 80px;    
+}
+
 /* INDEX */
 
 #index--container--categories {
@@ -17,17 +22,17 @@ body {
     max-width: 1050px;
 }
 
-.card_index {
+.flex-card_main {
     flex: 1;
 	min-width: 240px;
 	background-color: #fff;
 }
 
-.card_index_head{
+.flex-card_head{
 	flex: 0;
 }
 
-.card_index_para{
+.flex-card_para{ 
 	flex: 1 0 auto;
 }
 
@@ -44,6 +49,12 @@ body {
     padding-top: 20px;
 }
 
+/* VIEW_CATEGORY */
+
+.commentBox { 
+    border-bottom: 2px solid black;
+    background-color: rgba(149, 165, 166, 0.3);
+}    
 
 /* FOOTER */
 

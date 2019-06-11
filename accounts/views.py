@@ -3,14 +3,21 @@ from django.contrib import auth, messages
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required # stop people who aren't logged in for accessing this page, redirect to login page
 from django.contrib.auth.models import User
-from accounts.forms import UserLoginForm, UserRegistrationForm
+from accounts.forms import UserLoginForm, UserRegistrationForm, FilterView
 from django.template.context_processors import csrf
 
 
 def index(request):
     """Return the index.html file"""
-    # print("the print one", request.GET.get('category'))
-    return render(request, 'index.html')
+    if request.method == "POST":
+        filterView = FilterView(request.POST)
+        if filterView.is_valid() == True:
+            pass
+    else:
+        filterView = FilterView()
+    
+    args = {"filterView": filterView}    
+    return render(request, 'index.html', args)
 
     
 @login_required

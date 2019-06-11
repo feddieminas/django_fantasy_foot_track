@@ -44,4 +44,11 @@ class UserRegistrationForm(UserCreationForm):
             
         return password2
         
-        
+    
+class FilterView(forms.Form):
+    GROUP_BY_CHOICES = [
+        ('players', 'PLAYERS'),
+        ('features', 'FEATURES'),
+        ('all', 'ALL')
+    ]
+    group_by = forms.ChoiceField(choices=GROUP_BY_CHOICES, label='')        

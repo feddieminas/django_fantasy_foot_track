@@ -4,12 +4,6 @@ body {
     font-family: Arial;
 }
 
-.dot {
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
-}
-
 .arrow-left {
     transform: scaleX(-1);
     min-width: 80px;    
@@ -47,6 +41,30 @@ body {
 
 .accountform {
     padding-top: 20px;
+}
+
+
+/* ALL_CATEGORY */
+
+.dot {
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  transition: all .3s ease-in-out;
+}
+
+.dot:hover {
+  border-radius:0;  
+  cursor: pointer;
+}
+
+h3 > a:first-child {
+    color: black;
+}
+
+h3 > a:first-child:hover {
+    text-decoration: none;
+    cursor: pointer;
 }
 
 /* VIEW_CATEGORY */

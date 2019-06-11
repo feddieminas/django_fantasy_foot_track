@@ -3,15 +3,48 @@ from django.http import HttpResponseNotFound
 from .models import Influence, Comment, UpVote, Likeability
 from .forms import CreateInfluenceForm, CreateInfluenceCommentForm
 from django.db.models import Q
+from functools import reduce
+import operator
+from django.utils import timezone
+import datetime
+
+#index page filtering - fix the three html+css files - tests - insert comments on all
 
 # Create your views here.
 def all_influences(request):
     """Return the all_influences.html file"""
-    print("all_influence user_id", request.user.id)
-    influences = Influence.objects.all()
-    print("all_influences influences", influences)
     
-    args = {'influences': influences}
+    query = request.GET.get('q')
+    if query:
+        query_list = query.split()
+        influences = Influence.objects.filter(
+            reduce(operator.and_, (Q(name__icontains=q) for q in query_list)) |
+            reduce(operator.and_, (Q(desc__icontains=q) for q in query_list))
+        )
+    else:
+        influences = Influence.objects.all()
+    
+    infUpvotesAndDays = {}
+    for inf in influences:
+        infUpvotesAndDays[str(inf.id)] = {}
+        
+        upvotes = inf.vote_levels.filter(level=1).count()
+        infUpvotesAndDays[str(inf.id)]['upvotes'] = upvotes
+        
+        daysdiff = abs(timezone.now().date() - inf.created_date.date()).days
+        if daysdiff >= 365:
+            yearsCount = int(daysdiff/365)
+            infUpvotesAndDays[str(inf.id)]['daysyear'] = str(yearsCount) + " years ago" if yearsCount > 1 else "1 year ago"
+        else:
+            daysEval = lambda d: 'Today' if d == 0 else ('1 day ago' if d == 1 else str(d) + " days ago")
+            infUpvotesAndDays[str(inf.id)]['daysyear'] = daysEval(daysdiff)
+    
+    if 'viewlist' not in request.session:
+        request.session['viewlist']=[]
+    
+    colorsIndex = {"low": ["#2C3E50","white"], "medium": ["#95a5a6","black"], "high": ["#18BC9C", "black"]}
+    
+    args = {'influences': influences, 'infUpvotesAndDays': infUpvotesAndDays, 'colorsIndex':colorsIndex}
     return render(request, 'all_influences.html', args)
     
 
@@ -24,21 +57,29 @@ def view_influence(request, pk, view=''):
     
     # Influence
     if view == "view":
-        influence.views += 1
-        influence.save()
+        viewlist = request.session['viewlist']
+        if not (str(request.user.id) + "i" + str(pk)) in viewlist:
+            influence.views += 1
+            influence.save()
+            viewlist.append(str(request.user.id) + "i" + str(pk))
+            request.session['viewlist'] = viewlist
+            #request.session.modified = True
     
     # Comments
     comments = Comment.objects.filter(influence__pk=influence.pk)
 
     # UpVotes 
     users_vote, created = UpVote.objects.get_or_create(users_vote=request.user.id,)
-    if not created:
+    likeability = Likeability.objects.filter(influence=influence)
+    
+    check_users_vote_has_val = False
+    if not created and likeability.exists():
         check_users_vote_has_val = users_vote.influences.filter(name=influence.name, created_date=influence.created_date)
-    if any([created, not check_users_vote_has_val]): 
+    
+    if any([created, not likeability.exists(), not check_users_vote_has_val]): 
         userlikeNoVote = Likeability(influence=influence, users_vote=users_vote, level=0,)
         userlikeNoVote.save()
     
-    likeability = Likeability.objects.filter(influence=influence)
     userlikeUpVotes = 0
     user_has_upvote = False
     if likeability.exists():
@@ -95,9 +136,3 @@ def add_influ_comment(request, pk):
         
     args = {'form':form, "name": influence.name}    
     return render(request, 'add_influ_comment.html', args)   
-
-
-
-
-
-# add_comment loop comments, then when finished view, go to all_infuences.html fix upvotes length and days     

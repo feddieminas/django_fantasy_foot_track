@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
+{% load bootstrap_tags %}
+
 {% block content %}
 
-<div class="jumbotron">
+<div class="jumbotron mb-3 mb-sm-3">
   <h1 class="display-3">Fantasy Football UK Track</h1>
   <p class="lead">Assist us Data Scientists publicly to enhance player performances and web development features.</p>
   <hr class="my-4">
@@ -12,19 +14,18 @@
   </p>
 </div>
 
+<div class="row">
+  <div class="col-auto ml-3 ml-sm-4 pl-sm-4">
+    <form role="form" action="{% url 'index' %}" method="POST">
+        {{ filterView|as_bootstrap }}
+        {% csrf_token %}
+    </form>
+  </div>
+</div>
+
 <div id="index--container--categories" class="d-flex flex-row flex-wrap mx-auto">
     
-    <div class="d-flex flex-column p-2">
-      <form action="{% url 'index' %}" method="POST">
-        <select name="category" id="dropd-category">
-            <option value="1" selected>PLAYERS</option>
-            <option value="2">FEATURES</option>
-            <option value="3">ALL</option>
-        </select>
-      </form>
-    </div>    
-    
-    <div class="flex-card_main d-flex flex-column m-2 p-3">
+    <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
     	<img src="media/images/Influence.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Influence</h2>
@@ -34,7 +35,7 @@
     	</div>
     </div>
 
-    <div class="flex-card_main d-flex flex-column m-2 p-3">
+    <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
     	<img src="media/images/Creativity.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Creativity</h2>
@@ -44,7 +45,7 @@
     	</div>
     </div>
 	
-    <div class="flex-card_main d-flex flex-column m-2 p-3">
+    <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
     	<img src="media/images/Threat.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Threat</h2>

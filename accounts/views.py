@@ -4,19 +4,30 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required # stop people who aren't logged in for accessing this page, redirect to login page
 from django.contrib.auth.models import User
 from accounts.forms import UserLoginForm, UserRegistrationForm, FilterView
+from influence.models import Influence
+from django.db.models import Count
 from django.template.context_processors import csrf
-
 
 def index(request):
     """Return the index.html file"""
     if request.method == "POST":
         filterView = FilterView(request.POST)
         if filterView.is_valid() == True:
-            pass
+            filterViewCatgry = request.POST.get('group_by')
+            if filterViewCatgry == "all":
+                figuresInf = Influence.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
+                
+            else:
+                figuresInf = Influence.objects.filter(motive=filterViewCatgry).values('status').annotate(total=Count('status')).order_by('-total')
+            figuresCr = {}
+            figuresTh = {}    
     else:
         filterView = FilterView()
+        figuresInf = Influence.objects.filter(motive="player").values('status').annotate(total=Count('status')).order_by('-total')
+        figuresCr = {}
+        figuresTh = {}
     
-    args = {"filterView": filterView}    
+    args = {"filterView": filterView, "figuresInf": figuresInf, "figuresCr": figuresCr, "figuresTh": figuresTh}    
     return render(request, 'index.html', args)
 
     

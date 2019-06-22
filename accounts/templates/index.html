@@ -3,7 +3,7 @@
 {% load bootstrap_tags %}
 
 {% block content %}
-
+    
 <div class="jumbotron mb-3 mb-sm-3">
   <h1 class="display-3">Fantasy Football UK Track</h1>
   <p class="lead">Assist us Data Scientists publicly to enhance player performances and web development features.</p>
@@ -14,68 +14,116 @@
   </p>
 </div>
 
-<div class="row">
-  <div class="col-auto ml-3 ml-sm-4 pl-sm-4">
-    <form role="form" action="{% url 'index' %}" method="POST">
-        {{ filterView|as_bootstrap }}
-        {% csrf_token %}
-    </form>
-  </div>
+<div class="row" style="margin-bottom: -10px;">
+  <form id="jsform" role="form" action="{% url 'index' %}" method="POST">
+    <div class="col-12 ml-3 col-sm-12 ml-sm-4 pl-sm-4 col-lg-12 ml-lg-4 pl-lg-4"> 
+      {{ filterView|as_bootstrap }}
+      {% csrf_token %}
+    </div>  
+  </form>
 </div>
 
-<div id="index--container--categories" class="d-flex flex-row flex-wrap mx-auto">
+<div id="index--container--categories" class="d-flex flex-row flex-wrap mx-auto align-items-center">
     
     <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
-    	<img src="media/images/Influence.jpg" alt="" style="width:100%;">
+    	<img class="img-thumbnail" src="media/images/Influence.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Influence</h2>
     		<p class="flex-card_para">Player's influence on the game and style of play can play a huge role</p>
-    		<p class="flex-card_para">LOW : 4 <br /> MEDIUM : 4 <br /> HIGH : 4 </p>
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center px-2 py-3" href="#" role="button">View All</a>
+        {% for q in figuresInf %}
+          <p class="flex-card_para mb-1">
+          {% for k, v in q.items %}
+            {% if k == "status" %}  
+              {{ v|upper }} :
+            {% else %}
+              {{ v }}
+            {% endif %}
+          {% endfor %}
+          </p>
+          {% empty %}
+          <p class="flex-card_para mb-1">LOW : 0</p>
+    		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
+    		  <p class="flex-card_para mb-1">HIGH : 0</p>           
+        {% endfor %}        
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3" href="#" role="button">View All</a>
     	</div>
     </div>
 
     <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
-    	<img src="media/images/Creativity.jpg" alt="" style="width:100%;">
+    	<img class="img-thumbnail" src="media/images/Creativity.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Creativity</h2>
     		<p class="flex-card_para">Player's existing skills or newly created features might bring more public to football fantasy</p>
-    		<p class="flex-card_para">LOW : 4 <br /> MEDIUM : 4 <br /> HIGH : 4 </p>
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center px-2 py-3" href="#" role="button">View All</a>
+        {% for q in figuresCr %}
+          <p class="flex-card_para mb-1">
+          {% for k, v in q.items %}
+            {% if k == "status" %}  
+              {{ v|upper }} :
+            {% else %}
+              {{ v }}
+            {% endif %}
+          {% endfor %}
+          </p>
+          {% empty %}
+          <p class="flex-card_para mb-1">LOW : 0</p>
+    		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
+    		  <p class="flex-card_para mb-1">HIGH : 0</p>          
+        {% endfor %}    		
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3" href="#" role="button">View All</a>
     	</div>
     </div>
 	
     <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
-    	<img src="media/images/Threat.jpg" alt="" style="width:100%;">
+    	<img class="img-thumbnail" src="media/images/Threat.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Threat</h2>
     		<p class="flex-card_para">Players or Features can also bring negativity to the public</p>
-    		<p class="flex-card_para">LOW : 4 <br /> MEDIUM : 4 <br /> HIGH : 4 </p>
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center px-2 py-3" href="#" role="button">View All</a>
+        {% for q in figuresTh %}
+          <p class="flex-card_para mb-1">
+          {% for k, v in q.items %}
+            {% if k == "status" %}  
+              {{ v|upper }} :
+            {% else %}
+              {{ v }}
+            {% endif %}
+          {% endfor %}
+          </p>
+          {% empty %}
+          <p class="flex-card_para mb-1">LOW : 0</p>
+    		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
+    		  <p class="flex-card_para mb-1">HIGH : 0</p>          
+        {% endfor %}  
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3" href="#" role="button">View All</a>
     	</div>
     </div>
 </div>
 
 {% endblock %}
 
+
 {% block body_end_js %}
 <script>
-  $("#dropd-category").change(function () {
-    var url = "{% url 'index' %}";  
-    var categoryId = $(this).val();  
+$("#id_group_by").change(function() {
+  $("#jsform").submit();
+});
 
-    $.ajax({                       
-      url: url,                    
-      data: {
-        'category': categoryId       
-      },
-      success: function (data) {   
-        //console.log(categoryId); 
-        //console.log($(data).contents().find(".card_head").text());
-      }
+$('.flex-card_main').each(function(i, obj) {
+  let statusLst = ["LOW", "MEDIUM", "HIGH"];
+  let child = $(this).find('.flex-card_para.mb-1');
+  let childLength = child.length;
+  
+  for (let i = 0; i < childLength; i++) {
+    let childStatus = $.map($(child[i]).text().split(":"), $.trim);
+    statusLst.splice(statusLst.indexOf(childStatus[0]), 1 );
+  }
+  
+  if (statusLst.length > 0) {
+    for (let i = 0; i < statusLst.length; i++) {
+      $(child[childLength-1]).after("<p class='flex-card_para mb-1'>" + statusLst[i]  + " : 0</p>");
+    }
+  }
+  
+});    
       
-    });
-
-  });
 </script>
 {% endblock body_end_js %}

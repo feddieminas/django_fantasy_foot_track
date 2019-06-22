@@ -47,8 +47,8 @@ class UserRegistrationForm(UserCreationForm):
     
 class FilterView(forms.Form):
     GROUP_BY_CHOICES = [
-        ('players', 'PLAYERS'),
-        ('features', 'FEATURES'),
+        ('player', 'PLAYERS'),
+        ('feature', 'FEATURES'),
         ('all', 'ALL')
     ]
     group_by = forms.ChoiceField(choices=GROUP_BY_CHOICES, label='')        

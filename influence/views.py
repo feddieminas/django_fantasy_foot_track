@@ -8,7 +8,7 @@ import operator
 from django.utils import timezone
 import datetime
 
-# tests - fix all html+css files, first the view comment - insert comments on all
+# fix all html+css files, first the view comment - insert comments on all
 
 # Create your views here.
 def all_influences(request):
@@ -48,6 +48,24 @@ def all_influences(request):
     return render(request, 'all_influences.html', args)
     
 
+def add_influence(request, pk=None):
+    """Return the add_influence.html file"""
+    influence =  get_object_or_404(Influence, pk=pk) if pk else None
+    
+    if request.method == "POST":
+        form = CreateInfluenceForm(request.POST, instance=influence)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.owner = request.user
+            form.save()
+            return redirect(view_influence, form.pk)
+    else:
+        form = CreateInfluenceForm(instance=influence) 
+        
+    args = {'form':form}    
+    return render(request, 'add_influence.html', args)
+    
+
 def view_influence(request, pk, view=''):
     "Views on Influence Class, Upvote user_votes to add userid if needed and update, Likeability level add"
     try:
@@ -84,7 +102,7 @@ def view_influence(request, pk, view=''):
     user_has_upvote = False
     if likeability.exists():
         for l in likeability.iterator():
-            print(request.user.id, l.influence, l.users_vote, l.level)
+            #print(request.user.id, l.influence, l.users_vote, l.level)
             if l.level == 1: # number of UpVotes
                 userlikeUpVotes += 1
             if l.users_vote == users_vote and l.level == 1: # if user has UpVoted this category
@@ -92,32 +110,16 @@ def view_influence(request, pk, view=''):
     
     args = {'influence': influence, "comments": comments, "upvotes_total": userlikeUpVotes, "user_has_upvote": user_has_upvote} 
     return render(request, 'view_influence.html', args)
-    
-    
-def add_influence(request, pk=None):
-    """Return the add_influence.html file"""
-    influence =  get_object_or_404(Influence, pk=pk) if pk else None
-    
-    if request.method == "POST":
-        form = CreateInfluenceForm(request.POST, instance=influence)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.owner = request.user
-            form.save()
-            return redirect(view_influence, form.pk)
-    else:
-        form = CreateInfluenceForm(instance=influence) 
-        
-    args = {'form':form}    
-    return render(request, 'add_influence.html', args)
 
 
 def user_upvote(request, pk):
-    influence =  get_object_or_404(Influence, pk=pk)
+    influence = get_object_or_404(Influence, pk=pk)
+    print(UpVote.objects.get(users_vote=request.user.id,))
     likeit = get_object_or_404(Likeability, influence=influence, users_vote=UpVote.objects.get(users_vote=request.user.id,))
     likeit.level = 1
     likeit.save()
     return redirect(view_influence, influence.pk)
+
 
 def add_influ_comment(request, pk):
     """Return the add_influ_comment.html file"""

@@ -8,7 +8,7 @@ import operator
 from django.utils import timezone
 import datetime
 
-# fix all html+css files, first the view comment - insert comments on all
+# fix all html+css files, first the view comment, then add roboto or similar - insert comments on all
 
 # Create your views here.
 def all_influences(request):

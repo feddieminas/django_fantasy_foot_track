@@ -16,7 +16,6 @@ def index(request):
             filterViewCatgry = request.POST.get('group_by')
             if filterViewCatgry == "all":
                 figuresInf = Influence.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
-                
             else:
                 figuresInf = Influence.objects.filter(motive=filterViewCatgry).values('status').annotate(total=Count('status')).order_by('-total')
             figuresCr = {}

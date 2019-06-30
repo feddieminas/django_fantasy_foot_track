@@ -5,6 +5,9 @@ class CreateInfluenceForm(forms.ModelForm):
     class Meta:
         model = Influence
         fields = ('motive', 'name', 'desc', 'status')
+        labels = {
+            'desc': 'Description',
+        }        
         
 class CreateInfluenceCommentForm(forms.ModelForm):
     class Meta:

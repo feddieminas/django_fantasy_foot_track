@@ -124,6 +124,17 @@ $('.flex-card_main').each(function(i, obj) {
   }
   
 });    
-      
+
+  $(window).on('resize', function(){
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w >= 768 && h >= 1200) {
+          $("footer").css({'position' : 'absolute', 'bottom' : 0});
+      }
+      else {
+          $("footer").css({'position' : 'inherit'});
+      }
+  }).resize();
+  
 </script>
 {% endblock body_end_js %}

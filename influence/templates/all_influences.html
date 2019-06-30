@@ -8,7 +8,8 @@
 
 <div class="row my-2">
     <div class="col-sm-12 col-md-3">
-        <h3><a href="{% url 'all_influences' %}">Influences</a></h3>
+        <!--<h3><a href="{% url 'all_influences' %}">Influences</a></h3>-->
+        <h3 id="showAllInfl" style="cursor: pointer;">Influences</h3>
         <p><a href="{% url 'add_influence' %}" class="btn btn-secondary">Create One</a></p>
     </div>
 
@@ -21,10 +22,10 @@
     <div class="col-sm-12 col-md-5 mt-md-4 pt-md-3">
         <div class="row">
             <form id="searchform" class="form-inline my-2 my-lg-0" method="get" accept-charset="utf-8">
-        	    <div class="col-9 pr-0 col-sm-9 pr-sm-0 col-md-9 pr-md-0">
+        	    <div class="col-9 pr-0 col-sm-9 pr-sm-0 col-md-9 pr-md-0 col-lg-9 pr-lg-0">
                     <input class="form-control mr-sm-2" id="searchbox" name="q" type="text" placeholder="Search">
                 </div>
-                <div class="col-3 pl-1 col-sm-3 pl-sm-1 col-md-2 pl-md-1">
+                <div class="col-3 pl-1 col-sm-3 pl-sm-1 col-md-2 pl-md-1 col-lg-2 pl-lg-1">
                     <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
                 </div>
             </form>
@@ -34,34 +35,36 @@
 
 <!-- CARDS -->
 
-<div class="d-flex flex-row flex-wrap justify-content-sm-between">
+<div class="d-flex flex-row flex-wrap justify-content-between justify-content-sm-between">
 
     {% for inf in influences %}
     
     <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch">
         
-        <h3 class="card-header" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }}">{{ inf.motive|title }}</h3>
+        <h3 class="card-header py-2" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }};font-size: 22px;">{{ inf.motive|title }}</h3>
         
-        <div class="card-body">
-            <h5 class="card-title">{{ inf.name|title }}</h5>
-        </div>
-        <div class="card-body">
-            <p class="card-text">{{inf.desc | truncatewords:50 }}</p>
-        </div>
+        <div class="card-body px-0">
+            <h5 class="card-title py-2 pl-3">{{ inf.name|title }}</h5>
+            <hr style="min-width: 200px;">
+            <p class="card-text pl-3" style="height: 60px;overflow-y: scroll;">{{inf.desc | truncatewords:50 }}</p>
+        </div>        
         
         {% for key, values in infUpvotesAndDays.items %}
             {% with key as name %}
                 {% if inf.id|stringformat:"i" == name %}        
                 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><span class="oi oi-eye" title="person" aria-hidden="true"> {{ inf.views }}</span></li>
-                    <li class="list-group-item"><span class="oi oi-check" title="person" aria-hidden="true"></span>{{ values.upvotes }}</li>
-                </ul>
-                <div class="card-body">
+                    <li class="list-group-item py-2">
+                        <span class="oi oi-eye" title="person" aria-hidden="true"> {{ inf.views }}</span>
+                        <span class="oi oi-check px-3" title="person" aria-hidden="true">{{ values.upvotes }}</span>
+                    </li>
+                </ul>                
+
+                <div class="card-body py-3">
                     <a href="{% url 'view_influence' inf.id %}view/" class="card-link">View</a>
                 </div>
                 
-                <div class="card-footer font-weight-light" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }}">
+                <div class="card-footer font-weight-light py-2" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }}">
                     {{ values.daysyear }} 
                 </div>
                 
@@ -81,6 +84,11 @@
 <script>
   $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(62, 88, 113, 1)'});
 
+  $("#showAllInfl").click(function (e) {
+    const cardHeadElements = document.querySelectorAll('.card-header');
+    for (i = 0; i < cardHeadElements.length; i++) {cardHeadElements[i].parentElement.style.display = ""; }
+  });    
+
   $(".dot").click(function (e) {
     const status = $(this).parent().text().toLowerCase(); 
     const dictStatusColours = {"low": "rgb(24, 188, 156)", "medium": "rgb(149, 165, 166)", "high": "rgb(44, 62, 80)"};
@@ -95,5 +103,18 @@
         }
     }
   });
+  
+  
+  $(window).on('resize', function(){
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w >= 1200 || (h-300) > 900) {
+          $("footer").css({'position' : 'absolute', 'bottom' : 0});
+      }
+      else {
+          $("footer").css({'position' : 'inherit'});
+      }
+  }).resize();
+  
 </script>
 {% endblock body_end_js %}

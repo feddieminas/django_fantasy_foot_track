@@ -38,7 +38,7 @@ class Comment(models.Model):
         return self.content    
         
 
-class UpVote(models.Model):
+class UpVote(models.Model): # Model stores userIDs for potential Upvoting or Not 
     users_vote = models.IntegerField(unique=True, null=True) 
     
     def __str__(self):

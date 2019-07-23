@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
+<!-- django forms bootstrap -->
 {% load bootstrap_tags %}
 
 {% block content %}
     
-<div class="jumbotron mb-3 mb-sm-3">
-  <h1 class="display-3">Fantasy Football UK Track</h1>
+<!-- Aim of website -->    
+    
+<div id="index--bg" class="jumbotron mb-3 mb-sm-3">
+  <h1 class="display-3">Fantasy Football <span style="color: rgba(0, 0, 205, 0.8);">UK</span> Track</h1>
   <p class="lead">Assist us Data Scientists publicly to enhance player performances and web development features.</p>
   <hr class="my-4">
   <p>Post your ideas and knowledge of sport to expand their creativity. Watch out our online community contribution.</p>
@@ -13,6 +16,8 @@
     <a class="btn btn-primary btn-lg" href="#" role="button">Plot Charts</a>
   </p>
 </div>
+
+<!-- Django dropdown form filter per motive [Player, Feature, ALL] -->
 
 <div class="row" style="margin-bottom: -10px;">
   <form id="jsform" role="form" action="{% url 'index' %}" method="POST">
@@ -24,6 +29,8 @@
 </div>
 
 <div id="index--container--categories" class="d-flex flex-row flex-wrap mx-auto align-items-center">
+    
+    <!-- Influence Summary Card -->
     
     <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
     	<img class="img-thumbnail" src="media/images/Influence.jpg" alt="" style="width:100%;">
@@ -45,9 +52,11 @@
     		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
     		  <p class="flex-card_para mb-1">HIGH : 0</p>           
         {% endfor %}        
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3" href="#" role="button">View All</a>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3 index-btn-view-border index-btn-inf-outline" href="{% url 'all_influences' %}" role="button">View All</a>
     	</div>
     </div>
+
+    <!-- Creativity Summary Card -->
 
     <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
     	<img class="img-thumbnail" src="media/images/Creativity.jpg" alt="" style="width:100%;">
@@ -69,9 +78,11 @@
     		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
     		  <p class="flex-card_para mb-1">HIGH : 0</p>          
         {% endfor %}    		
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3" href="#" role="button">View All</a>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3 index-btn-view-border index-btn-crt-outline" href="#" role="button">View All</a>
     	</div>
     </div>
+	
+	   <!-- Threat Summary Card -->
 	
     <div class="flex-card_main d-flex flex-column m-2 p-auto m-sm-2 p-sm-auto">
     	<img class="img-thumbnail" src="media/images/Threat.jpg" alt="" style="width:100%;">
@@ -93,7 +104,7 @@
     		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
     		  <p class="flex-card_para mb-1">HIGH : 0</p>          
         {% endfor %}  
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3" href="#" role="button">View All</a>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3 index-btn-view-border index-btn-thr-outline" href="#" role="button">View All</a>
     	</div>
     </div>
 </div>
@@ -103,28 +114,32 @@
 
 {% block body_end_js %}
 <script>
-$("#id_group_by").change(function() {
-  $("#jsform").submit();
-});
 
-$('.flex-card_main').each(function(i, obj) {
-  let statusLst = ["LOW", "MEDIUM", "HIGH"];
-  let child = $(this).find('.flex-card_para.mb-1');
-  let childLength = child.length;
+  // Django dropdown form filter per motive [Player, Feature, ALL], it submits when a user filters
+  $("#id_group_by").change(function() {
+    $("#jsform").submit();
+  });
+
+  // Insert Low, medium and high rows in each Summary Card above that might be missing
+  $('.flex-card_main').each(function(i, obj) {
+    let statusLst = ["LOW", "MEDIUM", "HIGH"];
+    let child = $(this).find('.flex-card_para.mb-1');
+    let childLength = child.length;
   
-  for (let i = 0; i < childLength; i++) {
-    let childStatus = $.map($(child[i]).text().split(":"), $.trim);
-    statusLst.splice(statusLst.indexOf(childStatus[0]), 1 );
-  }
-  
-  if (statusLst.length > 0) {
-    for (let i = 0; i < statusLst.length; i++) {
-      $(child[childLength-1]).after("<p class='flex-card_para mb-1'>" + statusLst[i]  + " : 0</p>");
+    for (let i = 0; i < childLength; i++) {
+      let childStatus = $.map($(child[i]).text().split(":"), $.trim);
+      statusLst.splice(statusLst.indexOf(childStatus[0]), 1 );
     }
-  }
   
-});    
+    if (statusLst.length > 0) {
+      for (let i = 0; i < statusLst.length; i++) {
+        $(child[childLength-1]).after("<p class='flex-card_para mb-1'>" + statusLst[i]  + " : 0</p>");
+      }
+    }
+  
+  });    
 
+  // footer responsive stay at bottom
   $(window).on('resize', function(){
       const w = window.innerWidth;
       const h = window.innerHeight;

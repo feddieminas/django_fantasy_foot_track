@@ -1,7 +1,7 @@
 from django.test import TestCase
 from .forms import CreateInfluenceForm, CreateInfluenceCommentForm
 
-''' Influences '''
+''' Influences Forms '''
 
 # Create your tests here.
 class TestForm(TestCase):
@@ -10,12 +10,10 @@ class TestForm(TestCase):
         form = CreateInfluenceForm({'motive': 'player', 'name': "Test1", 'desc': "create a test1", 'status': "low"})
         self.assertTrue(form.is_valid())
         
-        
     def test_influence_less_or_empty_fields(self):
         form = CreateInfluenceForm({'motive': 'player', 'name': ""})
         self.assertFalse(form.is_valid())
         self.assertEqual(form.errors['name'], [u'This field is required.'])
-
 
 class TestCommentForm(TestCase):
 

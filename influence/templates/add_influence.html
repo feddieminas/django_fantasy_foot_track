@@ -1,19 +1,22 @@
 {% extends "base.html" %} 
 
+<!-- django form bootstrap -->
 {% load bootstrap_tags %} 
 
 {% block content %}
+<!-- category form creation of ['motive', 'name', 'desc', 'status'] -->
 <h4 class="my-3 fs20">Create Influence</h4>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %} {{ form | as_bootstrap }}
-    <button type="submit" class="btn btn-primary btnaddCategoryComment">Create</button>
+    <button type="submit" class="btn btn-primary btnadd-Category-Comment">Create</button>
 </form>
 {% endblock %}
 
 {% block body_end_js %}
 <script>
-  $(".container").css({'transform': 'translateY(5px)', 'transition': 'transform 0.3s ease-in-out 0s'});
+  $(".container").addClass("form-creation-shift");
 
+  // footer responsive stay at bottom
   $(window).on('resize', function(){
       const h = window.innerHeight;
       if (h > 900) {
@@ -23,5 +26,6 @@
           $("footer").css({'position' : 'inherit'});
       }
   }).resize();
+  
 </script>
 {% endblock body_end_js %}

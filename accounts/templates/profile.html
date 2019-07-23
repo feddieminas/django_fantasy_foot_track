@@ -4,3 +4,21 @@
 <h2>Success!</h2>
 <p>You are logged in as {{ profile.email }} </p>
 {% endblock %}
+
+{% block body_end_js %}
+<script>
+
+  // footer responsive stay at bottom
+  $(window).on('resize', function(){
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w >= 300 && h >= 400) {
+          $("footer").css({'position' : 'absolute', 'bottom' : 0});
+      }
+      else {
+          $("footer").css({'position' : 'inherit'});
+      }
+  }).resize();
+  
+</script>
+{% endblock body_end_js %}

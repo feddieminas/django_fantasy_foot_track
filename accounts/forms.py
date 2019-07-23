@@ -15,24 +15,26 @@ class UserRegistrationForm(UserCreationForm):
     
     password1 = forms.CharField(
         label="Password", 
-        widget=forms.PasswordInput) #field is specified as property unless you change label
+        widget=forms.PasswordInput) 
     password2 = forms.CharField(
         label="Password Confirmation",
         widget=forms.PasswordInput)
         
-    class Meta: # meta classes used to determine things about the class itself, to specify model want to store info, want it to use to specify fields we are going to use
+    class Meta: 
         model = User
         fields = ['username','email','password1', 'password2']
         
-    def clean_email(self):
-        email = self.cleaned_data.get('email') # allows us to clean the email field and return the email once we're done
-                                               # it's the cleaned_data we would use when use is_valid method     
+    def clean_email(self): 
+        ''' email called once the content is already valid and populated '''
+        email = self.cleaned_data.get('email') 
+                                                   
         username = self.cleaned_data.get('username')
         if User.objects.filter(email=email).exclude(username=username): # filter in db if existing email exists
             raise forms.ValidationError(u'Email address must be unique')
         return email
         
-    def clean_password2(self): # same with clean email you do on password
+    def clean_password2(self):
+        ''' password conf called once the content is already valid and populated '''
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         
@@ -45,7 +47,8 @@ class UserRegistrationForm(UserCreationForm):
         return password2
         
     
-class FilterView(forms.Form):
+class FilterView(forms.Form): 
+    """ dropdown form filter by motive """
     GROUP_BY_CHOICES = [
         ('player', 'PLAYERS'),
         ('feature', 'FEATURES'),

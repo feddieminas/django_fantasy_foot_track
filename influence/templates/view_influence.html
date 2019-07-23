@@ -1,92 +1,151 @@
 {% extends 'base.html' %}
 
+<!-- timezones -->
 {% load tz %}
 
 {% block content %}
 
-<div class="row mt-3">
-    <div class="col-12 mt-1 col-sm-3">
-        <h3>{{ influence.motive | title }}</h3>
+<section>
+    
+    <!-- category card Headers of motive [Player, Feature] and name -->
+    <div class="row mt-3">
+        
+        <div class="col-12 mt-1 col-sm-4">
+            <h3><mark>{{ influence.motive | title }}<i class="fa fa-asterisk ml-1 fs20 fa-cat-header-position"></i></mark></h3>
+        </div>
+        
+        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-1 px-sm-3 offset-md-0 text-sm-center text-md-left"> <!-- col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-1 px-sm-3 2. col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-1 px-sm-3 offset-md-0 -->
+            <h3 class="mw320 lh15"><mark class="inf--bg-fontcolor">{{ influence.name | truncatechars:25 | title }}</mark></h3>
+        </div>
+        
     </div>
     
-    <div class="col-12 mt-1 col-sm-5 offset-sm-2">
-        <h3>{{ influence.name | title }}</h3>
-    </div>    
-</div>
-
-<div class="row mt-2">
-    <div class="col-2 col-sm-1 arrow-left">
-        <a href="{% url 'all_influences' %}">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 10">
-                <path d="M29.71 4.29l-4-4a1 1 0 0 0-1.42 1.42L26.59 4H1a1 1 0 0 0 0 2h25.59l-2.3 2.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4-4a1 1 0 0 0 0-1.42z"></path>
-            </svg>
-        </a>
+    <!-- backward arrow and category card description -->
+    <div class="row mt-2">
+        
+        <div class="col-3 col-sm-2 col-md-1 arrow-left"> 
+            <a href="{% url 'all_influences' %}">
+                {% include "svgpartial.html" %}
+            </a>
+        </div>
+        
+        <div class="col-12 col-sm-7 mt-3 mt-sm-1 offset-sm-3 text-sm-center col-md-6 offset-md-3 offset-lg-2 text-md-center pl-md-0"> <!-- col-12 col-sm-7 mt-3 mt-sm-1 offset-sm-2 text-sm-center col-md-5 offset-md-3 text-md-center pl-md-0 -->
+            <h5 class="mw280 lh13" style="margin-right: 15px;">{{ influence.desc | title }}</h5>
+        </div>   
+        
     </div>
-    <div class="col-12 col-sm-5 mt-3 mt-sm-1 offset-sm-3 pl-sm-0 text-sm-center">
-        <h5 style="min-width: 240px;">{{ influence.desc | title }}</h5>
-    </div>     
-</div>
-
-<div class="row mt-2">
-    <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-lg-4 offset-sm-4">
-        <h6 class="text-uppercase font-weight-bold">Status</h6>
-        <div class="row">
-            <div class="col-xs-8 col-sm-10 py-1">
-                {{ influence.status | title }}
+    
+    <!-- status importance, number of upvotes and button to upvote it -->
+    <div class="row mt-2">
+        
+        <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4 offset-sm-5 offset-md-4 offset-lg-4"> <!-- col-xs-4 pt-2 col-sm-2 col-lg-1 mr-lg-4 offset-sm-4 -->
+            <h6 class="text-uppercase font-weight-bold">Status</h6>
+            <div class="row">
+                <div class="col-xs-8 col-sm-10 py-1">
+                    <mark>{{ influence.status | title }}</mark>
+                </div>
             </div>
         </div>
+        
+        <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4"> <!-- col-xs-4 pt-2 col-sm-2 col-lg-1 mr-lg-4 -->
+            <h6 class="text-uppercase font-weight-bold">UpVotes</h6>
+            <div class="row py-1">
+                <div class="col-xs-8 col-sm-8 text-sm-center pl-4 pl-sm-4">
+                    {{ upvotes_total }}
+                </div>
+            </div>        
+        </div>    
+        
+        <div class="col-xs-4 pt-2 col-sm-3 col-lg-3 mr-md-0 mr-lg-4"> <!-- col-xs-4 pt-2 col-sm-3 col-lg-3 mr-lg-4 -->
+            {% if user_has_upvote %}
+                <p class="mb-1 mb-sm-1"><a href="" class="btn btn-success disabled">UpVote</a></p>
+                <p class="text-muted">You have Upvoted it</p>
+            {% else %}
+                <p><a href="{% url 'user_upvote' influence.id %}" class="btn btn-success">UpVote</a></p>
+            {% endif %}
+        </div>
+        
     </div>
-    <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-lg-4">
-        <h6 class="text-uppercase font-weight-bold">UpVotes</h6>
-        <div class="row py-1">
-            <div class="col-xs-8 col-sm-8 text-sm-center pl-4 pl-sm-4">
-                {{ upvotes_total }}
-            </div>
-        </div>        
-    </div>    
-    <div class="col-xs-4 pt-2 col-sm-3 col-lg-2 mr-lg-4">
-        {% if user_has_upvote %}
-            <p class="mb1 mb-sm-1"><a href="" class="btn btn-success disabled">UpVote</a></p>
-            <p class="text-muted">You have Upvoted it</p>
-        {% else %}
-            <p><a href="{% url 'user_upvote' influence.id %}" class="btn btn-success">UpVote</a></p>
-        {% endif %}
-    </div>    
-</div>
+</section>
 
-<div class="row mt-2 mt-sm-3">
-    <div class="col-xs-4 my-1 pl-3 col-sm-4">
-        <h5 class="font-weight-light">Comments <span>( {{ comments | length }} )</span></h5>
-    </div>
-</div>
-
-<div class="row my-2">
-    <div class="col-xs-4 pl-3 col-sm-3">
-        <p><a href="{% url 'add_influ_comment' influence.id  %}" class="btn btn-secondary">Add Comment</a></p>
-    </div>
-</div>
-
-{% for comment in comments %}
-<div class="row mb-3 commentBox">
+<section>
     
-<div class="col-12 col-sm-3 pt-2 pt-sm-3">
-        <p>{{ comment.published_date|localtime }}</p>
-        <div class="row">
-            <div class="col-12 col-sm-12">
-                <p>{{ comment.owner | title }}</p>
-            </div>
-        </div>        
-    </div>
-                                             
-    <div class="col-12 col-sm-9 pt-2 pt-sm-3">
-        <div class="row">
-            <div class="col-12 col-sm-12">
-                <p>{{ comment.content | title }}</p>
-            </div>
-        </div>        
+    <!-- Number of Comments -->
+    <div class="row mt-2 mt-sm-3">
+        <div class="col-xs-4 my-1 pl-3 col-sm-4">
+            <h5 class="font-weight-light">Comments <span>( {{ comments | length }} )</span></h5>
+        </div>
     </div>
     
-</div>
-{% endfor %}
+    <!-- Button to add a comment -->
+    <div class="row my-2">
+        <div class="col-xs-4 pl-3 col-sm-3">
+            <p><a href="{% url 'add_influ_comment' influence.id  %}" class="btn btn-secondary">Add Comment</a></p>
+        </div>
+    </div>
+    
+    <!-- category card comments -->
+    <div style="overflow-y: scroll">
+        {% for comment in comments %}
+        
+        <article class="commentBox mb-3 pl-1">
+            <div class="row">
+                <div class="col-12 col-sm-3 pt-2 pt-sm-3">
+                    <p>{{ comment.published_date|localtime }}</p>
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <p>{{ comment.owner | title }}</p>
+                        </div>
+                    </div>        
+                </div>
+                                                             
+                <div class="col-12 col-sm-9 pt-2 pt-sm-3">
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <p>{{ comment.content | title }}</p>
+                        </div>
+                    </div>        
+                </div>
+            </div>
+        </article>
+    
+        {% endfor %}
+    </div>
+    
+</section>
 
 {% endblock %}
+
+{% block body_end_js %}
+<script>
+
+    // footer responsive stay at bottom, h3 header font-size change on smaller tablets
+    $(window).on('resize', function(){
+        const commentsTotal = parseInt('{{ comments | length }}', 10);
+        const h = window.innerHeight;
+        const w = window.innerWidth;
+        const filters = [[0, 800, 0], [1, 900, 0], [2, 1000, 550]]; // [commentsTotal,h,w]
+        
+        function checkFilterPos(filters) {
+            return commentsTotal == filters[0] && h >= filters[1] && w >= filters[2];
+        }
+        
+        if (filters.some(checkFilterPos)) {
+            $("footer").css({'position' : 'absolute', 'bottom' : 0});
+        }
+        else {
+            $("footer").css({'position' : 'inherit'});
+        }
+        
+        //h3 adjust font
+        if(w<=775) {
+            $("mark:eq(1)").css({'font-size' : '26px'});
+        } else {
+            $("mark:eq(1)").removeAttr('style');
+        }
+        console.log(w);
+        
+    }).resize();
+  
+</script>
+{% endblock body_end_js %}

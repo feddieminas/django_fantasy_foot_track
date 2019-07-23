@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 
 ''' Index.html '''
 
+"""
+Login with a user and post data on the dropdown filter form, 
+check whether filter value posted is equal to the one that is currently selected
+"""
 class TestIndexPostCall(TestCase):
     def setUp(self):
         User.objects.create_user(username='username', password='password')

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import auth, messages
 from django.core.urlresolvers import reverse
-from django.contrib.auth.decorators import login_required # stop people who aren't logged in for accessing this page, redirect to login page
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from accounts.forms import UserLoginForm, UserRegistrationForm, FilterView
 from influence.models import Influence
@@ -9,11 +9,11 @@ from django.db.models import Count
 from django.template.context_processors import csrf
 
 def index(request):
-    """Return the index.html file"""
+    """Return the index.html file. figures calcs all three [low, medium, high] status total counter"""
     if request.method == "POST":
         filterView = FilterView(request.POST)
         if filterView.is_valid() == True:
-            filterViewCatgry = request.POST.get('group_by')
+            filterViewCatgry = request.POST.get('group_by') # dropdown form filter value by motive, [Player, Feature, ALL]
             if filterViewCatgry == "all":
                 figuresInf = Influence.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
             else:
@@ -21,7 +21,7 @@ def index(request):
             figuresCr = {}
             figuresTh = {}    
     else:
-        filterView = FilterView()
+        filterView = FilterView() # dropdown form filter by motive
         figuresInf = Influence.objects.filter(motive="player").values('status').annotate(total=Count('status')).order_by('-total')
         figuresCr = {}
         figuresTh = {}
@@ -35,12 +35,12 @@ def logout(request):
     """Log the user out"""
     auth.logout(request)
     messages.success(request, "You have succesfully been logged out")
-    return redirect(reverse('index')) # reverse allows us to pass the name of url instead of the view (urls.py name="index")
+    return redirect(reverse('index'))
     
     
 def login(request):
     """Return a login page"""
-    if request.user.is_authenticated: # we do not want to display the login page to users that are logged in it
+    if request.user.is_authenticated: # not display login page if not logged in
         return redirect(reverse('index'))
     if request.method == "POST":
         login_form = UserLoginForm(request.POST)
@@ -75,10 +75,10 @@ def registration(request):
         return redirect(reverse('index'))
     
     if request.method == "POST":
-        registration_form = UserRegistrationForm(request.POST) # pass the values from request.POST
+        registration_form = UserRegistrationForm(request.POST)
     
-        if registration_form.is_valid(): # user == user.registration_form.save
-            registration_form.save() #because we specify the model in meta class we do not need to specify model again here
+        if registration_form.is_valid(): 
+            registration_form.save() 
     
         user = auth.authenticate(username=request.POST['username'],
                                  password=request.POST['password1'])

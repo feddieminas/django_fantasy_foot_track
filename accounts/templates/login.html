@@ -17,10 +17,29 @@
         {% csrf_token %}
         {{ login_form | as_bootstrap }}
         
-        <p><a href="{% url 'password_reset' %}">Reset Password</a></p> <!-- take name from the name='password_reset' in url_reset.py -->
+        <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
         
         <button type="submit" class="btn btn-primary">Login</button>
     </fieldset>    
 </form>
 
 {% endblock %}
+
+
+{% block body_end_js %}
+<script>
+
+  // footer responsive stay at bottom
+  $(window).on('resize', function(){
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w >= 350 && h >= 600) {
+          $("footer").css({'position' : 'absolute', 'bottom' : 0});
+      }
+      else {
+          $("footer").css({'position' : 'inherit'});
+      }
+  }).resize();
+  
+</script>
+{% endblock body_end_js %}

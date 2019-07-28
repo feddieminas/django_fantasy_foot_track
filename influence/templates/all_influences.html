@@ -47,7 +47,7 @@
     
         <div id="listingCards_inf" class="d-flex flex-row flex-wrap justify-content-between justify-content-sm-between col w-75 mx-auto fade-in">
         
-            {% for inf in influences %}
+            {% for inf in influences reversed %}
             
             <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch fade-in">
                 
@@ -257,6 +257,8 @@
         } else {
             btn_next.style.visibility = "visible";
         }
+        
+        //saveCurrentPage(); //call ajax
     }    
   
 //////////////////////////////////////////
@@ -278,6 +280,28 @@
             $("footer").css({'position' : 'inherit'});
         }
     }).resize();
+    
+    
+    // ajax call always when changing page, return back to the view and save it on session variable ???
+    /*
+    function saveCurrentPage(e) {
+        const url = "{% url 'all_influences' %}";
+        $.ajax({    
+            type: "GET",
+            url: url,                    
+            data: {
+                'curr_page': current_page       
+            },
+            success: function (data) {  
+                console.log("success");
+            },
+            error: function(error) {
+                console.log("error");
+            }     
+        });   
+        return; 
+    }
+    */
   
 </script>
 {% endblock body_end_js %}

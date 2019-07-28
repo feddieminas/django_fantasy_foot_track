@@ -13,6 +13,8 @@ import datetime
 def all_influences(request):
     """Return the all_influences.html file"""
     
+    # print("all", request.GET.get('curr_page', None)) # pagination if managed to save page last searched on session variable, not to start always from page 1
+    
     """ Search Button query category queryset values """
     query = request.GET.get('q')
     if query:
@@ -80,6 +82,7 @@ def view_influence(request, pk, view=''):
         influence = Influence.objects.get(pk=pk)
     except Influence.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
+    
     
     """ Auto-increment number of views when a user enters into a category card one time for current session """
     if view == "view":

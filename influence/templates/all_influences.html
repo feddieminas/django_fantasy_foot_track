@@ -11,7 +11,7 @@
     <div class="row my-2">
         <div class="col-7 col-sm-7 col-md-3"> 
         <!-- if influences exist, one will displayed visible all influences on page. If not, due to ex. search filtering results in empty value, one would like that page to get refreshed -->
-            {% if influences %}
+            {% if influences|Xor:filterquery %}
                 <h3 id="showAllInfl" class="inf--bg-fontcolor">Influences</h3>
             {% else %}
                 <h3><a href="{% url 'all_influences' %}" class="inf--bg-fontcolor">Influences</a></h3>
@@ -96,7 +96,7 @@
 <section>
     <div class="container mt-2 p-3">
         <div class="row">
-            <div class="col-4 col-sm-2 m-auto d-inline-flex justify-content-around justify-content-sm-around p-2 p-sm-2">
+            <div class="col-4 col-sm-2 m-auto d-inline-flex justify-content-around justify-content-sm-around p-2 p-sm-2 fade-in">
                 <a href="javascript:prevPage()" id="btn_prev_inf" class="arrow-left fade-in"> <!-- prev button -->
                     {% include "svgpartial.html" %}
                 </a>
@@ -106,12 +106,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3 col-sm-2 m-auto d-inline-flex justify-content-around justify-content-sm-around pt-0 pb-2 pb-sm-2 px-2 px-sm-2"> <!-- page display -->
+            <div class="col-3 col-sm-2 m-auto d-inline-flex justify-content-around justify-content-sm-around pt-0 pb-2 pb-sm-2 px-2 px-sm-2 fade-in"> <!-- page display -->
                 <p>Page: <span id="page_inf"></span></p>
             </div>
         </div>  
         <div class="row">
-            <div class="col-6 col-sm-4 m-auto d-inline-flex justify-content-center justify-content-sm-center pt-0 pb-2 pb-sm-2 px-2 px-sm-2">
+            <div class="col-6 col-sm-4 m-auto d-inline-flex justify-content-center justify-content-sm-center pt-0 pb-2 pb-sm-2 px-2 px-sm-2 fade-in">
                 <label>Go to <input class="text-center" type="text" name="page_input_inf" id="page_input_inf" placeholder="page" value="" style="width: 50px;"></label> <!-- page goto input value -->
                 <a href="#" id="goto_inf" style="margin-left: 5px;">&gt;&gt;</a>
             </div>
@@ -130,7 +130,7 @@
     // Filters per Status and Pagination
     
     // global vars
-    let current_page = 1;
+    let current_page = "{{inf_curr_page_views_py}}";
     const records_per_page = 2;
     const cardHeadElements = document.querySelectorAll('.card-header');
     let cardsLength = cardHeadElements.length;
@@ -188,7 +188,7 @@
         for (i = 0; i < cardHeadElements.length; i++) {cardHeadElements[i].parentElement.style.display = ""; cardsLength++;}
         
         buildMyPages();
-        changePage(1);    
+        changePage(1);
     });    
 
     // Filter per selected status
@@ -214,8 +214,8 @@
     
     // user be able to switch to desired page
     $("#goto_inf").click(function(e) {
-        let gotoPageVal = String(document.getElementById("page_input_inf").value).match(/\d+/g).join("");
-        console.log(gotoPageVal)
+        let gotoPageVal = String(document.getElementById("page_input_inf").value);
+        gotoPageVal = (gotoPageVal=="") ? "" : gotoPageVal.match(/\d+/g).join("");
         if (!isNaN(parseInt(gotoPageVal))) {
             if (gotoPageVal > numPages()) gotoPageVal = numPages();
             changePage(gotoPageVal);
@@ -231,43 +231,61 @@
         let btn_prev = document.getElementById("btn_prev_inf");
         let listing_cards = document.getElementById("listingCards_inf");
         let page_span = document.getElementById("page_inf");
+        let goto_inf = document.getElementById("goto_inf");
     
         // Validate page
         if (page < 1) page = 1;
         if (page > numPages()) page = numPages();
     
+        //check if page dict value exists
+        const checkPageExists = Boolean(myPages[String("p" + page)] != null);
+    
         //populate cards per page
         listing_cards.innerHTML = "";
-        for (let i = 0; i < myPages[String("p" + page)].length; i++) {
-            listing_cards.innerHTML += cardHeadElements[myPages[String("p" + page)][i]].parentElement.outerHTML;
+        if (page_span != null && goto_inf != null) {
+            page_span.parentElement.style.display = "none";
+            goto_inf.parentElement.parentElement.style.display = "none";            
         }
         
-        //show page
-        page_span.innerHTML = page;
-    
-        // buttons need to hide (last page, next button be hidden - first page, prev button be hidden) or visible
-        if (page == 1) {
-            btn_prev.style.visibility = "hidden";
-        } else {
-            btn_prev.style.visibility = "visible";
-        }
-    
-        if (page == numPages()) {
-            btn_next.style.visibility = "hidden";
-        } else {
-            btn_next.style.visibility = "visible";
+        if (checkPageExists) {
+            for (let i = 0; i < myPages[String("p" + page)].length; i++) {
+                listing_cards.innerHTML += cardHeadElements[myPages[String("p" + page)][i]].parentElement.outerHTML;
+            }            
+            
+            //show page
+            page_span.parentElement.style.display = "";
+            page_span.innerHTML = page;
+        
+            // buttons need to hide (last page, next button be hidden - first page, prev button be hidden) or visible
+            if (page == 1) {
+                btn_prev.style.visibility = "hidden";
+            } else {
+                btn_prev.style.visibility = "visible";
+            }
+        
+            if (page == numPages()) {
+                btn_next.style.visibility = "hidden";
+            } else {
+                btn_next.style.visibility = "visible";
+            }  
+            
+            goto_inf.parentElement.parentElement.style.display = "";
         }
         
-        //saveCurrentPage(); //call ajax
+        //saveCurrentPage(); //call ajax    
     }    
   
 //////////////////////////////////////////
-
-    // default pagination when page is loaded
-    window.addEventListener("load", function() {
+  
+    // have a link tags to onload a page from page 1 rather than the current page
+    $(document).ready(function() {    
+        $("a[href*='/influences/']").click(function(e) {
+            current_page = 1;
+            saveCurrentPage();
+        });
         buildMyPages();
-		changePage(1);
-	});
+	    changePage(current_page);
+    });      
   
     // footer responsive stay at bottom
     $(window).on('resize', function(){
@@ -281,27 +299,39 @@
         }
     }).resize();
     
-    
-    // ajax call always when changing page, return back to the view and save it on session variable ???
-    /*
+    // ajax call back to django views.py session variable, in order to keep track of last page saved 
+    // when a user is viewing a card and would like to go back
     function saveCurrentPage(e) {
-        const url = "{% url 'all_influences' %}";
+        const url = "{% url 'save_curr_page' %}";
         $.ajax({    
             type: "GET",
+            async: false,
             url: url,                    
             data: {
-                'curr_page': current_page       
+                'inf_curr_page': current_page       
             },
+            dataType: 'json',
             success: function (data) {  
-                console.log("success");
+                if (data.got_saved) {
+                    // console.log("success");
+                }
             },
             error: function(error) {
-                console.log("error");
+                // console.log("error");
             }     
         });   
         return; 
     }
-    */
+
+    // ajax to be called before leaving a page
+    window.onbeforeunload = function (e) {
+       saveCurrentPage();
+    };
   
 </script>
 {% endblock body_end_js %}
+
+
+
+
+

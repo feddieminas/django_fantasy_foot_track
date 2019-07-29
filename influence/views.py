@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Influence, Comment, UpVote, Likeability
 from .forms import CreateInfluenceForm, CreateInfluenceCommentForm
@@ -10,12 +10,23 @@ from django.utils import timezone
 import datetime
 
 # Create your views here.
+def save_curr_page(request):
+    """ save current page value from prev next pagination in all_influences.html, 
+    to achieve rendering the last page seen after viewing a card from that page """
+    
+    inf_curr_page = request.GET.get('inf_curr_page', None)
+    request.session['inf_curr_page'] = int(inf_curr_page)   
+    data = {
+        'got_saved': bool(not None)
+    }
+    return JsonResponse(data)
+
+
 def all_influences(request):
     """Return the all_influences.html file"""
     
-    # print("all", request.GET.get('curr_page', None)) # pagination if managed to save page last searched on session variable, not to start always from page 1
-    
     """ Search Button query category queryset values """
+    filterquery = False
     query = request.GET.get('q')
     if query:
         query_list = query.split()
@@ -23,6 +34,7 @@ def all_influences(request):
             reduce(operator.and_, (Q(name__icontains=q) for q in query_list)) |
             reduce(operator.and_, (Q(desc__icontains=q) for q in query_list))
         )
+        filterquery = influences.exists()
     else:
         influences = Influence.objects.all()
     
@@ -46,10 +58,14 @@ def all_influences(request):
     if 'viewlist' not in request.session:
         request.session['viewlist']=[]
     
+    """ init a session variable for current page """    
+    if 'inf_curr_page' not in request.session:    
+        request.session['inf_curr_page']=1
+    
     """ status three [low, medium, high] background and font color that will be filtered with registered filters on template tags """
     colorsIndex = {"high": ["#2C3E50","white"], "medium": ["#95a5a6","black"], "low": ["#18BC9C", "black"]}
     
-    args = {'influences': influences, 'infUpvotesAndDays': infUpvotesAndDays, 'colorsIndex':colorsIndex}
+    args = {'influences': influences, 'infUpvotesAndDays': infUpvotesAndDays, 'colorsIndex':colorsIndex, 'filterquery': filterquery, 'inf_curr_page_views_py': request.session['inf_curr_page']}
     return render(request, 'all_influences.html', args)
     
 @login_required
@@ -162,3 +178,12 @@ def add_influ_comment(request, pk):
         
     args = {'form':form, "name": influence.name}    
     return render(request, 'add_influ_comment.html', args)   
+    
+    
+    
+    
+    
+    
+    
+    
+    

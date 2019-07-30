@@ -169,7 +169,7 @@ nav h3:hover, .card-link:hover {
 
 /* category card description if long text */
 .category-card-text {
-    height: 60px;
+    height: 45px; /* 60 */
     overflow-y: scroll;    
 }
 

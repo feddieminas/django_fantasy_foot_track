@@ -186,9 +186,10 @@
     $("#showAllInfl").click(function (e) {
         cardsLength = 0;
         for (i = 0; i < cardHeadElements.length; i++) {cardHeadElements[i].parentElement.style.display = ""; cardsLength++;}
-        
+
+        current_page = 1;
         buildMyPages();
-        changePage(1);
+        changePage(current_page);
     });    
 
     // Filter per selected status
@@ -208,8 +209,9 @@
             }
         }
         
+        current_page = 1;
         buildMyPages();
-        changePage(1);
+        changePage(current_page);
     });
     
     // user be able to switch to desired page

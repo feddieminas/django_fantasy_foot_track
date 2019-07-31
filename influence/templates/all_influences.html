@@ -53,7 +53,7 @@
                 
                 <h3 class="card-header py-2 fs22" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }};">{{ inf.motive|title }}</h3>
                 
-                <div class="card-body px-0 py-4"> <!-- card-body px-0 -->
+                <div class="card-body px-0 py-4">
                     <h5 class="card-title py-2 pl-3">{{ inf.name|title }}</h5>
                     <hr class="mw200">
                     <p class="card-text pl-3 category-card-text">{{inf.desc | truncatewords:50 }}</p>
@@ -132,10 +132,11 @@
     // global vars
     let current_page = "{{inf_curr_page_views_py}}";
     const records_per_page = 2;
-    const cardHeadElements = document.querySelectorAll('.card-header');
-    //console.log("global", cardHeadElements.length);
-    let cardsLength = cardHeadElements.length;
+    const cardHeadElementsJQ = $('.card-header');
+    let cardsLength = cardHeadElementsJQ.length;
     let myPages = {};
+    
+//////////////////////////////////////////    
     
     //pagination - create per page a dict array of all card indexes according to user filtering or not
     function buildMyPages() {
@@ -143,8 +144,9 @@
         let pager=1;
         myPages[String("p" + pager)] = [];
         let loopCounterRecords = 0;
-        for (i = 0; i < cardHeadElements.length; i++) {
-            if (cardHeadElements[i].parentElement.style.display == "") {
+        
+        cardHeadElementsJQ.each(function( i ) {
+            if(this.closest('.card').style.display == "") {
                 if (loopCounterRecords<records_per_page) {
                     myPages[String("p" + (pager))].push(i);
                     loopCounterRecords++;
@@ -154,10 +156,9 @@
 		            pager+=1;
 				    myPages[String("p" + (pager))] = [];
 				    loopCounterRecords = 0;
-		        } 
+		        }                 
             }
-        }
-        //console.log("myPages", myPages);
+         });        
     }
     
     //previous btn
@@ -183,44 +184,43 @@
     {
         return Math.ceil(cardsLength / records_per_page);
     }    
-
+    
+//////////////////////////////////////////    
+    
     // Filter all
     $("#showAllInfl").click(function (e) {
-        //console.log("showAllInfl", cardHeadElements.length);
-        
         cardsLength = 0;
-        for (i = 0; i < cardHeadElements.length; i++) {cardHeadElements[i].parentElement.style.display = ''; cardsLength++;}
-        //console.log(cardHeadElements.length);
-        //console.log(cardsLength);
+        cardHeadElementsJQ.each(function( i ) {
+            $(this).parent().css({'display': ''});
+            cardsLength++;
+        });
 
         current_page = 1;
         buildMyPages();
         changePage(current_page);
     });    
-
+    
     // Filter per selected status
     $(".dot").click(function (e) {
-        //console.log("dot", cardHeadElements.length);
-        
         const status = $(this).parent().text().toLowerCase(); 
         const dictStatusColours = {"low": "rgb(24, 188, 156)", "medium": "rgb(149, 165, 166)", "high": "rgb(44, 62, 80)"};
         
         cardsLength = 0;
-        for (i = 0; i < cardHeadElements.length; i++) {
-            let bgcolor = cardHeadElements[i].style.backgroundColor;
+        cardHeadElementsJQ.each(function( i ) {
+            let bgcolor = this.style.backgroundColor;
             if (bgcolor==dictStatusColours[status]) {
-                cardHeadElements[i].parentElement.style.display = ''; // "" at chrome works but safari needs value like block to work
+                $(this).parent().css({'display': ""});
                 cardsLength++;
             }
             else {
-                cardHeadElements[i].parentElement.style.display = "none";
+                $(this).parent().css({'display': 'none'});
             }
-        }
+        });
         
         current_page = 1;
         buildMyPages();
         changePage(current_page);
-    });
+    });    
     
     // user be able to switch to desired page
     $("#goto_inf").click(function(e) {
@@ -231,7 +231,9 @@
             changePage(gotoPageVal);
             current_page = gotoPageVal;
         }
-    });    
+    });        
+    
+//////////////////////////////////////////
     
     //build page
     function changePage(page)
@@ -240,8 +242,8 @@
         let btn_next = document.getElementById("btn_next_inf");
         let btn_prev = document.getElementById("btn_prev_inf");
         let listing_cards = document.getElementById("listingCards_inf");
-        let page_span = document.getElementById("page_inf");
-        let goto_inf = document.getElementById("goto_inf");
+        let page_span = $("#page_inf");
+        let goto_inf = $("#goto_inf");
     
         // Validate page
         if (page < 1) page = 1;
@@ -253,20 +255,17 @@
         //populate cards per page
         listing_cards.innerHTML = "";
         if (page_span != null && goto_inf != null) {
-            page_span.parentElement.style.display = "none";
-            goto_inf.parentElement.parentElement.style.display = "none";            
+            page_span.parent().css({'display': 'none'});
+            goto_inf.parent().parent().css({'display': 'none'});
         }
         
         if (checkPageExists) {
             for (let i = 0; i < myPages[String("p" + String(page))].length; i++) {
-                //console.log("page", page, "i", i);
-                //console.log(cardHeadElements[myPages[String("p" + String(page))][i]]);
-                listing_cards.innerHTML += cardHeadElements[myPages[String("p" + String(page))][i]].parentElement.outerHTML;
+                listing_cards.innerHTML += cardHeadElementsJQ.eq(myPages[String("p" + String(page))][i]).parent()[0].outerHTML;
             }            
             
-            //show page
-            page_span.parentElement.style.display = "";
-            page_span.innerHTML = page;
+            page_span.parent().css({'display': ''});
+            page_span.html(page);
         
             // buttons need to hide (last page, next button be hidden - first page, prev button be hidden) or visible
             if (page == 1) {
@@ -281,23 +280,23 @@
                 btn_next.style.visibility = "visible";
             }  
             
-            goto_inf.parentElement.parentElement.style.display = "";
+            goto_inf.parent().parent().css({'display': ''});
         }
         
-        //saveCurrentPage(); //call ajax    
     }    
-  
-//////////////////////////////////////////
+    
+//////////////////////////////////////////    
   
     // have a link tags to onload a page from page 1 rather than the current page
-    $(document).ready(function() {    
+    $(document).ready(function() {   
         $("a[href*='/influences/']").click(function(e) {
             current_page = 1;
             saveCurrentPage();
         });
         buildMyPages();
 	    changePage(current_page);
-    });      
+    });  
+    
   
     // footer responsive stay at bottom
     $(window).on('resize', function(){

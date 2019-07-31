@@ -18,6 +18,7 @@ from django.contrib import admin
 from accounts import urls as urls_accounts
 from accounts.views import index
 from influence import urls as urls_influences
+from donate import urls as urls_donate
 from django.views import static
 from .settings import MEDIA_ROOT
 
@@ -26,5 +27,6 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^accounts/', include(urls_accounts)),
     url(r'^influences/', include(urls_influences)),
+    url(r'^donate/', include(urls_donate)),
     url(r'^media/(?P<path>.*)$', static.serve, {'document_root': MEDIA_ROOT}),
 ]

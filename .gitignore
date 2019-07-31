@@ -3,3 +3,4 @@ __pycache__
 .~c9*
 env.py
 .c9/
+*.pyc

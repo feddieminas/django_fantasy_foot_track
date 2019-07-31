@@ -99,7 +99,7 @@ body {
 
 /* ACCOUNTS */
 
-/* login and registration forms to appear towards middle on smaller devices */
+/* login, registration and similar forms to appear towards middle on smaller devices */
 .accountform {
     padding-top: 20px;
 }
@@ -169,7 +169,7 @@ nav h3:hover, .card-link:hover {
 
 /* category card description if long text */
 .category-card-text {
-    height: 45px; /* 60 */
+    height: 45px;
     overflow-y: scroll;    
 }
 
@@ -196,7 +196,6 @@ nav h3:hover, .card-link:hover {
 
 
 /* ---- FOOTER ---- */
-
 
 footer {
     width: 100%;      
@@ -269,7 +268,7 @@ footer .fa {
     }   
 }
 
-/* login and registration forms to appear towards middle on tablets and larger devices */
+/* login, registration and similar forms to appear towards middle on tablets and larger devices */
 @media screen and (min-height: 992px) {  
     .accountform {
         padding-top: 35px;

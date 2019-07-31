@@ -5,11 +5,17 @@
 
 {% block content %}
 <!-- comment form creation of ['content'] -->
-<h4 class="my-3">Influence <span class="oi oi-arrow-thick-right pr-1 fs20" style="top: 3px;"></span>{{ name | title }}</h4>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %} {{ form | as_bootstrap }}
-    <button type="submit" class="btn btn-primary btnadd-Category-Comment">Send</button>
-</form>
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+
+      <form method="POST" enctype="multipart/form-data" class="accountform form-horizontal justify-content-center">
+          <legend class="inf--bg-fontcolor">Influence <span class="oi oi-arrow-thick-right pr-1 fs20"></span>{{ name | title }}</legend>
+          {% csrf_token %} {{ form | as_bootstrap }}
+          <button type="submit" class="btn btn-primary btnadd-Category-Comment">Send</button>
+      </form>
+
+   </div> 
+</div>
 {% endblock %}
 
 {% block body_end_js %}
@@ -19,12 +25,19 @@
   // footer responsive stay at bottom
   $(window).on('resize', function(){
       const h = window.innerHeight;
-      if (h > 900) {
+      if (h > 600) {
           $("footer").css({'position' : 'absolute', 'bottom' : 0});
       }
       else {
           $("footer").css({'position' : 'inherit'});
       }
+      
+      const w = window.innerWidth;
+      if (w<=768) {
+        $('legend').addClass('fs18');
+      } else {
+        $('legend').removeClass('fs18')
+      }      
   }).resize();
   
 </script>

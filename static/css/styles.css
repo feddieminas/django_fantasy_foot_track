@@ -194,6 +194,20 @@ nav h3:hover, .card-link:hover {
     bottom: 3px;
 }
 
+/* ---- Graphs ---- */
+
+/* orientate paragraph to stay in between the middle of the charts */
+.p-shift {
+    transform: translate(150px,0);
+    transition: transform 0.3s ease-in-out 0s;
+    -webkit-transition: transform 0.3s ease-in-out 0s;
+    -moz-transition: transform 0.3s ease-in-out 0s;
+    -o-transition: transform 0.3s ease-in-out 0s;
+}
+
+#section--graphs {
+    padding: 30px 0;
+}
 
 /* ---- FOOTER ---- */
 
@@ -272,5 +286,12 @@ footer .fa {
 @media screen and (min-height: 992px) {  
     .accountform {
         padding-top: 35px;
+    }   
+}
+
+@media screen and (min-width: 992px) { 
+    /* large tablets to align section graphs with footer */
+    #section--graphs {
+        margin-left: 80px;
     }   
 }

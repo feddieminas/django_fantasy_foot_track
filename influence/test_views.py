@@ -25,11 +25,15 @@ class TestViews(TestCase):
         userlikeNoVote = Likeability(influence=influence, users_vote=users_vote, level=0,)
         userlikeNoVote.save()
     
-    def test_get_all_influences_page(self):
+    def test_get_all_influences_page_and_save_curr_page_is_valid(self):
+        ''' all_influences page '''
         page = self.client.get("/influences/")
         self.assertEqual(page.status_code, 200)
         self.assertTemplateUsed(page, "all_influences.html")
-        TestViews.Testid[0] = 1 
+        ''' save_curr_page response - test to see the view is functioning and returns a valid JSON response '''
+        response = self.client.get('/influences/ajax/save_curr_page/',content_type='application/json')
+        self.assertJSONEqual(response.content,{'got_saved': False})
+        TestViews.Testid[0] = 1
         self.goto_delete_objects_or_continue_other_tests()
     
     def test_add_influence_page(self):

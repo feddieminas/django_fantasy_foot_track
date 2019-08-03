@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block body_start_head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dc/3.1.0/dc.min.css" type="text/css" />
+{% endblock %}
+
+{% block content %}
+
+<section id="section--graphs">
+    <div class="row mb-4" style="border-bottom: 1px solid #e6e6e6;">
+        <div class="col-12 col-sm-7 text-center pb-2">
+            <p class="lh13">Categories Views Strength (Any Upvote equals extra two Views)</p>
+        </div>
+    </div>    
+
+    <div class="row">
+        <div class="col-12 col-sm-5 offset-sm-1 text-center mb-2" id="chart-ring-status"></div>
+        <div class="col-12 col-sm-5 text-center mb-2" id="chart-hist-views-upvotes"></div>
+    </div>
+        
+    <div class="row">
+        <div class="col-12 col-sm-5 offset-sm-3 text-center mb-2" id="chart-row-categories"></div>
+    </div>    
+</section>
+
+{% endblock %}    
+
+{% block body_end_head %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.0.0/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dc/3.1.0/dc.js"></script>
+{% endblock %}
+
+{% block body_end_js %}
+<script type="text/javascript">
+$(document).ready(function() { 
+    
+    ///// graphs section /////
+    
+    let statusRingChart   = dc.pieChart("#chart-ring-status"),
+        viewsUpvHistChart  = dc.barChart("#chart-hist-views-upvotes"),
+        categoriesRowChart = dc.rowChart("#chart-row-categories");
+    
+    /*
+    let viewsUpvData = [
+        {Category: 'Influence', viewsUpv: 10, Status: "Low"},
+        {Category: 'Creativity', viewsUpv: 15, Status: "Low"},
+        {Category: 'Threat', viewsUpv: 20, Status: "Low"},
+        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
+        {Category: 'Threat', viewsUpv: 40, Status: "High"}
+    ];  
+    */
+    
+    viewsUpvData = {{ jsonData|safe }};
+    console.log("viewsUpvData", viewsUpvData);    
+    
+    function remove_empty_bins(source_group) {
+        return {
+            all:function () {
+                return source_group.all().filter(function(d) {
+                    return d.value != 0;
+                });
+            }
+        };
+    }
+    
+    // set crossfilter
+    let ndx = crossfilter(viewsUpvData),
+        statusDim  = ndx.dimension(function(d) {return d.Status;}),
+        viewsUpvDim = ndx.dimension(function(d) {return Math.floor(d.viewsUpv/10);}),
+        categoryDim  = ndx.dimension(function(d) {return d.Category;}),
+        viewsUpvPerStatus = statusDim.group().reduceSum(function(d) {return +d.viewsUpv;}),
+        viewsUpvPerCategory = categoryDim.group().reduceSum(function(d) {return +d.viewsUpv;}),
+        viewsUpvHist = viewsUpvDim.group().reduceCount(),
+        nonEmptyHist = remove_empty_bins(viewsUpvHist)
+        
+    statusRingChart
+        .width(300).height(200)
+        .dimension(statusDim)
+        .group(viewsUpvPerStatus)
+        .innerRadius(50);
+        
+    viewsUpvHistChart
+        .width(300).height(200)
+        .dimension(viewsUpvDim)
+        .group(nonEmptyHist)
+        .x(d3.scaleBand())
+        .xUnits(dc.units.ordinal)
+        .yAxisLabel("Times")
+        .xAxisLabel("Views")
+        
+        .on('renderlet', function(chart) { 
+                chart.select('.x-axis-label').attr("transform", "translate(" + 146 + "," + 190 + ")");
+        })               
+        
+        .elasticX(true)
+        .elasticY(true);
+    viewsUpvHistChart.xAxis().tickFormat(function(d) {return (d) * 10  + "-" + (d+1) * 10});
+    viewsUpvHistChart.yAxis().ticks(3);
+    
+    categoriesRowChart
+        .width(350).height(250)
+        .dimension(categoryDim)
+        .group(viewsUpvPerCategory)
+        .elasticX(true);
+        
+    dc.renderAll();
+    
+    /////// rest ///////
+    
+    // footer responsive stay at bottom
+    $(window).on('resize', function(){
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        if (w >= 575 && h>=1000) {
+            $("footer").animate({
+                position: "absolute", bottom: "0"
+            }, 1500, "linear", function() {
+                $("footer").css({'position' : 'absolute', 'bottom' : 0});
+            });
+        }
+        else {
+            $("footer").css({'position' : 'inherit'});
+        }
+        
+        
+        if(w>575) {
+            statusRingChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")");
+            switch(true) {
+                case (w>=1000):
+                    viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + -100 + "," + 0 + ")");
+                    break;
+                default:
+                viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + -25 + "," + 0 + ")");
+            }
+            categoriesRowChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")");
+            $("p").first().addClass("p-shift");
+        } else {
+            statusRingChart.select('svg').transition(2000).attr("transform", "translate(" + -10 + "," + 0 + ")");
+            viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")"); 
+            categoriesRowChart.select('svg').transition(2000).attr("transform", "translate(" + -10 + "," + 0 + ")"); 
+            $("p").first().removeClass("p-shift");
+        }
+        
+        
+    }).resize();     
+    
+});     
+</script>
+{% endblock body_end_js %}    
+

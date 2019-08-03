@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.min.css" integrity="sha256-BJ/G+e+y7bQdrYkS2RBTyNfBHpA9IuGaPmf9htub5MQ=" crossorigin="anonymous" />
     <link rel="stylesheet" href="{% static 'font-awesome/css/font-awesome.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block body_start_head %} {% endblock body_start_head %}
 </head>
 <body>
     <header>
@@ -22,7 +23,7 @@
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'logout' %}"><i class="fa fa-sign-out mr-1"></i><span class="d-none d-sm-inline">LogOut</span></a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'profile' %}"><i class="fa fa-user mr-1"></i><span class="d-none d-sm-inline">Profile</span></a></li>
                     {%  else %}
-                        <li class="nav-item"><a class="nav-link px-2 px-md-3" href="#"><i class="fa fa-pie-chart mr-1"></i><span class="d-none d-sm-inline">Graphs</span></a></li>
+                        <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'show_graph' %}"><i class="fa fa-pie-chart mr-1"></i><span class="d-none d-sm-inline">Graphs</span></a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'login' %}"><i class="fa fa-sign-in mr-1"></i><span class="d-none d-sm-inline">LogIn</span></a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'registration' %}"><i class="fa fa-user-plus mr-1"></i><span class="d-none d-sm-inline">Register</span></a></li>
                     {% endif %}
@@ -35,7 +36,7 @@
             <div class="collapse navbar-collapse order-3 order-lg-2" id="navbarFFT">
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
-                        <li class="nav-item"><a class="nav-link px-2 px-md-3" href="#"><i class="fa fa-pie-chart mr-1"></i>Graphs</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'show_graph' %}"><i class="fa fa-pie-chart mr-1"></i>Graphs</a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'all_influences' %}"><i class="fa fa-asterisk mr-1"></i>Influence</a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="#"><i class="fa fa-cog mr-1"></i>Creativity</a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="#"><i class="fa fa-minus mr-1"></i>Threat</a></li>
@@ -80,7 +81,7 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    {% block head_js %} {% endblock head_js %}    
+    {% block body_end_head %} {% endblock body_end_head %}    
     {% block body_end_js %}{% endblock body_end_js %}
 </body>
 </html>

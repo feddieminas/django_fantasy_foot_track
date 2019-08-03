@@ -15,9 +15,9 @@ def save_curr_page(request):
     to achieve rendering the last page seen after viewing a card from that page """
     
     inf_curr_page = request.GET.get('inf_curr_page', None)
-    request.session['inf_curr_page'] = int(inf_curr_page)   
+    request.session['inf_curr_page'] = 1 if inf_curr_page is None else int(inf_curr_page)   
     data = {
-        'got_saved': bool(not None)
+        'got_saved': bool(inf_curr_page)
     }
     return JsonResponse(data)
 

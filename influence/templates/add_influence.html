@@ -6,17 +6,19 @@
 {% block content %}
 <!-- category form creation of ['motive', 'name', 'desc', 'status'] -->
 
-<div class="row">
-    <div class="col-md-10 offset-md-1">
-
-      <form method="POST" enctype="multipart/form-data" class="accountform form-horizontal justify-content-center">
-          <legend class="my-3 fs20 inf--bg-fontcolor">Create Influence</legend>
-          {% csrf_token %} {{ form | as_bootstrap }}
-          <button type="submit" class="btn btn-primary btnadd-Category-Comment">Create</button>
-      </form>
-    
-   </div> 
-</div>    
+<div class="inf-create-comment">
+  <div class="row">
+      <div class="col-md-10 offset-md-1">
+  
+        <form method="POST" enctype="multipart/form-data" class="accountform form-horizontal justify-content-center">
+            <legend class="my-3 fs20 inf--bg-fontcolor">Create Influence</legend>
+            {% csrf_token %} {{ form | as_bootstrap }}
+            <button type="submit" class="btn btn-primary btnadd-Category-Comment">Create</button>
+        </form>
+      
+     </div> 
+  </div>    
+</div>
 {% endblock %}
 
 {% block body_end_js %}
@@ -32,6 +34,13 @@
       else {
           $("footer").css({'position' : 'inherit'});
       }
+      
+      const w = window.innerWidth;
+      if (w<768 && h<768) {
+        $('div div.row form').parent().parent().parent().removeClass('inf-create-comment')
+      } else {
+        $('div div.row form').parent().parent().parent().addClass('inf-create-comment')
+      }      
   }).resize();
   
 </script>

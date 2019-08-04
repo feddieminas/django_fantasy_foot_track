@@ -52,6 +52,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
 
 - As a developer and user:
   - Show all three categories stats on home page to have a brief overview of their popularity
+  - When creating a category card or adding a comment on larger devices, insert a related bg colour thus the input and text area tags are quick easy to target.  
 
 - As a developer :
   - Used UK flag three colours to differentiate the three categories and show game country location (i.e. UK)

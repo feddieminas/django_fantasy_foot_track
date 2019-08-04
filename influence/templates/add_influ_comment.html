@@ -5,16 +5,19 @@
 
 {% block content %}
 <!-- comment form creation of ['content'] -->
-<div class="row">
-    <div class="col-md-10 offset-md-1">
 
-      <form method="POST" enctype="multipart/form-data" class="accountform form-horizontal justify-content-center">
-          <legend class="inf--bg-fontcolor">Influence <span class="oi oi-arrow-thick-right pr-1 fs20"></span>{{ name | title }}</legend>
-          {% csrf_token %} {{ form | as_bootstrap }}
-          <button type="submit" class="btn btn-primary btnadd-Category-Comment">Send</button>
-      </form>
-
-   </div> 
+<div class="inf-create-comment">
+  <div class="row">
+      <div class="col-md-10 offset-md-1">
+  
+        <form method="POST" enctype="multipart/form-data" class="accountform form-horizontal justify-content-center">
+            <legend class="inf--bg-fontcolor">Influence <span class="oi oi-arrow-thick-right pr-1 fs20"></span>{{ name | title }}</legend>
+            {% csrf_token %} {{ form | as_bootstrap }}
+            <button type="submit" class="btn btn-primary btnadd-Category-Comment">Send</button>
+        </form>
+  
+     </div> 
+  </div>
 </div>
 {% endblock %}
 
@@ -37,7 +40,14 @@
         $('legend').addClass('fs18');
       } else {
         $('legend').removeClass('fs18')
-      }      
+      }   
+      
+      if (w<768 && h<768) {
+        $('div div.row form').parent().parent().parent().removeClass('inf-create-comment')
+      } else {
+        $('div div.row form').parent().parent().parent().addClass('inf-create-comment')
+      }
+      
   }).resize();
   
 </script>

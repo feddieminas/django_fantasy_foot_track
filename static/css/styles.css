@@ -24,11 +24,24 @@ body {
     -o-transition: transform 0.3s ease-in-out 0s;
 }
 
+/* Add category and comment text - #id_desc and #id_content are the textarea.form-control */
+input[type = text].form-control, #id_desc,#id_content {
+    color: black;
+}
+
 /* svg arrow pointing to the left side, act as a backward button */
 .arrow-left {
     transform: scaleX(-1);
     min-width: 80px;    
 }
+
+/* large tablets to highlight the target form attributes when creating a category card or adding a comment */
+.inf-create-comment {
+    background-color: rgba(0, 127, 255, 0.15);
+    padding-bottom: 8px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}  
 
 /* ---- INDEX ---- */
 
@@ -286,7 +299,7 @@ footer .fa {
 @media screen and (min-height: 992px) {  
     .accountform {
         padding-top: 35px;
-    }   
+    }  
 }
 
 @media screen and (min-width: 992px) { 

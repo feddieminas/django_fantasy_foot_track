@@ -115,8 +115,10 @@ Additional plans to be implemented in the future would be :
 
 ## Testing
 
-- Django Testcase class to test forms, models and views. The automated Test files could be found inside the apps. 
+- Django Py Testcase class to test forms, models and views. The automated Test files could be found inside the apps. 
   - On bash command, one could press ```python3 manage.py test``` for whole test or ```python3 manage.py test <app name>``` per app specific.
+
+- Jasmine Js Testing for the Categories home page pagination and mock ajax page saved last browsed page (page on pagination).
 
 - Having tested it manually, project looks user friendly and works on different browsers and screen sizes. 
 
@@ -124,6 +126,7 @@ Additional plans to be implemented in the future would be :
 
 Encountered issues:
 
+- Cross-browser testing, not all browsers accepted some js selector/style script and switched to jquery selector/style script 
 
 ## Deployment
 

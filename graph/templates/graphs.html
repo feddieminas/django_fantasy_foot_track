@@ -49,9 +49,23 @@ $(document).ready(function() {
         {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
         {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
         {Category: 'Creativity', viewsUpv: 35, Status: "High"},
+        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
+        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
+        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
+        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
+        {Category: 'Creativity', viewsUpv: 35, Status: "High"},        
         {Category: 'Threat', viewsUpv: 40, Status: "High"}
     ];  
     */
+    
+    dc.config.defaultColors(d3.schemeCategory10);
     
     viewsUpvData = {{jsonData|safe}};
     //console.log("viewsUpvData", viewsUpvData);    
@@ -82,6 +96,12 @@ $(document).ready(function() {
         .group(viewsUpvPerStatus)
         .innerRadius(50);
         
+    // find the max value on your dimension to insert on your histogram ticks    
+    let myMaxTickFormat = 0; 
+    viewsUpvHist.top(Infinity).forEach(function (d) {
+        if(d.value>myMaxTickFormat) {myMaxTickFormat=d.value};
+    });
+    
     viewsUpvHistChart
         .width(300).height(200)
         .dimension(viewsUpvDim)
@@ -91,14 +111,19 @@ $(document).ready(function() {
         .yAxisLabel("Times")
         .xAxisLabel("Views")
         
+        .title(function(d) { 
+            return d.value;
+        })
+        .renderTitle(true)        
+        
         .on('renderlet', function(chart) { 
-                chart.select('.x-axis-label').attr("transform", "translate(" + 146 + "," + 190 + ")");
+            chart.select('.x-axis-label').attr("transform", "translate(" + 146 + "," + 190 + ")");
         })               
         
         .elasticX(true)
         .elasticY(true);
     viewsUpvHistChart.xAxis().tickFormat(function(d) {return (d) * 10  + "-" + (d+1) * 10});
-    viewsUpvHistChart.yAxis().ticks(3);
+    viewsUpvHistChart.yAxis().ticks(myMaxTickFormat);
     
     categoriesRowChart
         .width(350).height(250)
@@ -133,12 +158,12 @@ $(document).ready(function() {
                     viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + -100 + "," + 0 + ")");
                     break;
                 default:
-                viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + -25 + "," + 0 + ")");
+                viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + 35 + "," + 0 + ")");
             }
             categoriesRowChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")");
             $("p").first().addClass("p-shift");
         } else {
-            statusRingChart.select('svg').transition(2000).attr("transform", "translate(" + -10 + "," + 0 + ")");
+            statusRingChart.select('svg').transition(2000).attr("transform", "translate(" + -35 + "," + 0 + ")");
             viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")"); 
             categoriesRowChart.select('svg').transition(2000).attr("transform", "translate(" + -10 + "," + 0 + ")"); 
             $("p").first().removeClass("p-shift");

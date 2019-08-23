@@ -41,7 +41,7 @@ $(document).ready(function() {
         viewsUpvHistChart  = dc.barChart("#chart-hist-views-upvotes"),
         categoriesRowChart = dc.rowChart("#chart-row-categories");
     
-    /*
+    
     let viewsUpvData = [
         {Category: 'Influence', viewsUpv: 10, Status: "Low"},
         {Category: 'Creativity', viewsUpv: 15, Status: "Low"},
@@ -63,11 +63,11 @@ $(document).ready(function() {
         {Category: 'Creativity', viewsUpv: 35, Status: "High"},        
         {Category: 'Threat', viewsUpv: 40, Status: "High"}
     ];  
-    */
+    
     
     dc.config.defaultColors(d3.schemeCategory10);
     
-    viewsUpvData = {{jsonData|safe}};
+    //viewsUpvData = {{jsonData|safe}};
     //console.log("viewsUpvData", viewsUpvData);    
     
     function remove_empty_bins(source_group) {
@@ -129,7 +129,24 @@ $(document).ready(function() {
         .width(350).height(250)
         .dimension(categoryDim)
         .group(viewsUpvPerCategory)
+        
+        .colorAccessor(function (d) {
+            if (d.key == "Influence") {
+                return "category1";
+            }
+            else if (d.key == "Creativity") {
+                return "category2";
+            }
+            else if (d.key == "Threat") {
+                return "category3";
+            }
+        })
+        
+        .colors(d3.scaleOrdinal().domain(["category1", "category2", "category3"])
+        .range(["rgb(0, 0, 205)", "rgb(158, 158, 158)", "rgb(249,100,100)"]))           
+        
         .elasticX(true);
+        
         
     dc.renderAll();
     

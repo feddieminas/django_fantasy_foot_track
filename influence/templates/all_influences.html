@@ -12,11 +12,11 @@
         <div class="col-7 col-sm-7 col-md-3"> 
         <!-- if influences exist, one will displayed visible all influences on page. If not, due to ex. search filtering results in empty value, one would like that page to get refreshed -->
             {% if influences|Xor:filterquery %}
-                <h3 id="showAllInfl" class="inf--bg-fontcolor">Influences</h3>
+                <h3 id="showAllInfl" class="inf--bg-fontcolor"><span style="color:black;">Influences</span></h3>
             {% else %}
                 <h3><a href="{% url 'all_influences' %}" class="inf--bg-fontcolor">Influences</a></h3>
             {% endif %}
-            <p><a href="{% url 'add_influence' %}" class="btn btn-secondary">Create One</a></p>
+            <p id="create-inf-btn"><a href="{% url 'add_influence' %}" class="btn btn-secondary">Create One</a></p>
         </div>
     
         <div class="col-7 col-sm-7 col-md-4 d-flex flex-row mt-md-4 pt-md-2 text-center"> <!-- filter status [Low, Medium, High] -->
@@ -71,7 +71,7 @@
                         </ul>                
         
                         <div class="card-body py-3">
-                            <a href="{% url 'view_influence' inf.id %}view/" class="card-link">View</a>
+                            <a href="{% url 'view_influence' inf.id %}view/" class="card-link"><span class="span-Inf-link-Text">View</span></a>
                         </div>
                         
                         <div class="card-footer font-weight-light py-2" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }}">
@@ -126,6 +126,14 @@
 {% block body_end_js %}
 <script>
     $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(62, 88, 113, 1)'});
+    
+    $("#create-inf-btn").mouseover(function() {
+        $(this).find(".btn-secondary").css({'background-color' : '#4babff'});
+    });    
+    
+    $("#create-inf-btn").mouseleave(function() {
+        $(this).find(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
+    })    
     
     // Filters per Status and Pagination
     

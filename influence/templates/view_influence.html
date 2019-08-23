@@ -14,7 +14,7 @@
             <h3><mark>{{ influence.motive | title }}<i class="fa fa-asterisk ml-1 fs20 fa-cat-header-position"></i></mark></h3>
         </div>
         
-        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0"> 
+        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0 slide-left"> 
             <h3 class="mw320 lh15 ml-sm-0 ml-md-0"><mark class="inf--bg-fontcolor">{{ influence.name | truncatechars:25 | title }}</mark></h3>
         </div>
         
@@ -29,7 +29,7 @@
             </a>
         </div>
         
-        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-6 offset-md-3 text-md-center pl-md-0 col-lg-6 offset-lg-2"> 
+        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-6 offset-md-3 text-md-center pl-md-0 col-lg-6 offset-lg-2 slide-left"> 
             <h5 class="mw280 lh13" style="margin-right: 15px;">{{ influence.desc | title }}</h5>
         </div>   
         
@@ -80,7 +80,7 @@
     <!-- Button to add a comment -->
     <div class="row my-2">
         <div class="col-xs-4 pl-3 col-sm-3">
-            <p><a href="{% url 'add_influ_comment' influence.id  %}" class="btn btn-secondary">Add Comment</a></p>
+            <p><a href="{% url 'add_influ_comment' influence.id  %}" class="btn btn-secondary btn-shadow">Add Comment</a></p>
         </div>
     </div>
     

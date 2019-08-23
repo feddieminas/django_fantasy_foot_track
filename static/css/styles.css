@@ -95,18 +95,24 @@ input[type = text].form-control, #id_desc,#id_content {
 /* view btn in category influence */
 .index-btn-inf-outline {
     outline: rgba(0, 0, 205, 0.8) solid 5px;
+    -webkit-box-shadow: 0 0 3pt 2pt rgba(0, 0, 205, 0.8);
+    -moz-box-shadow: 0 0 3pt 2pt rgba(0, 0, 205, 0.8);
     box-shadow: 0 0 3pt 2pt rgba(0, 0, 205, 0.8);
 }
 
 /* view btn in category creativity */
 .index-btn-crt-outline {
     outline: rgb(219, 223, 224) solid 5px;
+    -webkit-box-shadow: 0 0 3pt 2pt rgb(219, 223, 224);
+    -moz-box-shadow: 0 0 3pt 2pt rgb(219, 223, 224);    
     box-shadow: 0 0 3pt 2pt rgb(219, 223, 224);
 }
 
 /* view btn in category threat */
 .index-btn-thr-outline {
     outline: rgb(249,100,100) solid 5px;
+    -webkit-box-shadow: 0 0 3pt 2pt rgb(249,100,100);
+    -moz-box-shadow: 0 0 3pt 2pt rgb(249,100,100);    
     box-shadow: 0 0 3pt 2pt rgb(249,100,100);
 }
 
@@ -148,11 +154,16 @@ nav h3 {
     margin-bottom: 10px;
 }
 
-/* category header tag make it underline for the user to capture that is clickable */
-nav h3:hover, .card-link:hover {
-    text-decoration: underline;
+/* category Influence span text links..a link to b coloured similar to its category */
+.span-Inf-link-Text {
+    color:#4babff;
 }
 
+/* category header tag make it underline for the user to capture that is clickable */
+#showAllInfl:hover, #listingCards_inf .card-link:hover {
+    text-decoration: underline;
+    color:blue;
+}
 
 /* category cards and pagination btns appearance when load page */
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
@@ -205,6 +216,28 @@ nav h3:hover, .card-link:hover {
     vertical-align: middle;
     position: relative;
     bottom: 3px;
+}
+
+/* slide left text title and descriptions to demonstrate fields needing attention */
+div.slide-left {
+  width:100%;
+  overflow:hidden;
+}
+
+div.slide-left h3, div.slide-left h5 {
+  animation: slide-left 3s;
+}
+
+@keyframes slide-left {
+  from {
+    margin-left: 100%;
+    width: 300%; 
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
 }
 
 /* ---- Graphs ---- */
@@ -284,6 +317,12 @@ footer .fa {
     line-height:1.5;
 }
 
+/* btn shadow */
+.btn-shadow {
+    -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);    
+}
 
 /* ---- MEDIA QUERIES ---- */
 

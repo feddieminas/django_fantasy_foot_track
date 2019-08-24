@@ -19,8 +19,8 @@
     <div class="col-md-10 offset-md-1 text-center">
         <div class="alert alert-dismissible alert-info">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <h5 class="alert-heading">Attention !</h5>
-          <p class="mb-0">The webpage has been built for Educational Purposes</p>
+          <h5 class="alert-heading" style="text-indent:10px;">Attention !</h5>
+          <p class="mb-0" style="text-indent:23px;">The webpage has been built for Educational Purposes</p>
         </div>
     </div>    
 </div>
@@ -30,7 +30,7 @@
     
     <!-- Payment form and form which takes the donate value to store on user db -->
     <form role="form" method="post" id="payment-form" action="{% url 'donate' %}" class="accountform form-horizontal justify-content-center">
-        <legend class="ml-3 ml-sm-4 pl-3 pb-1" style="background-color: #00ffff;width: 90%;"><i class="fa fa-credit-card mr-1" aria-hidden="true"></i>Payment Details</legend>
+        <fieldset><legend class="ml-3 ml-sm-4 mb-3 pl-3 pb-1 visa-colour" style="color:azure;width: 90%;"><i class="fa fa-credit-card mr-1" aria-hidden="true"></i>Payment Details</legend></fieldset>
         
         <!-- for any credit card errors that come back -->
         <div id="credit-card-errors" style="display: none;">

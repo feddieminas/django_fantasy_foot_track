@@ -17,5 +17,8 @@ class CreateInfluenceCommentForm(forms.ModelForm):
         model = Comment
         fields = ('content',)  
         labels = {
-            'content': 'Comment',
+            'content': '',
+        }
+        widgets = {
+          'content': forms.Textarea(attrs={'rows':5, 'cols':25}),
         }

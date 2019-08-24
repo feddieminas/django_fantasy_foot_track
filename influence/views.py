@@ -89,7 +89,7 @@ def add_influence(request, pk=None):
     args = {'form':form}    
     return render(request, 'add_influence.html', args)
 
-    
+   
 def view_influence(request, pk, view=''):
     """ Return the view_influence.html file. Pk is the category created through the add_category view. """
     
@@ -99,50 +99,63 @@ def view_influence(request, pk, view=''):
     except Influence.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
     
+    """ create a category card comment [pk, influence, owner, content, created_date ] """
+    if request.method == "POST":
+        if not request.user.is_authenticated():
+            return redirect(reverse('login'))
+        form = CreateInfluenceCommentForm(request.POST)
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.owner = request.user
+            form.influence = influence
+            form.save()
+        return redirect(view_influence, influence.pk)
+    else:
+        form = CreateInfluenceCommentForm(instance=influence)     
     
-    """ Auto-increment number of views when a user enters into a category card one time for current session """
-    if view == "view":
-        viewlist = request.session['viewlist']
-        if not (str(request.user.id) + "i" + str(pk)) in viewlist:
-            influence.views += 1
-            influence.save()
-            viewlist.append(str(request.user.id) + "i" + str(pk))
-            request.session['viewlist'] = viewlist
-            #request.session.modified = True
+        """ Auto-increment number of views when a user enters into a category card one time for current session """
+        if view == "view":
+            viewlist = request.session['viewlist']
+            if not (str(request.user.id) + "i" + str(pk)) in viewlist:
+                influence.views += 1
+                influence.save()
+                viewlist.append(str(request.user.id) + "i" + str(pk))
+                request.session['viewlist'] = viewlist
+                #request.session.modified = True
+        
+        """ Comments filter existing """
+        comments = Comment.objects.filter(influence__pk=influence.pk)
     
-    """ Comments filter existing """
-    comments = Comment.objects.filter(influence__pk=influence.pk)
-
-    """ UpVotes model. Create candidate user (or get if has already been created previously) for future potential upvote. 
-    Candidate user is the user of the page """ 
-    users_vote, created = UpVote.objects.get_or_create(users_vote=request.user.id,)
+        """ UpVotes model. Create candidate user (or get if has already been created previously) for future potential upvote. 
+        Candidate user is the user of the page """ 
+        users_vote, created = UpVote.objects.get_or_create(users_vote=request.user.id,)
+        
+        """ Likeability filter existing """
+        likeability = Likeability.objects.filter(influence=influence)
+        
+        """ If user_vote has been created previously and likeability model already exists for this category card, 
+        check if a user has actually viewed the current category card """
+        check_users_vote_has_val = False
+        if not created and likeability.exists():
+            check_users_vote_has_val = users_vote.influences.filter(name=influence.name, created_date=influence.created_date)
+        
+        """ If at least one of the options that user_vote has been created now or likeability model already exists for this category card, 
+        or a user first time views the current category card, then create a Likeability model """    
+        if any([created, not likeability.exists(), not check_users_vote_has_val]): 
+            userlikeNoVote = Likeability(influence=influence, users_vote=users_vote, level=0,)
+            userlikeNoVote.save()
+        
+        """ Calculate number of existing upvotes and tell whether a user has upvoted already this category card, to prevent duplication """
+        userlikeUpVotes = 0
+        user_has_upvote = False
+        if likeability.exists():
+            for l in likeability.iterator():
+                if l.level == 1: # number of UpVotes
+                    userlikeUpVotes += 1
+                if l.users_vote == users_vote and l.level == 1: # if user has UpVoted this category
+                    user_has_upvote = True
     
-    """ Likeability filter existing """
-    likeability = Likeability.objects.filter(influence=influence)
-    
-    """ If user_vote has been created previously and likeability model already exists for this category card, 
-    check if a user has actually viewed the current category card """
-    check_users_vote_has_val = False
-    if not created and likeability.exists():
-        check_users_vote_has_val = users_vote.influences.filter(name=influence.name, created_date=influence.created_date)
-    
-    """ If at least one of the options that user_vote has been created now or likeability model already exists for this category card, 
-    or a user first time views the current category card, then create a Likeability model """    
-    if any([created, not likeability.exists(), not check_users_vote_has_val]): 
-        userlikeNoVote = Likeability(influence=influence, users_vote=users_vote, level=0,)
-        userlikeNoVote.save()
-    
-    """ Calculate number of existing upvotes and tell whether a user has upvoted already this category card, to prevent duplication """
-    userlikeUpVotes = 0
-    user_has_upvote = False
-    if likeability.exists():
-        for l in likeability.iterator():
-            if l.level == 1: # number of UpVotes
-                userlikeUpVotes += 1
-            if l.users_vote == users_vote and l.level == 1: # if user has UpVoted this category
-                user_has_upvote = True
-    
-    args = {'influence': influence, "comments": comments, "upvotes_total": userlikeUpVotes, "user_has_upvote": user_has_upvote} 
+    args = {'influence': influence, "comments": comments, "upvotes_total": userlikeUpVotes, "user_has_upvote": user_has_upvote, 'form':form} 
     return render(request, 'view_influence.html', args)
 
 @login_required
@@ -156,28 +169,7 @@ def user_upvote(request, pk):
     likeit.level = 1
     likeit.save()
     return redirect(view_influence, influence.pk)
-
-@login_required
-def add_influ_comment(request, pk):
-    """Return the add_influ_comment.html file. Pk is the category created through the add_category view. 
-    Comments are foreign keys to the category"""
-    
-    influence =  get_object_or_404(Influence, pk=pk)
-    
-    """ create a category card comment [pk, influence, owner, content, created_date ] """
-    if request.method == "POST":
-        form = CreateInfluenceCommentForm(request.POST)
-        if form.is_valid():
-            form = form.save(commit=False)
-            form.owner = request.user
-            form.influence = influence
-            form.save()
-        return redirect(view_influence, influence.pk)
-    else:
-        form = CreateInfluenceCommentForm(instance=influence) 
-        
-    args = {'form':form, "name": influence.name}    
-    return render(request, 'add_influ_comment.html', args)   
+   
     
     
     

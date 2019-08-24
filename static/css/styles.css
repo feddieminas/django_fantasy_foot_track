@@ -10,12 +10,12 @@ body {
     font-family: 'Open Sans', sans-serif, Arial;
 }
 
-/* button of creating the category and comment form */
-.btnadd-Category-Comment {
+/* button of creating the category form */
+.btnadd-Category {
     width: 100px;
 }
 
-/* shift of creating the category and comment form */
+/* shift of creating the category form */
 .form-creation-shift {
     transform: translateY(5px);
     transition: transform 0.3s ease-in-out 0s;
@@ -35,8 +35,8 @@ input[type = text].form-control, #id_desc,#id_content {
     min-width: 80px;    
 }
 
-/* large tablets to highlight the target form attributes when creating a category card or adding a comment */
-.inf-create-comment {
+/* large tablets to highlight the target form attributes when creating a category card */
+.ctgry-inf-create-box {
     background-color: rgba(0, 127, 255, 0.15);
     padding-bottom: 8px;
     border-left: 1px solid black;
@@ -240,11 +240,32 @@ div.slide-left h3, div.slide-left h5 {
   }
 }
 
+.comment-par-view {
+    overflow: scroll;
+    word-break: break-all;
+}
+
+
+/* ---- Donate ---- */
+
+.visa-colour {
+    background: -moz-linear-gradient(left, rgba(26,31,113,1) 0%, rgba(247,182,0,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(26,31,113,1)), color-stop(100%, rgba(247,182,0,1)));
+    background: -webkit-linear-gradient(left, rgba(26,31,113,1) 0%, rgba(247,182,0,1) 100%);
+    background: -o-linear-gradient(left, rgba(26,31,113,1) 0%, rgba(247,182,0,1) 100%);
+    background: -ms-linear-gradient(left, rgba(26,31,113,1) 0%, rgba(247,182,0,1) 100%);
+    background: linear-gradient(to right, rgba(26,31,113,1) 0%, rgba(247,182,0,1) 100%);
+}
+
+#submit_payment_btn:hover {
+    background-color: #3498DB;
+}
+
 /* ---- Graphs ---- */
 
 /* orientate paragraph to stay in between the middle of the charts */
 .p-shift {
-    transform: translate(150px,0);
+    transform: translate(10px,0); /* translate(130px,0); */
     transition: transform 0.3s ease-in-out 0s;
     -webkit-transition: transform 0.3s ease-in-out 0s;
     -moz-transition: transform 0.3s ease-in-out 0s;
@@ -252,7 +273,13 @@ div.slide-left h3, div.slide-left h5 {
 }
 
 #section--graphs {
-    padding: 30px 0;
+    padding: 20px 0;
+}
+
+.txt-pie-graphs-boxshadow {
+    box-shadow: inset 0 -0.175em #3182bd, inset 0 -0.2em #3182bd;
+    -webkit-box-shadow: inset 0 -0.175em #3182bd, inset 0 -0.2em #3182bd;
+    -moz-box-shadow: inset 0 -0.175em #3182bd, inset 0 -0.2em #3182bd;
 }
 
 /* ---- FOOTER ---- */
@@ -339,11 +366,8 @@ footer .fa {
     .accountform {
         padding-top: 35px;
     }  
-}
-
-@media screen and (min-width: 992px) { 
-    /* large tablets to align section graphs with footer */
+    
     #section--graphs {
-        margin-left: 80px;
-    }   
+        padding: 30px 0;
+    }    
 }

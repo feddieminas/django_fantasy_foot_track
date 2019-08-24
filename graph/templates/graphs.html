@@ -7,19 +7,28 @@
 {% block content %}
 
 <section id="section--graphs">
-    <div class="row mb-4" style="border-bottom: 1px solid #e6e6e6;">
-        <div class="col-12 col-sm-7 text-center pb-2">
-            <p class="lh13">Categories Views Strength (Any Upvote equals extra two Views)</p>
+    <div class="row mb-3" style="border-bottom: 1px solid #e6e6e6;">
+        <div class="col-md-9 col-lg-7 m-auto text-center py-2 pl-1 p-sm-2">
+            <h3 class="fs22 lh13 mb-2">Categories Players &amp; Features Views Strength</h3>
+            <p class="lh13 text-white bg-dark mb-2">Below calculation assumes any Upvote to equal into two extra Views</p>
         </div>
     </div>    
 
     <div class="row">
-        <div class="col-12 col-sm-5 offset-sm-1 text-center mb-2" id="chart-ring-status"></div>
-        <div class="col-12 col-sm-5 text-center mb-2" id="chart-hist-views-upvotes"></div>
+        <div class="col-md-7 m-auto text-center p-2">
+            <div class="col-11 col-sm-11 text-center pl-0 pl-sm-2 mb-3 mb-sm-3">
+                <p class="lh13 txt-pie-graphs-boxshadow" style="display: inline;"><span style="color: black;">User Creator of Category-Card ToView Importance</span></p>
+            </div>
+            <div class="col-12 col-sm-12 text-center" id="chart-ring-status"></div>
+        </div>        
     </div>
-        
+
     <div class="row">
-        <div class="col-12 col-sm-5 offset-sm-3 text-center mb-2" id="chart-row-categories"></div>
+        <div class="col-md-7 m-auto text-center p-2" id="chart-hist-views-upvotes"></div>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-7 m-auto text-center p-2" id="chart-row-categories"></div>
     </div>    
 </section>
 
@@ -42,32 +51,9 @@ $(document).ready(function() {
         categoriesRowChart = dc.rowChart("#chart-row-categories");
     
     
-    let viewsUpvData = [
-        {Category: 'Influence', viewsUpv: 10, Status: "Low"},
-        {Category: 'Creativity', viewsUpv: 15, Status: "Low"},
-        {Category: 'Threat', viewsUpv: 20, Status: "Low"},
-        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
-        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
-        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
-        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 35, Status: "High"},
-        {Category: 'Influence', viewsUpv: 25, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 30, Status: "Medium"},
-        {Category: 'Creativity', viewsUpv: 35, Status: "High"},        
-        {Category: 'Threat', viewsUpv: 40, Status: "High"}
-    ];  
-    
-    
     dc.config.defaultColors(d3.schemeCategory10);
     
-    //viewsUpvData = {{jsonData|safe}};
+    viewsUpvData = {{jsonData|safe}};
     //console.log("viewsUpvData", viewsUpvData);    
     
     function remove_empty_bins(source_group) {
@@ -91,9 +77,18 @@ $(document).ready(function() {
         nonEmptyHist = remove_empty_bins(viewsUpvHist)
         
     statusRingChart
-        .width(300).height(200)
+        .width(340).height(260) 
         .dimension(statusDim)
         .group(viewsUpvPerStatus)
+        
+        .title(function(d) { 
+            return d.key + " Status Views : " + d.value;
+        })
+        .renderTitle(true) 
+        
+        .cx(135) //move pie chart a bit on the left side to align with bottom two charts using cx and cy
+        .cy(130) 
+        
         .innerRadius(50);
         
     // find the max value on your dimension to insert on your histogram ticks    
@@ -103,21 +98,32 @@ $(document).ready(function() {
     });
     
     viewsUpvHistChart
-        .width(300).height(200)
+        .width(360).height(320) 
         .dimension(viewsUpvDim)
         .group(nonEmptyHist)
         .x(d3.scaleBand())
         .xUnits(dc.units.ordinal)
-        .yAxisLabel("Times")
+        .yAxisLabel("Category Cards in each views group")
         .xAxisLabel("Views")
         
         .title(function(d) { 
-            return d.value;
+            return "Number of Cards : " + d.value;
         })
         .renderTitle(true)        
         
         .on('renderlet', function(chart) { 
-            chart.select('.x-axis-label').attr("transform", "translate(" + 146 + "," + 190 + ")");
+            chart.select('.x-axis-label').attr("transform", "translate(" + 150 + "," + 313 + ")");
+            chart.select('.x-axis-label').attr("font-size", "14px");
+            chart.select('.y-axis-label').attr("font-size", "13px");
+            let c = chart.selectAll(".bar").nodes();
+            const c_y = c.map(function(d) { return parseFloat(d.attributes.y.value); });
+            const c_y_last_min_idx = parseInt(c_y.lastIndexOf(d3.min(c_y)));
+            c[c_y_last_min_idx].attributes.fill.value = "rgba(44, 62, 80, 0.8)";
+            for (let i=0; i < c.length; i++) {
+              if (i!=c_y_last_min_idx) {
+                c[i].attributes.fill.value = "rgba(149, 165, 166,0.8)";  
+              }
+            }            
         })               
         
         .elasticX(true)
@@ -126,10 +132,15 @@ $(document).ready(function() {
     viewsUpvHistChart.yAxis().ticks(myMaxTickFormat);
     
     categoriesRowChart
-        .width(350).height(250)
+        .width(380).height(320) 
         .dimension(categoryDim)
         .group(viewsUpvPerCategory)
-        
+
+        .title(function(d) { 
+            return d.key + " Views : " + d.value;
+        })
+        .renderTitle(true) 
+
         .colorAccessor(function (d) {
             if (d.key == "Influence") {
                 return "category1";
@@ -143,10 +154,31 @@ $(document).ready(function() {
         })
         
         .colors(d3.scaleOrdinal().domain(["category1", "category2", "category3"])
-        .range(["rgb(0, 0, 205)", "rgb(158, 158, 158)", "rgb(249,100,100)"]))           
+        .range(["rgb(0, 0, 205)", "rgb(219, 223, 224)", "rgb(249,100,100)"]))           
+        
+        .on('renderlet', function(chart) { 
+            let c = chart.selectAll("g.row").selectAll("text").nodes();
+            for (let i=0; i < c.length; i++) {
+                c[i].style.fill = "white";
+                if(c[i].textContent=="Creativity") {
+                   c[i].style.fill = "black";
+                }
+                c[i].attributes.x.value = 5;
+            }
+            
+            chart.select(".x-axis-label").remove();
+            chart.svg()
+                    .append("text")
+                    .attr("class", "x-axis-label").attr("font-size", "14px")
+                    .attr("text-anchor", "middle")
+                    .attr("x", (chart.width()/2)-17)
+                    .attr("y", chart.height()-3.5)
+                    .text("Total Views in each Category"); 
+                    
+            chart.select("g").attr("transform", "translate(20,5)")        
+        })    
         
         .elasticX(true);
-        
         
     dc.renderAll();
     
@@ -156,7 +188,8 @@ $(document).ready(function() {
     $(window).on('resize', function(){
         const w = window.innerWidth;
         const h = window.innerHeight;
-        if (w >= 575 && h>=1000) {
+        
+        if (h>=1380) {
             $("footer").animate({
                 position: "absolute", bottom: "0"
             }, 1500, "linear", function() {
@@ -165,27 +198,17 @@ $(document).ready(function() {
         }
         else {
             $("footer").css({'position' : 'inherit'});
-        }
-        
+        }        
         
         if(w>575) {
-            statusRingChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")");
-            switch(true) {
-                case (w>=1000):
-                    viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + -100 + "," + 0 + ")");
-                    break;
-                default:
-                viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + 35 + "," + 0 + ")");
-            }
-            categoriesRowChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")");
-            $("p").first().addClass("p-shift");
+            $("h3").addClass("p-shift").css({'white-space': 'nowrap'});
+            $("p").slice(0, 1).addClass("p-shift").css({'white-space': 'nowrap'});
+            $("p").slice(1,2).css({'white-space': 'nowrap'});
         } else {
-            statusRingChart.select('svg').transition(2000).attr("transform", "translate(" + -35 + "," + 0 + ")");
-            viewsUpvHistChart.select('svg').transition(2000).attr("transform", "translate(" + 0 + "," + 0 + ")"); 
-            categoriesRowChart.select('svg').transition(2000).attr("transform", "translate(" + -10 + "," + 0 + ")"); 
-            $("p").first().removeClass("p-shift");
+            $("h3").removeClass("p-shift").css({'white-space': 'normal'});
+            $("p").slice(0, 1).removeClass("p-shift").css({'white-space': 'normal'});
+            $("p").slice(1,2).css({'white-space': 'normal'}); 
         }
-        
         
     }).resize();     
     

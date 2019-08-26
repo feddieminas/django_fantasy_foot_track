@@ -78,7 +78,7 @@
     		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
     		  <p class="flex-card_para mb-1">HIGH : 0</p>          
         {% endfor %}    		
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3 index-btn-view-border index-btn-crt-outline" href="#" role="button">View All</a>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3 index-btn-view-border index-btn-crt-outline" href="{% url 'all_creativities' %}" role="button">View All</a>
     	</div>
     </div>
 	
@@ -104,7 +104,7 @@
     		  <p class="flex-card_para mb-1">MEDIUM : 0</p>
     		  <p class="flex-card_para mb-1">HIGH : 0</p>          
         {% endfor %}  
-    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3 index-btn-view-border index-btn-thr-outline" href="#" role="button">View All</a>
+    		<a class="bottom_button d-flex d-block btn btn-secondary text-center mt-2 px-2 py-3 index-btn-view-border index-btn-thr-outline" href="{% url 'all_threats' %}" role="button">View All</a>
     	</div>
     </div>
 </div>

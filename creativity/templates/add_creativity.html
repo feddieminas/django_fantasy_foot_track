@@ -6,12 +6,12 @@
 {% block content %}
 <!-- category form creation of ['motive', 'name', 'desc', 'status'] -->
 
-<div id="ctgry-inf-create-box">
+<div>
   <div class="row">
       <div class="col-md-10 offset-md-1">
   
         <form method="POST" enctype="multipart/form-data" class="accountform form-horizontal justify-content-center">
-            <fieldset><legend class="my-3 fs20 inf--bg-fontcolor">Create Influence</legend></fieldset>
+            <fieldset><legend class="my-3 fs20 cre--bg-fontcolor">Create Creativity</legend></fieldset>
             {% csrf_token %} {{ form | as_bootstrap }}
             <button type="submit" class="btn btn-primary btnadd-Category">Create</button>
         </form>
@@ -37,9 +37,9 @@
       
       const w = window.innerWidth;
       if (w<768) { 
-        $('div div.row form').parent().parent().parent().removeClass('inf-create-box-color')
+        $('div div.row form').parent().parent().parent().removeClass('cre-create-box-color')
       } else {
-        $('div div.row form').parent().parent().parent().addClass('inf-create-box-color')
+        $('div div.row form').parent().parent().parent().addClass('cre-create-box-color')
       }      
   }).resize();
   

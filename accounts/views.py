@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from accounts.forms import UserLoginForm, UserRegistrationForm, FilterView
 from influence.models import Influence
+from creativity.models import Creativity
 from django.db.models import Count
 from django.template.context_processors import csrf
 
@@ -16,14 +17,15 @@ def index(request):
             filterViewCatgry = request.POST.get('group_by') # dropdown form filter value by motive, [Player, Feature, ALL]
             if filterViewCatgry == "all":
                 figuresInf = Influence.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
+                figuresCr = Creativity.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
             else:
                 figuresInf = Influence.objects.filter(motive=filterViewCatgry).values('status').annotate(total=Count('status')).order_by('-total')
-            figuresCr = {}
+                figuresCr = Creativity.objects.filter(motive=filterViewCatgry).values('status').annotate(total=Count('status')).order_by('-total')
             figuresTh = {}    
     else:
         filterView = FilterView() # dropdown form filter by motive
         figuresInf = Influence.objects.filter(motive="player").values('status').annotate(total=Count('status')).order_by('-total')
-        figuresCr = {}
+        figuresCr = Creativity.objects.filter(motive="player").values('status').annotate(total=Count('status')).order_by('-total')
         figuresTh = {}
     
     args = {"filterView": filterView, "figuresInf": figuresInf, "figuresCr": figuresCr, "figuresTh": figuresTh}    

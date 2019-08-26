@@ -10,13 +10,13 @@
 <nav>
     <div class="row my-2">
         <div class="col-7 col-sm-7 col-md-3"> 
-        <!-- if influences exist, one will displayed visible all influences on page. If not, due to ex. search filtering results in empty value, one would like that page to get refreshed -->
-            {% if influences|Xor:filterquery %}
-                <h3 id="showAllInfl" class="inf--bg-fontcolor"><span style="color:black;">Influences</span></h3>
+        <!-- if creativities exist, one will displayed visible all creativities on page. If not, due to ex. search filtering results in empty value, one would like that page to get refreshed -->
+            {% if creativities|Xor:filterquery %}
+                <h3 id="showAllCrel" class="cre--bg-fontcolor maxw165"><span style="color:black;">Creativities</span></h3>
             {% else %}
-                <h3><a href="{% url 'all_influences' %}" class="inf--bg-fontcolor">Influences</a></h3>
+                <h3><a href="{% url 'all_creativities' %}" class="cre--bg-fontcolor maxw165">Creativities</a></h3>
             {% endif %}
-            <p id="create-inf-btn"><a href="{% url 'add_influence' %}" class="btn btn-secondary">Create One</a></p>
+            <p id="create-cre-btn"><a href="{% url 'add_creativity' %}" class="btn btn-secondary">Create One</a></p>
         </div>
     
         <div class="col-7 col-sm-7 col-md-4 d-flex flex-row mt-md-4 pt-md-2 text-center"> <!-- filter status [Low, Medium, High] -->
@@ -27,9 +27,9 @@
     
         <div class="col-7 col-sm-7 col-md-5 mt-md-4 pt-md-3"> <!-- Search form button -->
             <div class="row">
-                <form id="searchform_inf" class="form-inline my-2 my-lg-0" method="get" accept-charset="utf-8">
+                <form id="searchform_cre" class="form-inline my-2 my-lg-0" method="get" accept-charset="utf-8">
             	    <div class="col-9 pr-0 col-sm-9 pr-sm-0 col-md-9 pr-md-0 col-lg-9 pr-lg-0">
-                        <input class="form-control mr-sm-2" id="searchbox_inf" name="q" type="text" placeholder="Search">
+                        <input class="form-control mr-sm-2" id="searchbox_cre" name="q" type="text" placeholder="Search">
                     </div>
                     <div class="col-3 pl-1 col-sm-3 pl-sm-1 col-md-2 pl-md-1 col-lg-2 pl-lg-1">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="fa fa-search"></i></button>
@@ -45,36 +45,36 @@
 <section>
     <div class="row align-items-center">
     
-        <div id="listingCards_inf" class="d-flex flex-row flex-wrap justify-content-between justify-content-sm-between col w-75 mx-auto fade-in">
+        <div id="listingCards_cre" class="d-flex flex-row flex-wrap justify-content-between justify-content-sm-between col w-75 mx-auto fade-in">
         
-            {% for inf in influences reversed %}
+            {% for cre in creativities reversed %}
             
             <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch fade-in">
                 
-                <h3 class="card-header py-2 fs22" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }};"><span>{{ inf.motive|title }}</span></h3>
+                <h3 class="card-header py-2 fs22" style="color:{{ colorsIndex|hash:cre.status|hash2:1 }};background-color:{{ colorsIndex|hash:cre.status|hash2:0 }};"><span>{{ cre.motive|title }}</span></h3>
                 
                 <div class="card-body px-0 py-4">
-                    <h5 class="card-title py-2 pl-3">{{ inf.name|title }}</h5>
+                    <h5 class="card-title py-2 pl-3">{{ cre.name|title }}</h5>
                     <hr class="mw200">
-                    <p class="card-text pl-3 category-card-text">{{inf.desc | truncatewords:50 }}</p>
+                    <p class="card-text pl-3 category-card-text">{{cre.desc | truncatewords:50 }}</p>
                 </div>        
                 
-                {% for key, values in infUpvotesAndDays.items %}
+                {% for key, values in creUpvotesAndDays.items %}
                     {% with key as name %}
-                        {% if inf.id|stringformat:"i" == name %}        
+                        {% if cre.id|stringformat:"i" == name %}        
                         
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item py-2">
-                                <span class="oi oi-eye" title="person" aria-hidden="true"> {{ inf.views }}</span>
+                                <span class="oi oi-eye" title="person" aria-hidden="true"> {{ cre.views }}</span>
                                 <span class="oi oi-check px-3" title="person" aria-hidden="true">{{ values.upvotes }}</span>
                             </li>
                         </ul>                
         
                         <div class="card-body py-3">
-                            <a href="{% url 'view_influence' inf.id %}view/" class="card-link"><span class="span-Inf-link-Text">View</span></a>
+                            <a href="{% url 'view_creativity' cre.id %}view/" class="card-link"><span class="span-Cre-link-Text">View</span></a>
                         </div>
                         
-                        <div class="card-footer font-weight-light py-2" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }}">
+                        <div class="card-footer font-weight-light py-2" style="color:{{ colorsIndex|hash:cre.status|hash2:1 }};background-color:{{ colorsIndex|hash:cre.status|hash2:0 }}">
                             {{ values.daysyear }} 
                         </div>
                         
@@ -91,29 +91,29 @@
     </div>
 </section>
 
-{% if influences %}
+{% if creativities %}
 
 <section>
     <div class="container mt-2 p-3">
         <div class="row">
             <div class="col-4 col-sm-2 m-auto d-inline-flex justify-content-around justify-content-sm-around p-2 p-sm-2 fade-in">
-                <a href="javascript:prevPage()" id="btn_prev_inf" class="arrow-left fade-in"> <!-- prev button -->
+                <a href="javascript:prevPage()" id="btn_prev_cre" class="arrow-left fade-in"> <!-- prev button -->
                     {% include "svgpartial.html" %}
                 </a>
-                <a href="javascript:nextPage()" id="btn_next_inf" class="mw80 fade-in" style="margin-left:10%;"> <!-- next button -->
+                <a href="javascript:nextPage()" id="btn_next_cre" class="mw80 fade-in" style="margin-left:10%;"> <!-- next button -->
                     {% include "svgpartial.html" %}
                 </a>
             </div>
         </div>
         <div class="row">
             <div class="col-3 col-sm-2 m-auto d-inline-flex justify-content-around justify-content-sm-around pt-0 pb-2 pb-sm-2 px-2 px-sm-2 fade-in"> <!-- page display -->
-                <p>Page: <span id="page_inf"></span></p>
+                <p>Page: <span id="page_cre"></span></p>
             </div>
         </div>  
         <div class="row">
             <div class="col-6 col-sm-4 m-auto d-inline-flex justify-content-center justify-content-sm-center pt-0 pb-2 pb-sm-2 px-2 px-sm-2 fade-in">
-                <label>Go to <input class="text-center" type="text" name="page_input_inf" id="page_input_inf" placeholder="page" value="" style="width: 50px;"></label> <!-- page goto input value -->
-                <a href="#" id="goto_inf" style="margin-left: 5px;">&gt;&gt;</a>
+                <label>Go to <input class="text-center" type="text" name="page_input_cre" id="page_input_cre" placeholder="page" value="" style="width: 50px;"></label> <!-- page goto input value -->
+                <a href="#" id="goto_cre" style="margin-left: 5px;">&gt;&gt;</a>
             </div>
         </div>	        
     </div>
@@ -127,18 +127,18 @@
 <script>
     $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(62, 88, 113, 1)'});
     
-    $("#create-inf-btn").mouseover(function() {
-        $(this).find(".btn-secondary").css({'background-color' : 'rgba(0, 127, 255, 1)'});
+    $("#create-cre-btn").mouseover(function() {
+        $(this).find(".btn-secondary").css({'background-color' : 'rgba(124,139,142,0.18)', 'color' : 'black'});
     });    
     
-    $("#create-inf-btn").mouseleave(function() {
-        $(this).find(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
+    $("#create-cre-btn").mouseleave(function() {
+        $(this).find(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'color' : 'white'});
     })    
     
     // Filters per Status and Pagination
     
     // global vars
-    let current_page = "{{inf_curr_page_views_py}}";
+    let current_page = "{{cre_curr_page_views_py}}";
     const records_per_page = 8;
     const cardHeadElementsJQ = $('.card-header');
     let cardsLength = cardHeadElementsJQ.length;
@@ -190,7 +190,7 @@
     function footerResponsive() {
         const w = window.innerWidth;
         const h = window.innerHeight;
-        const visible_records_per_page = $('#listingCards_inf .card').length;
+        const visible_records_per_page = $('#listingCards_cre .card').length;
         let threshold = 0;
         switch(visible_records_per_page) {
             case 4:
@@ -241,7 +241,7 @@
 //////////////////////////////////////////    
     
     // Filter all
-    $("#showAllInfl").click(function (e) {
+    $("#showAllCrel").click(function (e) {
         cardsLength = 0;
         cardHeadElementsJQ.each(function( i ) {
             $(this).parent().css({'display': ''});
@@ -276,8 +276,8 @@
     });    
     
     // user be able to switch to desired page
-    $("#goto_inf").click(function(e) {
-        let gotoPageVal = String(document.getElementById("page_input_inf").value);
+    $("#goto_cre").click(function(e) {
+        let gotoPageVal = String(document.getElementById("page_input_cre").value);
         gotoPageVal = (gotoPageVal=="") ? "" : gotoPageVal = gotoPageVal.match(/\d+/g) || [];
         if(gotoPageVal.length) {gotoPageVal = parseInt(gotoPageVal.join(""));}
         if (!isNaN(parseInt(gotoPageVal))) {
@@ -293,11 +293,11 @@
     function changePage(page)
     {
         //pagination attrs [btns,card records,current page show value]
-        let btn_next = document.getElementById("btn_next_inf");
-        let btn_prev = document.getElementById("btn_prev_inf");
-        let listing_cards = document.getElementById("listingCards_inf");
-        let page_span = $("#page_inf");
-        let goto_inf = $("#goto_inf");
+        let btn_next = document.getElementById("btn_next_cre");
+        let btn_prev = document.getElementById("btn_prev_cre");
+        let listing_cards = document.getElementById("listingCards_cre");
+        let page_span = $("#page_cre");
+        let goto_cre = $("#goto_cre");
     
         // Validate page
         if (page < 1) page = 1;
@@ -308,9 +308,9 @@
     
         //populate cards per page
         listing_cards.innerHTML = "";
-        if (page_span != null && goto_inf != null) {
+        if (page_span != null && goto_cre != null) {
             page_span.parent().css({'display': 'none'});
-            goto_inf.parent().parent().css({'display': 'none'});
+            goto_cre.parent().parent().css({'display': 'none'});
         }
         
         if (checkPageExists) {
@@ -334,7 +334,7 @@
                 btn_next.style.visibility = "visible";
             }  
             
-            goto_inf.parent().parent().css({'display': ''});
+            goto_cre.parent().parent().css({'display': ''});
         }
         
         featureHeaderHighlight();
@@ -345,7 +345,7 @@
   
     // have a link tags to onload a page from page 1 rather than the current page
     $(document).ready(function() {   
-        $("a[href*='/influences/']").click(function(e) {
+        $("a[href*='/creativities/']").click(function(e) {
             current_page = 1;
             saveCurrentPage();
         });
@@ -362,13 +362,13 @@
     // ajax call back to django views.py session variable, in order to keep track of last page saved 
     // when a user is viewing a card and would like to go back
     function saveCurrentPage(e) {
-        const url = "{% url 'save_curr_page' %}";
+        const url = "{% url 'cre_save_curr_page' %}";
         $.ajax({    
             type: "GET",
             async: false,
             url: url,                    
             data: {
-                'inf_curr_page': current_page       
+                'cre_curr_page': current_page       
             },
             dataType: 'json',
             success: function (data) {  

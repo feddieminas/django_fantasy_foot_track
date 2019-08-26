@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django_forms_bootstrap',
     'accounts',
     'influence',
+    'creativity',
+    'threat',
     'donate',
     'graph',
 ]

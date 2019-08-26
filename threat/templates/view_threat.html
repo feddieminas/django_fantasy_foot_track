@@ -14,11 +14,11 @@
     <div class="row mt-3">
         
         <div class="col-12 mt-1 col-sm-4">
-            <h3><mark class="infmark">{{ influence.motive | title }}<i class="fa fa-asterisk ml-1 fs20 fa-cat-header-position"></i></mark></h3>
+            <h3><mark class="thrmark">{{ threat.motive | title }}<i class="fa fa-minus ml-1 fs20 fa-cat-header-position"></i></mark></h3>
         </div>
         
         <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0 slide-left"> 
-            <h3 class="mw320 lh15 ml-sm-0 ml-md-0"><mark class="inf--bg-fontcolor">{{ influence.name | truncatechars:25 | title }}</mark></h3>
+            <h3 class="mw320 lh15 ml-sm-0 ml-md-0"><mark class="thr--bg-fontcolor">{{ threat.name | truncatechars:25 | title }}</mark></h3>
         </div>
         
     </div>
@@ -27,13 +27,13 @@
     <div class="row mt-2">
         
         <div class="col-3 col-sm-2 col-md-1 arrow-left"> 
-            <a href="{% url 'all_influences' %}">
+            <a href="{% url 'all_threats' %}">
                 {% include "svgpartial.html" %}
             </a>
         </div>
         
         <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-6 offset-md-3 text-md-center pl-md-0 col-lg-6 offset-lg-2 slide-left"> 
-            <h5 class="mw280 lh13" style="margin-right: 15px;">{{ influence.desc | title }}</h5>
+            <h5 class="mw280 lh13" style="margin-right: 15px;">{{ threat.desc | title }}</h5>
         </div>   
         
     </div>
@@ -45,7 +45,7 @@
             <h6 class="text-uppercase font-weight-bold">Status</h6>
             <div class="row">
                 <div class="col-xs-8 col-sm-10 py-1">
-                    <mark class="infmark">{{ influence.status | title }}</mark>
+                    <mark class="thrmark">{{ threat.status | title }}</mark>
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
                 <p class="mb-1 mb-sm-1"><a href="" class="btn btn-success disabled">UpVote</a></p>
                 <p class="text-muted">You have Upvoted it</p>
             {% else %}
-                <p><a href="{% url 'user_upvote' influence.id %}" class="btn btn-success">UpVote</a></p>
+                <p><a href="{% url 'user_upvote' threat.id %}" class="btn btn-success">UpVote</a></p>
             {% endif %}
         </div>
         
@@ -82,10 +82,10 @@
     
     <!-- Comment Text Area and Submit Comment -->
     <div class="row">
-        <div id="inf-add-comment-section" class="col-md-8 pl-3">
+        <div id="thr-add-comment-section" class="col-md-8 pl-3">
             <form method="POST" enctype="multipart/form-data" class="form-horizontal justify-content-center">
                 {% csrf_token %} {{ form | as_bootstrap }}
-                <button type="submit" class="btn btn-shadow mb-3">Add Comment</button>
+                <button type="submit" class="btn thr-comment-color btn-shadow mb-3">Add Comment</button>
             </form>
         </div> 
     </div>    
@@ -94,7 +94,7 @@
     <div style="overflow-y: scroll">
         {% for comment in comments reversed %}
         
-        <article class="commentBox inf-comment-color mb-3 pl-1">
+        <article class="commentBox thr-comment-color mb-3 pl-1">
             <div class="row">
                 <div class="col-12 col-sm-3 pt-2 pt-sm-3">
                     <p>{{ comment.published_date|localtime }}</p>

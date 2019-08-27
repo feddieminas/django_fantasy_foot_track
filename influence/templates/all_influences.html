@@ -125,7 +125,7 @@
 
 {% block body_end_js %}
 <script>
-    $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(62, 88, 113, 1)'});
+    $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'blue'});
     
     $("#create-inf-btn").mouseover(function() {
         $(this).find(".btn-secondary").css({'background-color' : 'rgba(0, 127, 255, 1)'});
@@ -202,7 +202,7 @@
             default:
                 threshold = 765; // for 3,2,1 records appear
         }
-        if ((w >= threshold && visible_records_per_page <= 4) || ((h-300) > 900 && visible_records_per_page <= 4)) { //assume one row in big tablet has 4 cards
+        if ((w >= threshold && visible_records_per_page <= 4 && h>900) || ((h-300) > 900 && visible_records_per_page <= 4)) { //assume one row in big tablet has 4 cards
             $("footer").animate({
                 position: "absolute", bottom: "0"
             }, 500, "linear", function() {

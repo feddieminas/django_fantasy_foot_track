@@ -29,7 +29,11 @@
   $(window).on('resize', function(){
       const h = window.innerHeight;
       if (h > 900) {
+        $("footer").animate({
+          position: "absolute", bottom: "0"
+        }, 500, "linear", function() {
           $("footer").css({'position' : 'absolute', 'bottom' : 0});
+        });
       }
       else {
           $("footer").css({'position' : 'inherit'});
@@ -37,9 +41,9 @@
       
       const w = window.innerWidth;
       if (w<768) { 
-        $('div div.row form').parent().parent().parent().removeClass('thr-create-box-color')
+        $('div div.row form').parent().parent().parent().removeClass('thr-create-box-color').removeClass('boxModel-create-box')
       } else {
-        $('div div.row form').parent().parent().parent().addClass('thr-create-box-color')
+        $('div div.row form').parent().parent().parent().addClass('thr-create-box-color').addClass('boxModel-create-box')
       }      
   }).resize();
   

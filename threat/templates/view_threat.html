@@ -17,7 +17,7 @@
             <h3><mark class="thrmark">{{ threat.motive | title }}<i class="fa fa-minus ml-1 fs20 fa-cat-header-position"></i></mark></h3>
         </div>
         
-        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0 slide-left"> 
+        <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0 slide-left"> 
             <h3 class="mw320 lh15 ml-sm-0 ml-md-0"><mark class="thr--bg-fontcolor">{{ threat.name | truncatechars:25 | title }}</mark></h3>
         </div>
         
@@ -137,7 +137,11 @@
         }
         
         if (filters.some(checkFilterPos)) {
-            $("footer").css({'position' : 'absolute', 'bottom' : 0});
+            $("footer").animate({
+                position: "absolute", bottom: "0"
+            }, 500, "linear", function() {
+                $("footer").css({'position' : 'absolute', 'bottom' : 0});
+            });
         }
         else {
             $("footer").css({'position' : 'inherit'});

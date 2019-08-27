@@ -16,6 +16,11 @@ class TestViews(TestCase):
             self.delete_objects()
         self.client.logout()        
     
+    def the_Session_For_View_Cat(self):
+        session = self.client.session 
+        session['viewlist'] = []
+        session.save()         
+    
     def setUp(self):
         User.objects.create_user(username='username', password='password')
         self.client.login(username='username', password='password')
@@ -46,9 +51,7 @@ class TestViews(TestCase):
     def test_view_influence_views_count_user_has_viewed(self):
         inf = Influence.objects.get(name="Test2")
         self.assertEqual(inf.views, 0)
-        session = self.client.session 
-        session['viewlist'] = []
-        session.save()
+        self.the_Session_For_View_Cat()
         self.client.get("/influences/{0}/view/".format(int(inf.pk)))
         inf = Influence.objects.get(name="Test2")
         self.assertEqual(inf.views, 1)
@@ -58,6 +61,7 @@ class TestViews(TestCase):
     def test_view_influence_usersvote_likeability_and_upvote(self):
         ''' view_influence '''
         inf = Influence.objects.get(name="Test2")
+        self.the_Session_For_View_Cat()        
         page = self.client.get("/influences/{0}/".format(int(inf.pk)))
         self.assertEqual(page.status_code, 200)
         likeability = Likeability.objects.filter(influence=inf)

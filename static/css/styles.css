@@ -255,41 +255,39 @@ nav h3 {
 /* ---- ADD_CATEGORY ---- */
 
 /* large tablets to highlight the target form attributes when creating a category card */
-.inf-create-box-color {
-    background-color: rgba(0, 127, 255, 0.15);
+
+.boxModel-create-box {
     padding-bottom: 8px;
     border-left: 1px solid black;
-    border-right: 1px solid black;
+    border-right: 1px solid black;    
+}
+
+.inf-create-box-color {
+    background-color: rgba(0, 127, 255, 0.15);
 } 
 
-#ctgry-inf-create-box .form-control:focus {
+#ctgry-inf-create-box .form-control:focus, #ctgry-inf-create-box button:focus, #create-inf-btn .btn-secondary:focus { /* #create-inf-btn derives from all_influences.html */
     border-color: blue;
     outline: 0;
-    -webkit-box-shadow: 0 0 0 0.05rem rgba(0, 0, 255, 1);
-    -moz-box-shadow: 0 0 0 0.05rem rgba(0, 0, 255, 1);
-    box-shadow: 0 0 0 0.05rem rgba(0, 0, 255, 1);
+    -webkit-box-shadow: 0 0 0 0.075rem rgba(0, 0, 255, 1);
+    -moz-box-shadow: 0 0 0 0.075rem rgba(0, 0, 255, 1);
+    box-shadow: 0 0 0 0.075rem rgba(0, 0, 255, 1);
 }
 
 .cre-create-box-color {
     background-color: rgba(219, 223, 224, 0.4);
-    padding-bottom: 8px;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
 }  
 
 .thr-create-box-color {
     background-color: rgba(249,100,100, 0.2);
-    padding-bottom: 8px;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
 }  
 
-#ctgry-thr-create-box .form-control:focus {
+#ctgry-thr-create-box .form-control:focus, #ctgry-thr-create-box button:focus, #create-thr-btn .btn-secondary:focus { /* #create-inf-btn derives from all_threats.html */
     border-color: rgba(249,100,100, 1);
     outline: 0;
-    -webkit-box-shadow: 0 0 0 0.05rem rgba(249,100,100, 1);
-    -moz-box-shadow: 0 0 0 0.05rem rgba(249,100,100, 1);
-    box-shadow: 0 0 0 0.05rem rgba(249,100,100, 1);
+    -webkit-box-shadow: 0 0 0 0.075rem rgba(249,100,100, 1);
+    -moz-box-shadow: 0 0 0 0.075rem rgba(249,100,100, 1);
+    box-shadow: 0 0 0 0.075rem rgba(249,100,100, 1);
 }
 
 /* ---- VIEW_CATEGORY ---- */
@@ -491,9 +489,17 @@ footer .fa {
    font-size: 22px; 
 }
 
-/* min-width and max-width */
+/* widths */
 .mw80 {
     min-width: 80px;
+}
+
+.w115 {
+    width: 115px;
+}
+
+.mw165 {
+    min-width: 165px;
 }
 
 .mw200 {
@@ -506,14 +512,6 @@ footer .fa {
 
 .mw320 {
     min-width: 320px;    
-}
-
-.maxw115 {
-    max-width: 115px;
-}
-
-.maxw165 {
-    max-width: 165px;
 }
 
 /* line-height */

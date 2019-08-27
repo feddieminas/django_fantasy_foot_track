@@ -114,7 +114,7 @@ def view_threat(request, pk, view=''):
         form = CreateThreatCommentForm(instance=threat)     
     
         """ Auto-increment number of views when a user enters into a category card one time for current session """
-        if view == "view" or threat.views==0:
+        if view == "view" or threat.views==0: 
             viewlist = request.session['viewlist']
             if not (str(request.user.id) + "t" + str(pk)) in viewlist:
                 threat.views = F('views') + 1

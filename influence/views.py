@@ -3,7 +3,7 @@ from django.http import HttpResponseNotFound, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Influence, Comment, UpVote, Likeability
 from .forms import CreateInfluenceForm, CreateInfluenceCommentForm
-from django.db.models import Q
+from django.db.models import Q, F
 from functools import reduce
 import operator
 from django.utils import timezone
@@ -117,7 +117,7 @@ def view_influence(request, pk, view=''):
         if view == "view" or influence.views==0:
             viewlist = request.session['viewlist']
             if not (str(request.user.id) + "i" + str(pk)) in viewlist:
-                influence.views += 1
+                influence.views = F('views') + 1
                 influence.save()
                 viewlist.append(str(request.user.id) + "i" + str(pk))
                 request.session['viewlist'] = viewlist

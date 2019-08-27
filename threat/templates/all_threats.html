@@ -12,9 +12,9 @@
         <div class="col-7 col-sm-7 col-md-3"> 
         <!-- if threats exist, one will displayed visible all threats on page. If not, due to ex. search filtering results in empty value, one would like that page to get refreshed -->
             {% if threats|Xor:filterquery %}
-                <h3 id="showAllThrl" class="thr--bg-fontcolor maxw115"><span style="color:black;">Threats</span></h3>
+                <h3 id="showAllThrl" class="thr--bg-fontcolor w115"><span style="color:black;">Threats</span></h3>
             {% else %}
-                <h3><a href="{% url 'all_threats' %}" class="thr--bg-fontcolor maxw115">Threats</a></h3>
+                <h3><a href="{% url 'all_threats' %}" class="thr--bg-fontcolor w115">Threats</a></h3>
             {% endif %}
             <p id="create-thr-btn"><a href="{% url 'add_threat' %}" class="btn btn-secondary">Create One</a></p>
         </div>
@@ -125,7 +125,7 @@
 
 {% block body_end_js %}
 <script>
-    $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(62, 88, 113, 1)'});
+    $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(249,100,100, 1)'});
     
     $("#create-thr-btn").mouseover(function() {
         $(this).find(".btn-secondary").css({'background-color' : 'rgba(249,100,100,0.18)', 'color' : 'black'});
@@ -202,7 +202,7 @@
             default:
                 threshold = 765; // for 3,2,1 records appear
         }
-        if ((w >= threshold && visible_records_per_page <= 4) || ((h-300) > 900 && visible_records_per_page <= 4)) { //assume one row in big tablet has 4 cards
+        if ((w >= threshold && visible_records_per_page <= 4 && h>900) || ((h-300) > 900 && visible_records_per_page <= 4)) { //assume one row in big tablet has 4 cards
             $("footer").animate({
                 position: "absolute", bottom: "0"
             }, 500, "linear", function() {

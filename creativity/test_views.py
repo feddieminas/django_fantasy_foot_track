@@ -16,6 +16,11 @@ class TestViews(TestCase):
             self.delete_objects()
         self.client.logout()        
     
+    def the_Session_For_View_Cat(self):
+        session = self.client.session 
+        session['viewlist'] = []
+        session.save()      
+    
     def setUp(self):
         User.objects.create_user(username='username', password='password')
         self.client.login(username='username', password='password')
@@ -31,7 +36,7 @@ class TestViews(TestCase):
         self.assertEqual(page.status_code, 200)
         self.assertTemplateUsed(page, "all_creativities.html")
         ''' save_curr_page response - test to see the view is functioning and returns a valid JSON response '''
-        response = self.client.get('/creativities/ajax/save_curr_page/',content_type='application/json')
+        response = self.client.get('/creativities/ajax/cre_save_curr_page/',content_type='application/json')
         self.assertJSONEqual(response.content,{'got_saved': False})
         TestViews.Testid[0] = 1
         self.goto_delete_objects_or_continue_other_tests()
@@ -46,9 +51,7 @@ class TestViews(TestCase):
     def test_view_creativity_views_count_user_has_viewed(self):
         cre = Creativity.objects.get(name="Test2")
         self.assertEqual(cre.views, 0)
-        session = self.client.session 
-        session['viewlist'] = []
-        session.save()
+        self.the_Session_For_View_Cat()
         self.client.get("/creativities/{0}/view/".format(int(cre.pk)))
         cre = Creativity.objects.get(name="Test2")
         self.assertEqual(cre.views, 1)
@@ -58,6 +61,7 @@ class TestViews(TestCase):
     def test_view_creativity_usersvote_likeability_and_upvote(self):
         ''' view_creativity '''
         cre = Creativity.objects.get(name="Test2")
+        self.the_Session_For_View_Cat()
         page = self.client.get("/creativities/{0}/".format(int(cre.pk)))
         self.assertEqual(page.status_code, 200)
         likeability = Likeability.objects.filter(creativity=cre)

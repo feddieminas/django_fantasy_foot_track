@@ -89,6 +89,8 @@ $(document).ready(function() {
         .cx(135) //move pie chart a bit on the left side to align with bottom two charts using cx and cy
         .cy(130) 
         
+        .transitionDuration(800)
+        
         .innerRadius(50);
         
     // find the max value on your dimension to insert on your histogram ticks    
@@ -125,6 +127,8 @@ $(document).ready(function() {
               }
             }            
         })               
+        
+        .transitionDuration(800)
         
         .elasticX(true)
         .elasticY(true);
@@ -177,6 +181,8 @@ $(document).ready(function() {
                     
             chart.select("g").attr("transform", "translate(20,5)")        
         })    
+        
+        .transitionDuration(800)
         
         .elasticX(true);
         

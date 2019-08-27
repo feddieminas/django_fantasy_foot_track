@@ -121,7 +121,7 @@ input[type = text].form-control, #id_desc,#id_content {
 
 /* influence category header colours */
 .inf--bg-fontcolor {
-    background-color: aliceblue;
+    background-color: aliceblue; 
     color: black;
 }
 

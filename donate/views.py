@@ -10,7 +10,7 @@ import stripe
 stripe.api_key = settings.STRIPE_SECRET
 
 # Create your views here.
-@login_required()
+@login_required
 def donate(request):    
     if request.method=="POST":
         donation_form = DonationForm(request.POST)

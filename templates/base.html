@@ -41,6 +41,10 @@
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'all_creativities' %}"><i class="fa fa-cog mr-1"></i>Creativity</a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'all_threats' %}"><i class="fa fa-minus mr-1"></i>Threat</a></li>
                         <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'donate' %}"><i class="fa fa-money mr-1"></i>Donate</a></li>
+                    {% else %}    
+                        <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'all_influences' %}"><i class="fa fa-asterisk mr-1"></i>Influence</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'all_creativities' %}"><i class="fa fa-cog mr-1"></i>Creativity</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 px-md-3" href="{% url 'all_threats' %}"><i class="fa fa-minus mr-1"></i>Threat</a></li>                        
                     {% endif %}
                 </ul>
             </div>

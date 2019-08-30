@@ -1,6 +1,7 @@
 from django.conf.urls import url
+from django.urls import path
 from .views import show_graph
 
 urlpatterns = [
-    url(r'^$', show_graph, name='show_graph')
-    ]
+    path('', show_graph, name='show_graph'),
+    ]    

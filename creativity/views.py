@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.http import HttpResponseNotFound, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Creativity, Comment, UpVote, Likeability
@@ -159,7 +160,7 @@ def view_creativity(request, pk, view=''):
     return render(request, 'view_creativity.html', args)
 
 @login_required
-def user_upvote(request, pk):
+def cre_user_upvote(request, pk):
     """ Returns no html file, it redirects to view_creativity.html. Pk is the category created through the add_category view """
     
     """ Via ManyToMany Relationship, we need to retrieve the category card and user to be able to assign 

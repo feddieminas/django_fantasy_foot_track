@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import auth, messages
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from accounts.forms import UserLoginForm, UserRegistrationForm, FilterView
 from influence.models import Influence
+from influence.models import Likeability as LikeabilityInf
 from creativity.models import Creativity
-from django.db.models import Count
+from creativity.models import Likeability as LikeabilityCre
+from threat.models import Threat
+from threat.models import Likeability as LikeabilityThr
+from django.db.models import Count, Sum
+from django.db.models.functions import Coalesce
 from django.template.context_processors import csrf
 
 def index(request):
@@ -18,15 +23,16 @@ def index(request):
             if filterViewCatgry == "all":
                 figuresInf = Influence.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
                 figuresCr = Creativity.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
+                figuresTh = Threat.objects.all().values('status').annotate(total=Count('status')).order_by('-total')
             else:
                 figuresInf = Influence.objects.filter(motive=filterViewCatgry).values('status').annotate(total=Count('status')).order_by('-total')
                 figuresCr = Creativity.objects.filter(motive=filterViewCatgry).values('status').annotate(total=Count('status')).order_by('-total')
-            figuresTh = {}    
+                figuresTh = Threat.objects.filter(motive=filterViewCatgry).values('status').annotate(total=Count('status')).order_by('-total')   
     else:
         filterView = FilterView() # dropdown form filter by motive
         figuresInf = Influence.objects.filter(motive="player").values('status').annotate(total=Count('status')).order_by('-total')
         figuresCr = Creativity.objects.filter(motive="player").values('status').annotate(total=Count('status')).order_by('-total')
-        figuresTh = {}
+        figuresTh = Threat.objects.filter(motive="player").values('status').annotate(total=Count('status')).order_by('-total')
     
     args = {"filterView": filterView, "figuresInf": figuresInf, "figuresCr": figuresCr, "figuresTh": figuresTh}    
     return render(request, 'index.html', args)
@@ -107,7 +113,33 @@ def registration(request):
 def user_profile(request):
     """The user's profile page"""
     user = User.objects.get(email=request.user.email)
-    return render(request, 'profile.html', {"profile": user})
+    
+    """ influence stats """
+    figuresInf = Influence.objects.filter(owner=user).aggregate(
+        created=Count('owner'), views=Coalesce(Sum('views'), 0)
+    )
+    figuresInf.update(LikeabilityInf.objects.filter(influence__in=Influence.objects.filter(owner=user), level=1).aggregate(
+        upvotes=Count('users_vote')
+    ))
+    
+    """ creativity stats """
+    figuresCr = Creativity.objects.filter(owner=user).aggregate(
+        created=Count('owner'), views=Coalesce(Sum('views'), 0)
+    )
+    figuresCr.update(LikeabilityCre.objects.filter(creativity__in=Creativity.objects.filter(owner=user), level=1).aggregate(
+        upvotes=Count('users_vote')
+    ))    
+    
+    """ threat stats """
+    figuresTh = Threat.objects.filter(owner=user).aggregate(
+        created=Count('owner'), views=Coalesce(Sum('views'), 0)
+    )
+    figuresTh.update(LikeabilityThr.objects.filter(threat__in=Threat.objects.filter(owner=user), level=1).aggregate(
+        upvotes=Count('users_vote')
+    ))  
+    
+    args = {"profile": user, "figuresInf": figuresInf, "figuresCr": figuresCr, "figuresTh": figuresTh}
+    return render(request, 'profile.html', args)
     
     
 

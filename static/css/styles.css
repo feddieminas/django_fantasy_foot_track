@@ -255,14 +255,13 @@ nav h3 {
 /* ---- ADD_CATEGORY ---- */
 
 /* large tablets to highlight the target form attributes when creating a category card */
-
 .boxModel-create-box {
     padding-bottom: 8px;
     border-left: 1px solid black;
     border-right: 1px solid black;    
 }
 
-.inf-create-box-color {
+.inf-create-box-color { /* influence */
     background-color: rgba(0, 127, 255, 0.15);
 } 
 
@@ -274,11 +273,11 @@ nav h3 {
     box-shadow: 0 0 0 0.075rem rgba(0, 0, 255, 1);
 }
 
-.cre-create-box-color {
+.cre-create-box-color { /* creativity */
     background-color: rgba(219, 223, 224, 0.4);
 }  
 
-.thr-create-box-color {
+.thr-create-box-color { /* threat */
     background-color: rgba(249,100,100, 0.2);
 }  
 
@@ -438,6 +437,39 @@ div.slide-left h3, div.slide-left h5 {
     fill: black !important;
 }
 
+/* ---- PROFILE ---- */
+
+td, th {
+    width: 5rem;
+    height: 2.8rem;
+    border: 1px solid #ccc;
+}
+    
+th {
+    background: #2C3E50;
+    color: white;
+    border-color: white;
+}
+
+.tblInf { /* influence */
+    background: rgb(0,0,205);
+    color: white;
+}
+
+.tblCre { /* creativity */
+    background: rgb(219,223,224);
+    color: black;
+}
+
+.tblThr { /* threat */
+    background: rgb(249,100,100);
+    color: white;
+}
+
+.tblTot { /* totals */
+    background-color:  #18BC9C;
+    color:#fff;
+} 
 
 /* ---- FOOTER ---- */
 

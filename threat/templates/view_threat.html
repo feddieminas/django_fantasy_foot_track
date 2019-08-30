@@ -64,7 +64,7 @@
                 <p class="mb-1 mb-sm-1"><a href="" class="btn btn-success disabled">UpVote</a></p>
                 <p class="text-muted">You have Upvoted it</p>
             {% else %}
-                <p><a href="{% url 'user_upvote' threat.id %}" class="btn btn-success">UpVote</a></p>
+                <p><a href="{% url 'thr_user_upvote' threat.id %}" class="btn btn-success">UpVote</a></p>
             {% endif %}
         </div>
         

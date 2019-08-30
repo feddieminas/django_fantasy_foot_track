@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404, redirect, reverse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.http import HttpResponseNotFound, JsonResponse
 from django.contrib.auth.decorators import login_required
 from .models import Influence, Comment, UpVote, Likeability
@@ -84,8 +85,8 @@ def add_influence(request, pk=None):
             form.save()
             return redirect(view_influence, form.pk)
     else:
-        form = CreateInfluenceForm(instance=influence) 
-        
+        form = CreateInfluenceForm(instance=influence)    
+    
     args = {'form':form}    
     return render(request, 'add_influence.html', args)
 

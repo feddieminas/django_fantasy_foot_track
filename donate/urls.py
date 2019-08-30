@@ -1,6 +1,7 @@
 from django.conf.urls import url
+from django.urls import path
 from .views import donate
 
 urlpatterns = [
-    url(r'^$', donate, name='donate')
-    ]
+    path('', donate, name='donate'),
+    ]    

@@ -6,6 +6,8 @@
 
 {% block content %}
 
+{% if jsonData|length > 2 %}
+
 <section id="section--graphs">
     <div class="row mb-3" style="border-bottom: 1px solid #e6e6e6;">
         <div class="col-md-9 col-lg-7 m-auto text-center py-2 pl-1 p-sm-2">
@@ -32,6 +34,12 @@
     </div>    
 </section>
 
+{% else %}
+
+<h3 class="p-shift mt-3 d-flex justify-content-center">No Records Found</h3>
+
+{% endif %}
+
 {% endblock %}    
 
 {% block body_end_head %}
@@ -54,139 +62,141 @@ $(document).ready(function() {
     dc.config.defaultColors(d3.schemeCategory10);
     
     viewsUpvData = {{jsonData|safe}};
-    //console.log("viewsUpvData", viewsUpvData);    
-    
-    function remove_empty_bins(source_group) {
-        return {
-            all:function () {
-                return source_group.all().filter(function(d) {
-                    return d.value != 0;
-                });
-            }
-        };
-    }
-    
-    // set crossfilter
-    let ndx = crossfilter(viewsUpvData),
-        statusDim  = ndx.dimension(function(d) {return d.Status;}),
-        viewsUpvDim = ndx.dimension(function(d) {return Math.floor(d.viewsUpv/10);}),
-        categoryDim  = ndx.dimension(function(d) {return d.Category;}),
-        viewsUpvPerStatus = statusDim.group().reduceSum(function(d) {return +d.viewsUpv;}),
-        viewsUpvPerCategory = categoryDim.group().reduceSum(function(d) {return +d.viewsUpv;}),
-        viewsUpvHist = viewsUpvDim.group().reduceCount(),
-        nonEmptyHist = remove_empty_bins(viewsUpvHist)
-        
-    statusRingChart
-        .width(340).height(260) 
-        .dimension(statusDim)
-        .group(viewsUpvPerStatus)
-        
-        .title(function(d) { 
-            return d.key + " Status Views : " + d.value;
-        })
-        .renderTitle(true) 
-        
-        .cx(135) //move pie chart a bit on the left side to align with bottom two charts using cx and cy
-        .cy(130) 
-        
-        .transitionDuration(800)
-        
-        .innerRadius(50);
-        
-    // find the max value on your dimension to insert on your histogram ticks    
-    let myMaxTickFormat = 0; 
-    viewsUpvHist.top(Infinity).forEach(function (d) {
-        if(d.value>myMaxTickFormat) {myMaxTickFormat=d.value};
-    });
-    
-    viewsUpvHistChart
-        .width(360).height(320) 
-        .dimension(viewsUpvDim)
-        .group(nonEmptyHist)
-        .x(d3.scaleBand())
-        .xUnits(dc.units.ordinal)
-        .yAxisLabel("Category Cards in each views group")
-        .xAxisLabel("Views")
-        
-        .title(function(d) { 
-            return "Number of Cards : " + d.value;
-        })
-        .renderTitle(true)        
-        
-        .on('renderlet', function(chart) { 
-            chart.select('.x-axis-label').attr("transform", "translate(" + 150 + "," + 313 + ")");
-            chart.select('.x-axis-label').attr("font-size", "14px");
-            chart.select('.y-axis-label').attr("font-size", "13px");
-            let c = chart.selectAll(".bar").nodes();
-            const c_y = c.map(function(d) { return parseFloat(d.attributes.y.value); });
-            const c_y_last_min_idx = parseInt(c_y.lastIndexOf(d3.min(c_y)));
-            c[c_y_last_min_idx].attributes.fill.value = "rgba(44, 62, 80, 0.8)";
-            for (let i=0; i < c.length; i++) {
-              if (i!=c_y_last_min_idx) {
-                c[i].attributes.fill.value = "rgba(149, 165, 166,0.8)";  
-              }
-            }            
-        })               
-        
-        .transitionDuration(800)
-        
-        .elasticX(true)
-        .elasticY(true);
-    viewsUpvHistChart.xAxis().tickFormat(function(d) {return (d) * 10  + "-" + (d+1) * 10});
-    viewsUpvHistChart.yAxis().ticks(myMaxTickFormat);
-    
-    categoriesRowChart
-        .width(380).height(320) 
-        .dimension(categoryDim)
-        .group(viewsUpvPerCategory)
 
-        .title(function(d) { 
-            return d.key + " Views : " + d.value;
-        })
-        .renderTitle(true) 
-
-        .colorAccessor(function (d) {
-            if (d.key == "Influence") {
-                return "category1";
-            }
-            else if (d.key == "Creativity") {
-                return "category2";
-            }
-            else if (d.key == "Threat") {
-                return "category3";
-            }
-        })
-        
-        .colors(d3.scaleOrdinal().domain(["category1", "category2", "category3"])
-        .range(["rgb(0, 0, 205)", "rgb(219, 223, 224)", "rgb(249,100,100)"]))           
-        
-        .on('renderlet', function(chart) { 
-            let c = chart.selectAll("g.row").selectAll("text").nodes();
-            for (let i=0; i < c.length; i++) {
-                c[i].style.fill = "white";
-                if(c[i].textContent=="Creativity") {
-                   c[i].style.fill = "black";
+    if(viewsUpvData.length > 0) {
+        function remove_empty_bins(source_group) {
+            return {
+                all:function () {
+                    return source_group.all().filter(function(d) {
+                        return d.value != 0;
+                    });
                 }
-                c[i].attributes.x.value = 5;
-            }
+            };
+        }
+        
+        // set crossfilter
+        let ndx = crossfilter(viewsUpvData),
+            statusDim  = ndx.dimension(function(d) {return d.Status;}),
+            viewsUpvDim = ndx.dimension(function(d) {return Math.floor(d.viewsUpv/10);}),
+            categoryDim  = ndx.dimension(function(d) {return d.Category;}),
+            viewsUpvPerStatus = statusDim.group().reduceSum(function(d) {return +d.viewsUpv;}),
+            viewsUpvPerCategory = categoryDim.group().reduceSum(function(d) {return +d.viewsUpv;}),
+            viewsUpvHist = viewsUpvDim.group().reduceCount(),
+            nonEmptyHist = remove_empty_bins(viewsUpvHist)
             
-            chart.select(".x-axis-label").remove();
-            chart.svg()
-                    .append("text")
-                    .attr("class", "x-axis-label").attr("font-size", "14px")
-                    .attr("text-anchor", "middle")
-                    .attr("x", (chart.width()/2)-17)
-                    .attr("y", chart.height()-3.5)
-                    .text("Total Views in each Category"); 
-                    
-            chart.select("g").attr("transform", "translate(20,5)")        
-        })    
+        statusRingChart
+            .width(340).height(260) 
+            .dimension(statusDim)
+            .group(viewsUpvPerStatus)
+            
+            .title(function(d) { 
+                return d.key + " Status Views : " + d.value;
+            })
+            .renderTitle(true) 
+            
+            .cx(135) //move pie chart a bit on the left side to align with bottom two charts using cx and cy
+            .cy(130) 
+            
+            .transitionDuration(800)
+            
+            .innerRadius(50);
+            
+        // find the max value on your dimension to insert on your histogram ticks    
+        let myMaxTickFormat = 0; 
+        viewsUpvHist.top(Infinity).forEach(function (d) {
+            if(d.value>myMaxTickFormat) {myMaxTickFormat=d.value};
+        });
         
-        .transitionDuration(800)
+        viewsUpvHistChart
+            .width(360).height(320) 
+            .dimension(viewsUpvDim)
+            .group(nonEmptyHist)
+            .x(d3.scaleBand())
+            .xUnits(dc.units.ordinal)
+            .yAxisLabel("Category Cards in each views group")
+            .xAxisLabel("Views")
+            
+            .title(function(d) { 
+                return "Number of Cards : " + d.value;
+            })
+            .renderTitle(true)        
+            
+            .on('renderlet', function(chart) { 
+                chart.select('.x-axis-label').attr("transform", "translate(" + 150 + "," + 313 + ")");
+                chart.select('.x-axis-label').attr("font-size", "14px");
+                chart.select('.y-axis-label').attr("font-size", "13px");
+                let c = chart.selectAll(".bar").nodes();
+                const c_y = c.map(function(d) { return parseFloat(d.attributes.y.value); });
+                const c_y_last_min_idx = parseInt(c_y.lastIndexOf(d3.min(c_y)));
+                c[c_y_last_min_idx].attributes.fill.value = "rgba(44, 62, 80, 0.8)";
+                for (let i=0; i < c.length; i++) {
+                  if (i!=c_y_last_min_idx) {
+                    c[i].attributes.fill.value = "rgba(149, 165, 166,0.8)";  
+                  }
+                }            
+            })               
+            
+            .transitionDuration(800)
+            
+            .elasticX(true)
+            .elasticY(true);
+        viewsUpvHistChart.xAxis().tickFormat(function(d) {return (d) * 10  + "-" + (d+1) * 10});
+        viewsUpvHistChart.yAxis().ticks(myMaxTickFormat);
         
-        .elasticX(true);
+        categoriesRowChart
+            .width(380).height(320) 
+            .dimension(categoryDim)
+            .group(viewsUpvPerCategory)
+    
+            .title(function(d) { 
+                return d.key + " Views : " + d.value;
+            })
+            .renderTitle(true) 
+    
+            .colorAccessor(function (d) {
+                if (d.key == "Influence") {
+                    return "category1";
+                }
+                else if (d.key == "Creativity") {
+                    return "category2";
+                }
+                else if (d.key == "Threat") {
+                    return "category3";
+                }
+            })
+            
+            .colors(d3.scaleOrdinal().domain(["category1", "category2", "category3"])
+            .range(["rgb(0, 0, 205)", "rgb(219, 223, 224)", "rgb(249,100,100)"]))           
+            
+            .on('renderlet', function(chart) { 
+                let c = chart.selectAll("g.row").selectAll("text").nodes();
+                for (let i=0; i < c.length; i++) {
+                    c[i].style.fill = "white";
+                    if(c[i].textContent=="Creativity") {
+                       c[i].style.fill = "black";
+                    }
+                    c[i].attributes.x.value = 5;
+                }
+                
+                chart.select(".x-axis-label").remove();
+                chart.svg()
+                        .append("text")
+                        .attr("class", "x-axis-label").attr("font-size", "14px")
+                        .attr("text-anchor", "middle")
+                        .attr("x", (chart.width()/2)-17)
+                        .attr("y", chart.height()-3.5)
+                        .text("Total Views in each Category"); 
+                        
+                chart.select("g").attr("transform", "translate(20,5)")        
+            })    
+            
+            .transitionDuration(800)
+            
+            .elasticX(true);
+            
+        dc.renderAll();        
         
-    dc.renderAll();
+    }
     
     /////// rest ///////
     
@@ -195,7 +205,7 @@ $(document).ready(function() {
         const w = window.innerWidth;
         const h = window.innerHeight;
         
-        if (h>=1380) {
+        if (h>=1380 || viewsUpvData <= 0) {
             $("footer").animate({
                 position: "absolute", bottom: "0"
             }, 1500, "linear", function() {

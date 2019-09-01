@@ -6,33 +6,33 @@
 
   <h3>{{ profile.username }}'s Table</h3>
   
-  <table class="text-center">
+  <table class="table text-center">
     <tr>
-      <th></th>
-      <th>Created</th>
-      <th>Views</th>
-      <th>Upvotes</th>
+      <th scope="col"></th>
+      <th scope="col">Created</th>
+      <th scope="col">Views</th>
+      <th scope="col">Upvotes</th>
     </tr>
     <tr>
-      <th class="tblInf">Influence</th>
+      <th scope="row" class="tblInf">Influence</th>
       <td>{{ figuresInf.created }}</td>
       <td>{{ figuresInf.views }}</td>
       <td>{{ figuresInf.upvotes }}</td>
     </tr>
     <tr>
-      <th class="tblCre">Creativity</th>
+      <th scope="row" class="tblCre">Creativity</th>
       <td>{{ figuresCr.created }}</td>
       <td>{{ figuresCr.views }}</td>
       <td>{{ figuresCr.upvotes }}</td>
     </tr>
     <tr>
-      <th class="tblThr">Threat</th>
+      <th scope="row" class="tblThr">Threat</th>
       <td>{{ figuresTh.created }}</td>
       <td>{{ figuresTh.views }}</td>
       <td>{{ figuresTh.upvotes }}</td>
     </tr>
     <tr>
-      <th>Totals</th>
+      <th scope="row">Totals</th>
       <td>{{ figuresInf.created|add:figuresCr.created|add:figuresTh.created }}</td>
       <td>{{ figuresInf.views|add:figuresCr.views|add:figuresTh.views }}</td>
       <td>{{ figuresInf.upvotes|add:figuresCr.upvotes|add:figuresTh.upvotes }}</td>    

@@ -102,7 +102,7 @@ def view_influence(request, pk, view=''):
     
     """ create a category card comment [pk, influence, owner, content, created_date ] """
     if request.method == "POST":
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return redirect(reverse('login'))
         form = CreateInfluenceCommentForm(request.POST)
         if form.is_valid():

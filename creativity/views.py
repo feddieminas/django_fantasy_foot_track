@@ -102,7 +102,7 @@ def view_creativity(request, pk, view=''):
     
     """ create a category card comment [pk, creativity, owner, content, created_date ] """
     if request.method == "POST":
-        if not request.user.is_authenticated():
+        if not request.user.is_authenticated:
             return redirect(reverse('login'))
         form = CreateCreativityCommentForm(request.POST)
         if form.is_valid():

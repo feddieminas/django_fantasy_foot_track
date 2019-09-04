@@ -33,9 +33,9 @@
         <fieldset><legend class="ml-3 ml-sm-4 mb-3 pl-3 pb-1 visa-colour" style="color:azure;width: 90%;"><i class="fa fa-credit-card mr-1" aria-hidden="true"></i>Payment Details</legend></fieldset>
         
         <!-- for any credit card errors that come back -->
-        <div id="credit-card-errors" style="display: none;">
+        <div id="credit-card-errors" style="display: none;font-weight: bold;">
             <!-- if errors come back, we display stripe-error-message -->
-            <div class="alert-message block-message error" id="stripe-error-message"></div>
+            <div class="alert-message block-message error mb-3" id="stripe-error-message"></div>
         </div>
         
         <div class="form-group col-md-6 offset-md-3">
@@ -71,6 +71,12 @@
     });
     
     $(".container").addClass("form-creation-shift");
+
+    const alertVar = {{alertResult|safe}};
+    if ($('.messages')[0]) {
+        $(".messages").parent().removeClass();
+        $(".messages").parent().addClass('alert').addClass("alert-" + alertVar["result"]);    
+    };
 
     // footer responsive stay at bottom
     $(window).on('resize', function(){

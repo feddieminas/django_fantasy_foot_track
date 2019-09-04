@@ -61,7 +61,7 @@ $(document).ready(function() {
     
     dc.config.defaultColors(d3.schemeCategory10);
     
-    viewsUpvData = {{jsonData|safe}};
+    let viewsUpvData = {{jsonData|safe}};
 
     if(viewsUpvData.length > 0) {
         function remove_empty_bins(source_group) {

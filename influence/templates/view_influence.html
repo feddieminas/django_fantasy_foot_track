@@ -18,7 +18,7 @@
         </div>
         
         <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0 slide-left"> 
-            <h3 class="mw320 lh15 ml-sm-0 ml-md-0"><mark class="inf--bg-fontcolor">{{ influence.name | truncatechars:25 | title }}</mark></h3>
+            <h3 class="mw320 lh15 ml-sm-0 ml-md-0"><mark class="inf--bg-fontcolor">{{ influence.name | truncatechars:32 | title }}</mark></h3>
         </div>
         
     </div>
@@ -32,8 +32,8 @@
             </a>
         </div>
         
-        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-6 offset-md-3 text-md-center pl-md-0 col-lg-6 offset-lg-2 slide-left"> 
-            <h5 class="mw280 lh13" style="margin-right: 15px;">{{ influence.desc | title }}</h5>
+        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-7 offset-md-3 text-md-center pl-md-0 col-lg-7 offset-lg-2 slide-left"> 
+            <h5 class="mh18 mw280 lh13 wordbr" style="margin-right: 15px;">{{ influence.desc | title }}</h5>
         </div>   
         
     </div>
@@ -124,38 +124,20 @@
 
 {% block body_end_js %}
 <script>
+    // sticky footer
+    $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
+    $(".container").css({"flex": "1"});
 
     // footer responsive stay at bottom, h3 header font-size change on smaller tablets
     $(window).on('resize', function(){
-        const commentsTotal = parseInt('{{ comments | length }}', 10);
-        const h = window.innerHeight;
-        const w = window.innerWidth;
-        const filters = [[0, 800, 0], [1, 900, 0], [2, 1000, 550], [3, 1000, 992]]; // [commentsTotal,h,w]
-        
-        function checkFilterPos(filters) {
-            return commentsTotal == filters[0] && h >= filters[1] && w >= filters[2];
-        }
-        
-        if (filters.some(checkFilterPos)) {
-            $("footer").animate({
-                position: "absolute", bottom: "0"
-            }, 500, "linear", function() {
-                $("footer").css({'position' : 'absolute', 'bottom' : 0});
-            });
-        }
-        else {
-            $("footer").css({'position' : 'inherit'});
-        }
-        
         //h3 adjust font
+        const w = window.innerWidth;
         if(w<=775) {
             $("mark:eq(1)").css({'font-size' : '26px'});
         } else {
             $("mark:eq(1)").removeAttr('style');
         }
-        console.log(w);
         
     }).resize();
-  
 </script>
 {% endblock body_end_js %}

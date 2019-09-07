@@ -10,6 +10,9 @@ class CreateInfluenceForm(forms.ModelForm):
             'desc': 'Description',
             'status': 'Status Importance',
         }        
+        widgets = {
+          'desc': forms.Textarea(attrs={'rows':7, 'cols':25}),
+        }              
 
 ''' add an influence comment '''        
 class CreateInfluenceCommentForm(forms.ModelForm):

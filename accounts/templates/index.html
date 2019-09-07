@@ -36,7 +36,7 @@
     	<img class="img-thumbnail" src="{{MEDIA_URL}}images/Influence.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Influence</h2>
-    		<p class="flex-card_para">Player's influence on the game and style of play can play a huge role</p>
+    		<p class="flex-card_para">Player's or Features app influence on the game and style of play can play a huge role</p>
         {% for q in figuresInf %}
           <p class="flex-card_para mb-1">
           {% for k, v in q.items %}
@@ -62,7 +62,7 @@
     	<img class="img-thumbnail" src="{{MEDIA_URL}}images/Creativity.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Creativity</h2>
-    		<p class="flex-card_para">Player's existing skills or newly created features might bring more public to football fantasy</p>
+    		<p class="flex-card_para">Player's existing skills or newly created Features might bring more public to football fantasy</p>
         {% for q in figuresCr %}
           <p class="flex-card_para mb-1">
           {% for k, v in q.items %}
@@ -88,7 +88,7 @@
     	<img class="img-thumbnail" src="{{MEDIA_URL}}images/Threat.jpg" alt="" style="width:100%;">
     	<div class="d-flex flex-column">
     		<h2 class="flex-card_head">Threat</h2>
-    		<p class="flex-card_para">Players or Features can also bring negativity to the public</p>
+    		<p class="flex-card_para">Player's pitch location or Features negative impact to the public</p>
         {% for q in figuresTh %}
           <p class="flex-card_para mb-1">
           {% for k, v in q.items %}
@@ -114,6 +114,9 @@
 
 {% block body_end_js %}
 <script>
+  // sticky footer
+  $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
+  $(".container").css({"flex": "1"});
 
   // Django dropdown form filter per motive [Player, Feature, ALL], it submits when a user filters
   $("#id_group_by").change(function() {
@@ -143,7 +146,7 @@
   $(window).on('resize', function(){
       const w = window.innerWidth;
       const h = window.innerHeight;
-      if (w >= 768 && h >= 1200) {
+      if (w >= 768 && h >= 1300) {
           $("footer").css({'position' : 'absolute', 'bottom' : 0});
       }
       else {

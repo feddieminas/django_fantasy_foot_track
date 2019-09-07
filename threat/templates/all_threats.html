@@ -56,7 +56,7 @@
                 <div class="card-body px-0 py-4">
                     <h5 class="card-title py-2 pl-3">{{ thr.name|title }}</h5>
                     <hr class="mw200">
-                    <p class="card-text pl-3 category-card-text">{{thr.desc | truncatewords:50 }}</p>
+                    <p class="card-text pl-3 pt-1 category-card-text">{{thr.desc | truncatewords:50 }}</p>
                 </div>        
                 
                 {% for key, values in thrUpvotesAndDays.items %}
@@ -125,6 +125,10 @@
 
 {% block body_end_js %}
 <script>
+    // sticky footer
+    $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
+    $(".container").css({"flex": "1"});
+
     $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(249,100,100, 1)'});
     
     $(".list-group").css({'border-left': '0.018em solid rgba(0,0,0,0.125)'});
@@ -187,33 +191,6 @@
             }              
           }
         }); 
-    }    
-    
-    function footerResponsive() {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        const visible_records_per_page = $('#listingCards_thr .card').length;
-        let threshold = 0;
-        switch(visible_records_per_page) {
-            case 4:
-                threshold = 1200;
-                break;
-            case 0:
-                threshold = 0;
-                break;                
-            default:
-                threshold = 765; // for 3,2,1 records appear
-        }
-        if ((w >= threshold && visible_records_per_page <= 4 && h>900) || ((h-300) > 900 && visible_records_per_page <= 4)) { //assume one row in big tablet has 4 cards
-            $("footer").animate({
-                position: "absolute", bottom: "0"
-            }, 500, "linear", function() {
-                $("footer").css({'position' : 'absolute', 'bottom' : 0});
-            });
-        }
-        else {
-            $("footer").css({'position' : 'inherit'});
-        }        
     }    
     
     //previous btn
@@ -340,7 +317,6 @@
         }
         
         featureHeaderHighlight();
-        footerResponsive();  
     }    
     
 //////////////////////////////////////////    
@@ -351,11 +327,6 @@
             current_page = 1;
             saveCurrentPage();
         });
-        
-        // footer responsive stay at bottom
-        $(window).on('resize', function(){
-            if("p1" in myPages) {footerResponsive();}
-        }).resize();        
         
         buildMyPages();
 	    changePage(current_page);

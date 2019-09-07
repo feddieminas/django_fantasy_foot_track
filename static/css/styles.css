@@ -221,7 +221,7 @@ nav h3 {
 
 /* category card description if long text */
 .category-card-text {
-    height: 45px;
+    height: 70px;
     overflow-y: scroll;    
 }
 
@@ -256,7 +256,7 @@ nav h3 {
 
 /* large tablets to highlight the target form attributes when creating a category card */
 .boxModel-create-box {
-    padding-bottom: 8px;
+    padding-bottom: 18px;
     border-left: 1px solid black;
     border-right: 1px solid black;    
 }
@@ -521,7 +521,12 @@ footer .fa {
    font-size: 22px; 
 }
 
-/* widths */
+/* widths and heights */
+
+.mh18 {
+    min-height: 18px;
+}
+
 .mw80 {
     min-width: 80px;
 }
@@ -553,6 +558,12 @@ footer .fa {
 
 .lh15 {
     line-height:1.5;
+}
+
+/* word break */
+
+.wordbr {
+    word-break: break-all;    
 }
 
 /* btn shadow */

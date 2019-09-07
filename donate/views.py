@@ -46,7 +46,7 @@ def donate(request):
                 alertResult = { "result":"danger" }
         
         else:
-            print(donation_form.errors)
+            ''' print(donation_form.errors) '''
             messages.error(request, "We were unable to take a payment with that card!")
             alertResult = { "result":"danger" }
     else:

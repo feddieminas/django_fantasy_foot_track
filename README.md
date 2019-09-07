@@ -3,7 +3,7 @@
 FPL (Fantasy Football(soccer) Premier League) is a game in which users assemble an imaginary team of real life footballers and score points based on those players' actual statistical performance 
 or their perceived contribution on the field of play. The [FPL ICT Index](https://www.premierleague.com/news/65567) uses match event data to generate a single view score for each player on three key categories – Influence (player's impact), Creativity (player's producing opportunities) 
 and Threat (player's threat on goal). Public users can generate a category card (on either or all of the three key categories) and initiate a discussion. In addition the users insert a Status (Low, Medium, High) to state the degree of importance of that category card.
-Current users as well as other users can upvote the categories cards created. Further to a user inserting a Player as a topic in each category card, one can also insert a Feature in each one (ex. dashboard lineups online presence, add feature fouls called on VAR). 
+Current users as well as other users can upvote the categories cards created. Further to a user inserting a Player as a topic in each category card, one can also insert a Feature (ex. dashboard lineups online presence, add feature fouls called on VAR). 
 
 After all, FPL Data Scientists can accumulate all these help data to improve players indices, features stats (goals, assists etc), as well as, platform's features functionalities, appearance and responsiveness. 
 
@@ -15,7 +15,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
 
 - The scope plane: 
   - Features
-    - Registration and Login section 
+    - Registration, Login and User's Profile section
     - An initial home page explanation and browse to the three categories
     - Three sections with each categories cards published, create, upvotes and comments
     - A donate section
@@ -28,7 +28,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
     - A status [Low, Medium, High] filtering (single, not multiple filtering) and a search text button to find specific cards. 
     - pagination on category cards using linked list concept
   - Donate section implies a credit card form 
-  - Graphs section show three charts
+  - Graphs section show three Views + Upvotes charts ( status pie chart, histogram bar chart, categories row chart)
 
 - The skeleton plane: 
   - Page info represented from left to right (or top to bottom) concept :
@@ -40,6 +40,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
       - A back button on view category card to return back to categories cards
     - Button submit donate amount
     - Cross filtered charts
+    - Profile section having table user stats (No of categories, status and comments posted)
 
 - The surface plane: 
   - Colours : home page showing UK colours and each of the three categories having its distinct colour (blue, white, red)  
@@ -52,16 +53,15 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
 
 - As a developer and user:
   - Show all three categories stats on home page to have a brief overview of their popularity
-  - When creating a category card or adding a comment on larger devices, insert a related bg colour thus the input and text area tags are quick easy to target.  
+  - When creating a category card or adding a comment on larger devices, insert a related bg colour thus the input and text area tags are quick easy to target  
 
 - As a developer :
   - Used UK flag three colours to differentiate the three categories and show game country location (i.e. UK)
-  - Used pagination and even numbers per page to not overload the user having many categories per page to scroll
+  - Used pagination and even numbers per page to not overload the user having many categories per page to scroll and structured appearance
   - As previous and next buttons have been implemented, use page input value to be inserted by the user to achieve flexibility
 
 - As a user : 
-  - Category cards posted showing the day that has been created (i.e. Today, 3 days ago etc), to enable me understand the trend and recent topics discussed
-    - Above mentioned concept similar concerning each card comments section
+  - Category cards posted showing the day that has been created (i.e. Today, 3 days ago etc), to enable me understand the trend and recent topics discussed. Similarly implement datetime in each view card section
   - Number of comments show when viewing a card, thus one can see number of public actions at a glance without scrolling 
   - Use mark tag to highlight the two to three key values on a category card overview
 
@@ -81,13 +81,16 @@ Additional plans to be implemented in the future would be :
 
 - thread on comments (reply to)
 - Database wise, categories classes could all belong in a single model class with an inner column field called category, along with the other current fields  
+- Profile section to insert detailed data per card created by the user (for ex. accordion or group/ungroup)
 
 ### Features Left to Implement
 
-- On profile user section, show personal user stats (ex. No of categories, status and comments posted)
 - Pagination dropdown form filtering for users to be able to indicate number of category cards displayed per page
 - In each category home page, status filter to be multiple, rather than the current single triggered (Lor or Medium or High)
 - Datetime on each category footer, showing far from days also the hours ago (specifically if two cards are posted Today).
+- Admin's action on category cards created after a time period of a month 
+  - No comments showed, status importance to be decreased (ex. from medium to low)
+  - Several comments appear, status to be incremented (ex. from medium to high) 
 
 
 ## Technologies Used

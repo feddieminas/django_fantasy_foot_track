@@ -51,6 +51,9 @@
 {% block body_end_js %}
 <script type="text/javascript">
 $(document).ready(function() { 
+    // sticky footer /////
+    $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
+    $(".container").css({"flex": "1"});    
     
     ///// graphs section /////
     
@@ -203,18 +206,6 @@ $(document).ready(function() {
     // footer responsive stay at bottom
     $(window).on('resize', function(){
         const w = window.innerWidth;
-        const h = window.innerHeight;
-        
-        if (h>=1380 || viewsUpvData <= 0) {
-            $("footer").animate({
-                position: "absolute", bottom: "0"
-            }, 1500, "linear", function() {
-                $("footer").css({'position' : 'absolute', 'bottom' : 0});
-            });
-        }
-        else {
-            $("footer").css({'position' : 'inherit'});
-        }        
         
         if(w>575) {
             $("h3").addClass("p-shift").css({'white-space': 'nowrap'});

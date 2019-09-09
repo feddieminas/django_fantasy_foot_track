@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/feddieminas/django_fantasy_foot_track.svg?branch=master)](https://travis-ci.org/feddieminas/django_fantasy_foot_track)
+
 # SportAttractor - FPL ICT Index public assist
 
 FPL (Fantasy Football(soccer) Premier League) is a game in which users assemble an imaginary team of real life footballers and score points based on those players' actual statistical performance 

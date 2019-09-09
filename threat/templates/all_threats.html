@@ -49,14 +49,13 @@
         
             {% for thr in threats reversed %}
             
-            <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch fade-in">
+            <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch fade-in h420">
                 
                 <h3 class="card-header py-2 fs22" style="color:{{ colorsIndex|hash:thr.status|hash2:1 }};background-color:{{ colorsIndex|hash:thr.status|hash2:0 }};"><span>{{ thr.motive|title }}</span></h3>
                 
-                <div class="card-body px-0 py-4">
-                    <h5 class="card-title py-2 pl-3">{{ thr.name|title }}</h5>
-                    <hr class="mw200">
-                    <p class="card-text pl-3 pt-1 category-card-text">{{thr.desc | truncatewords:50 }}</p>
+                <div class="card-body px-0 py-4 h260">
+                    <h5 class="card-title mb-3 px-3 pt-1 mh105 hr-btm">{{ thr.name|title }}</h5>
+                    <p class="card-text mt-3 px-3 pt-1 category-card-text">{{thr.desc | truncatewords:50 }}</p>
                 </div>        
                 
                 {% for key, values in thrUpvotesAndDays.items %}
@@ -64,17 +63,17 @@
                         {% if thr.id|stringformat:"i" == name %}        
                         
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item py-2">
+                            <li class="list-group-item py-2 px-3">
                                 <span class="oi oi-eye" title="person" aria-hidden="true"> {{ thr.views }}</span>
                                 <span class="oi oi-check px-3" title="person" aria-hidden="true">{{ values.upvotes }}</span>
                             </li>
                         </ul>                
         
-                        <div class="card-body py-3">
+                        <div class="card-body py-3 px-3">
                             <a href="{% url 'view_threat' thr.id %}view/" class="card-link"><span class="span-Thr-link-Text">View</span></a>
                         </div>
                         
-                        <div class="card-footer font-weight-light py-2" style="color:{{ colorsIndex|hash:thr.status|hash2:1 }};background-color:{{ colorsIndex|hash:thr.status|hash2:0 }}">
+                        <div class="card-footer font-weight-light py-2 px-3" style="color:{{ colorsIndex|hash:thr.status|hash2:1 }};background-color:{{ colorsIndex|hash:thr.status|hash2:0 }}">
                             {{ values.daysyear }} 
                         </div>
                         
@@ -129,7 +128,8 @@
     $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
     $(".container").css({"flex": "1"});
 
-    $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'border-color' : 'rgba(249,100,100, 1)'});
+    $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
+    $(".btn-secondary:first").css({'border-color' : 'rgba(249,100,100, 1)'});    
     
     $(".list-group").css({'border-left': '0.018em solid rgba(0,0,0,0.125)'});
     

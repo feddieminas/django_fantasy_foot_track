@@ -18,7 +18,7 @@
         </div>
         
         <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0 slide-left"> 
-            <h3 class="mw320 lh15 ml-sm-0 ml-md-0"><mark class="inf--bg-fontcolor">{{ influence.name | truncatechars:32 | title }}</mark></h3>
+            <h3 class="mw300 lh15 ml-sm-0 ml-md-0 d-inline-flex"><mark class="inf--bg-fontcolor wordbr">{{ influence.name | truncatechars:50 | title }}</mark></h3>
         </div>
         
     </div>
@@ -26,14 +26,14 @@
     <!-- backward arrow and category card description -->
     <div class="row mt-2">
         
-        <div class="col-3 col-sm-2 col-md-1 arrow-left"> 
+        <div class="col-3 col-sm-2 col-md-1 col-lg-1 arrow-left"> 
             <a href="{% url 'all_influences' %}">
                 {% include "svgpartial.html" %}
             </a>
         </div>
         
         <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-7 offset-md-3 text-md-center pl-md-0 col-lg-7 offset-lg-2 slide-left"> 
-            <h5 class="mh18 mw280 lh13 wordbr" style="margin-right: 15px;">{{ influence.desc | title }}</h5>
+            <h5 class="mh18 mw300 lh13 wordbr" style="margin-right: 15px;">{{ influence.desc | title }}</h5>
         </div>   
         
     </div>
@@ -138,6 +138,13 @@
             $("mark:eq(1)").removeAttr('style');
         }
         
+        if ($("h5:first").text().length <= 17) {
+            $("h5:first").parent().removeClass("offset-md-3 offset-lg-2").addClass("offset-md-2 offset-lg-1");  
+            $("h5:first").css({'font-size' : '1.171875rem'});
+        } else {
+            $("h5:first").parent().removeClass("offset-md-2 offset-lg-1").addClass("offset-md-3 offset-lg-2"); 
+            $("h5:first").css({'font-size' : '17px'});
+        }        
     }).resize();
 </script>
 {% endblock body_end_js %}

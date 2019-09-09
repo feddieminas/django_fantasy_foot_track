@@ -57,8 +57,8 @@ input[type = text].form-control, #id_desc,#id_content {
 /* div of category card */
 .flex-card_main {
     flex: 1;
-	min-width: 200px; 
-	background-color: #fff;
+    min-width: 200px;
+    background-color: #fff;
 }
 
 /* inner div of category's card flex column header */
@@ -108,7 +108,7 @@ input[type = text].form-control, #id_desc,#id_content {
     box-shadow: 0 0 3pt 2pt rgb(249,100,100);
 }
 
-/* ACCOUNTS */
+/* ---- ACCOUNTS ---- */
 
 /* login, registration and similar forms to appear towards middle on smaller devices */
 .accountform {
@@ -396,7 +396,7 @@ div.slide-left h3, div.slide-left h5 {
     -o-transition: all 0.5s ease-in-out 0s;    
 }
 
-/* ---- Donate ---- */
+/* ---- DONATE ---- */
 
 .visa-colour {
     background: -moz-linear-gradient(left, rgba(26,31,113,1) 0%, rgba(247,182,0,1) 100%);
@@ -411,7 +411,7 @@ div.slide-left h3, div.slide-left h5 {
     background-color: #3498DB;
 }
 
-/* ---- Graphs ---- */
+/* ---- GRAPHS ---- */
 
 /* orientate header and/or paragraph to stay in between the middle of the charts */
 .p-shift {
@@ -507,7 +507,6 @@ footer .fa {
     background-color: lightgoldenrodyellow;
 }
 
-
 /* font-size */
 .fs18 {
    font-size: 18px; 
@@ -531,6 +530,10 @@ footer .fa {
     min-width: 80px;
 }
 
+.mh105 {
+    min-height: 105px;    
+}
+
 .w115 {
     width: 115px;
 }
@@ -543,12 +546,16 @@ footer .fa {
     min-width: 200px;
 }
 
-.mw280 {
-    min-width: 280px;    
+.h260 {
+    height: 260px;    
 }
 
-.mw320 {
-    min-width: 320px;    
+.mw300 {
+    min-width: 300px;    
+}
+
+.h420 {
+    height: 420px;    
 }
 
 /* line-height */
@@ -571,6 +578,10 @@ footer .fa {
     -webkit-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);    
+}
+
+.hr-btm {
+    border-bottom: 1px solid rgba(0,0,0,0.125);    
 }
 
 /* ---- MEDIA QUERIES ---- */

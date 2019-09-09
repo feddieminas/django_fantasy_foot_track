@@ -6,11 +6,13 @@ from django.db import IntegrityError, transaction
 ''' Influences Models '''
 
 class TestModels(TestCase):
-    u = User.objects.get(pk=1)
     influence = None
     upvote = None
     likeability = None
     Testid = [0,0,0] # [ influence, upvote, likeability ]
+    
+    def setUp(self):
+        u = User.objects.create_user('username', 'username@example.com', 'password')    
 
     def test_influence(self):
         if TestModels.influence is None:
@@ -22,18 +24,20 @@ class TestModels(TestCase):
     
     def test_upvote(self):
         if TestModels.upvote is None:
-            TestModels.upvote, created = UpVote.objects.get_or_create(users_vote=TestModels.u.pk,)
+            user = User.objects.get(pk=1)
+            TestModels.upvote, created = UpVote.objects.get_or_create(users_vote=user.pk,)
             TestModels.upvote.save()
             TestModels.Testid[1] = TestModels.upvote.id
-            self.assertEqual(TestModels.upvote.users_vote, 1)
+            self.assertEqual(TestModels.upvote.users_vote, user.pk)
     
     def test_likeability(self):    
         if TestModels.likeability is None:
+            user = User.objects.get(pk=1)
             TestModels.likeability = Likeability(influence=TestModels.influence, users_vote=TestModels.upvote, level=0,)
             TestModels.likeability.save()
             TestModels.Testid[2] = TestModels.likeability.id
             self.assertEqual(TestModels.likeability.influence.name, 'Test2')
-            self.assertEqual(TestModels.likeability.users_vote.users_vote, TestModels.u.pk)
+            self.assertEqual(TestModels.likeability.users_vote.users_vote, user.pk)
             self.assertEqual(TestModels.likeability.level, 0) 
             
             """ test meta_class of unique_together in likeability model """

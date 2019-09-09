@@ -2,6 +2,7 @@ from django.test import TestCase
 from .models import Threat, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+import json
 
 ''' Threats Views '''
 
@@ -37,7 +38,7 @@ class TestViews(TestCase):
         self.assertTemplateUsed(page, "all_threats.html")
         ''' save_curr_page response - test to see the view is functioning and returns a valid JSON response '''
         response = self.client.get('/threats/ajax/thr_save_curr_page/',content_type='application/json')
-        self.assertJSONEqual(response.content,{'got_saved': False})
+        self.assertEqual(json.loads(response.content.decode('utf-8')),{'got_saved': False})
         TestViews.Testid[0] = 1
         self.goto_delete_objects_or_continue_other_tests()
     

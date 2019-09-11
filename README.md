@@ -135,9 +135,31 @@ Encountered issues:
 
 ## Deployment
 
-I deployed the project on ....
+I deployed the project on [Heroku](https://fantasy-foot-track.herokuapp.com/) 
 
 Worked on Google Chrome and Safari Version.
+
+Setting it up :
+
+```
+$ git clone https://github.com/feddieminas/django_fantasy_foot_track
+
+$ sudo pip3 -r install requirements.txt
+```
+
+Amend the ALLOWED_HOSTS (ex. os.environ.get("C9_HOST") env variable) to whatever IP you're using. ALLOWED_HOSTS is on fantasyfoottrack folder --> settings.py file. 
+
+```
+ALLOWED_HOSTS = [os.environ.get("C9_HOST"), 'fantasy-foot-track.herokuapp.com']
+```
+
+Concerning the above, one can create an env.py file and insert the related url link. 
+
+```
+import os
+
+os.environ.setdefault("C9_HOST", "IP LINK")
+```
 
 ## Credits
 

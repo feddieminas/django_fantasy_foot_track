@@ -142,7 +142,7 @@ Worked on Google Chrome and Safari Version.
 Setting it up :
 
 ```
-$ git clone https://github.com/feddieminas/django_fantasy_foot_track
+$ git clone https://github.com/feddieminas/django_fantasy_foot_track.git
 
 $ sudo pip3 -r install requirements.txt
 ```

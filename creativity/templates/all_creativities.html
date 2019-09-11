@@ -55,7 +55,7 @@
                 
                 <div class="card-body px-0 py-4 h260">
                     <h5 class="card-title mb-3 px-3 pt-1 mh105 hr-btm">{{ cre.name|title }}</h5>
-                    <p class="card-text mt-3 px-3 pt-1 category-card-text">{{cre.desc | truncatewords:50 }}</p>
+                    <p class="card-text mt-3 px-3 pt-1 category-card-text fw300">{{cre.desc | truncatewords:50 }}</p>
                 </div>        
                 
                 {% for key, values in creUpvotesAndDays.items %}
@@ -70,7 +70,7 @@
                         </ul>                
         
                         <div class="card-body py-3 px-3">
-                            <a href="{% url 'view_creativity' cre.id %}view/" class="card-link"><span class="span-Cre-link-Text">View</span></a>
+                            <a href="{% url 'view_creativity' cre.id %}view/" class="card-link"><span class="span-Cre-link-Text font-weight-bold">View</span></a>
                         </div>
                         
                         <div class="card-footer font-weight-light py-2 px-3" style="color:{{ colorsIndex|hash:cre.status|hash2:1 }};background-color:{{ colorsIndex|hash:cre.status|hash2:0 }}">

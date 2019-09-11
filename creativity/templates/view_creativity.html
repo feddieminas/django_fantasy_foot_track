@@ -14,11 +14,11 @@
     <div class="row mt-3">
         
         <div class="col-12 mt-1 col-sm-4">
-            <h3><mark class="cremark">{{ creativity.motive | title }}<i class="fa fa-cog ml-1 fs20 fa-cat-header-position"></i></mark></h3>
+            <h3 class="fw400"><mark class="cremark">{{ creativity.motive | title }}<i class="fa fa-cog ml-1 fs20 fa-cat-header-position"></i></mark></h3>
         </div>
         
         <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left col-md-7 offset-md-0 text-md-left col-lg-5 offset-lg-0 slide-left"> 
-            <h3 class="mw300 lh15 ml-sm-0 ml-md-0 d-inline-flex"><mark class="cre--bg-fontcolor wordbr">{{ creativity.name | truncatechars:50 | title }}</mark></h3>
+            <h3 class="mw300 lh15 ml-sm-0 ml-md-0 d-inline-flex fw400"><mark class="cre--bg-fontcolor wordbr">{{ creativity.name | truncatechars:50 | title }}</mark></h3>
         </div>
         
     </div>
@@ -33,7 +33,7 @@
         </div>
         
         <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-7 offset-md-3 text-md-center pl-md-0 col-lg-7 offset-lg-2 slide-left"> 
-            <h5 class="mh18 mw300 lh13 wordbr" style="margin-right: 15px;">{{ creativity.desc | title }}</h5>
+            <p class="mh18 mw300 lh13 wordbr fw300" style="margin-right: 15px;">{{ creativity.desc | title }}</p>
         </div>   
         
     </div>
@@ -138,12 +138,12 @@
             $("mark:eq(1)").removeAttr('style');
         }
         
-        if ($("h5:first").text().length <= 17) {
-            $("h5:first").parent().removeClass("offset-md-3 offset-lg-2").addClass("offset-md-2 offset-lg-1");
-            $("h5:first").css({'font-size' : '1.171875rem'});
+        if ($("p:first").text().length <= 17) {
+            $("p:first").parent().removeClass("offset-md-3 offset-lg-2").addClass("offset-md-2 offset-lg-1");
+            $("p:first").css({'font-size' : '1.171875rem'});
         } else {
-            $("h5:first").parent().removeClass("offset-md-2 offset-lg-1").addClass("offset-md-3 offset-lg-2"); 
-            $("h5:first").css({'font-size' : '17px'});
+            $("p:first").parent().removeClass("offset-md-2 offset-lg-1").addClass("offset-md-3 offset-lg-2"); 
+            $("p:first").css({'font-size' : '17px'});
         }
     }).resize();
 </script>

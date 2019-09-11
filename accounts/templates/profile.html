@@ -4,7 +4,7 @@
 
 <div class="accountform d-flex flex-column justify-content-center align-content-center">
 
-  <h3>{{ profile.username }}'s Table</h3>
+  <h3 class="fw400">{{ profile.username }}'s Table</h3>
   
   <table class="table text-center">
     <tr>
@@ -83,7 +83,7 @@
   $(window).on('resize', function(){
       const w = window.innerWidth;
       const h = window.innerHeight;
-      if (w >= 450 && h >= 550) {
+      if (w >= 320 && h >= 550) {
           $("footer").css({'position' : 'absolute', 'bottom' : 0});
       }
       else {

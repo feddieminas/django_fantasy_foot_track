@@ -55,7 +55,7 @@
                 
                 <div class="card-body px-0 py-4 h260">
                     <h5 class="card-title mb-3 px-3 pt-1 mh105 hr-btm">{{ inf.name|title }}</h5>
-                    <p class="card-text mt-3 px-3 pt-1 category-card-text">{{inf.desc | truncatewords:50 }}</p>
+                    <p class="card-text mt-3 px-3 pt-1 category-card-text fw300">{{inf.desc | truncatewords:50 }}</p>
                 </div>        
                 
                 {% for key, values in infUpvotesAndDays.items %}
@@ -70,7 +70,7 @@
                         </ul>                
         
                         <div class="card-body py-3 px-3">
-                            <a href="{% url 'view_influence' inf.id %}view/" class="card-link"><span class="span-Inf-link-Text">View</span></a>
+                            <a href="{% url 'view_influence' inf.id %}view/" class="card-link"><span class="span-Inf-link-Text font-weight-bold">View</span></a>
                         </div>
                         
                         <div class="card-footer font-weight-light py-2 px-3" style="color:{{ colorsIndex|hash:inf.status|hash2:1 }};background-color:{{ colorsIndex|hash:inf.status|hash2:0 }}">

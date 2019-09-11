@@ -452,7 +452,7 @@ th {
 }
 
 .tblInf { /* influence */
-    background: rgb(0,0,205);
+    background: rgba(0,0,205,0.8);
     color: white;
 }
 
@@ -518,6 +518,16 @@ footer .fa {
 
 .fs22 {
    font-size: 22px; 
+}
+
+/* font-weight  */
+
+.fw300 {
+    font-weight: 300;
+}
+
+.fw400 {
+    font-weight: 400;
 }
 
 /* widths and heights */

@@ -35,10 +35,10 @@ def all_creativities(request):
             reduce(operator.and_, (Q(motive__icontains=q[0:4]) for q in query_list)) |
             reduce(operator.and_, (Q(name__icontains=q) for q in query_list)) |
             reduce(operator.and_, (Q(desc__icontains=q) for q in query_list))
-        )
+        ).order_by("-created_date")
         filterquery = creativities.exists()
     else:
-        creativities = Creativity.objects.all()
+        creativities = Creativity.objects.all().order_by("-created_date")
     
     """ Number of Upvotes and Days category has been created """
     creUpvotesAndDays = {}

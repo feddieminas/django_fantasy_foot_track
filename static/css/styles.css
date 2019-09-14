@@ -493,6 +493,11 @@ footer .fa {
 }
 
 /* font-size */
+
+.fs17 {
+   font-size: 17px; 
+}
+
 .fs18 {
    font-size: 18px; 
 }

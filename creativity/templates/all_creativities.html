@@ -47,15 +47,15 @@
     
         <div id="listingCards_cre" class="d-flex flex-row flex-wrap justify-content-between justify-content-sm-between col w-75 mx-auto fade-in">
         
-            {% for cre in creativities reversed %}
+            {% for cre in creativities %}
             
             <div class="card flex-card_main mb-3 mr-2 mr-lg-5 align-items-stretch fade-in h420">
                 
                 <h3 class="card-header py-2 fs22" style="color:{{ colorsIndex|hash:cre.status|hash2:1 }};background-color:{{ colorsIndex|hash:cre.status|hash2:0 }};"><span>{{ cre.motive|title }}</span></h3>
                 
                 <div class="card-body px-0 py-4 h260">
-                    <h5 class="card-title mb-3 px-3 pt-1 mh105 hr-btm">{{ cre.name|title }}</h5>
-                    <p class="card-text mt-3 px-3 pt-1 category-card-text fw300">{{cre.desc | truncatewords:50 }}</p>
+                    <h5 class="card-title mb-3 px-3 pt-0 pt-sm-1 mh105 hr-btm fs17">{{ cre.name|title }}</h5>
+                    <p class="card-text mt-3 px-3 pt-1 category-card-text fw300">{{cre.desc | truncatewords:80 }}</p>
                 </div>        
                 
                 {% for key, values in creUpvotesAndDays.items %}

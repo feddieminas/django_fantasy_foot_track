@@ -131,8 +131,8 @@ $(document).ready(function() {
             
             .on('renderlet', function(chart) { 
                 chart.select('.x-axis-label').attr("transform", "translate(" + 160 + "," + 313 + ")");
-                chart.select('.x-axis-label').attr("font-size", "14px");
-                chart.select('.y-axis-label').attr("font-size", "13px");
+                chart.select('.x-axis-label').attr("font-size", "13px");
+                chart.select('.y-axis-label').attr("font-size", "12px");
                 let c = chart.selectAll(".bar").nodes();
                 const c_y = c.map(function(d) { return parseFloat(d.attributes.y.value); });
                 const c_y_last_min_idx = parseInt(c_y.lastIndexOf(d3.min(c_y)));
@@ -189,7 +189,7 @@ $(document).ready(function() {
                 chart.select(".x-axis-label").remove();
                 chart.svg()
                         .append("text")
-                        .attr("class", "x-axis-label").attr("font-size", "14px")
+                        .attr("class", "x-axis-label").attr("font-size", "13px")
                         .attr("text-anchor", "middle")
                         .attr("x", (chart.width()/2)-17)
                         .attr("y", chart.height()-3.5)
@@ -205,7 +205,7 @@ $(document).ready(function() {
         dc.renderAll();        
         
         d3.select("#chart-ring-status").select('svg').attr("transform", "translate(" + 0 + "," + 6 + ")"); // to enable top down arcs not be cut
-        d3.select("#chart-hist-views-upvotes").select('svg').attr("transform", "translate(" + 6 + "," + 0 + ")"); 
+        d3.select("#chart-hist-views-upvotes").select('svg').attr("transform", "translate(" + 1 + "," + 0 + ")"); 
     }
     
     /////// rest ///////

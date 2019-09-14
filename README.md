@@ -87,6 +87,7 @@ Additional plans to be implemented in the future would be :
   - to insert detailed data per card created by the user (for ex. accordion or group/ungroup)
   - possibility of an owner to edit the card before any comment applies or delete without the need to make a request to the admin
     - A table to be created with columns :
+    
       | Category        | Card_Name      | Comments No | Edit Btn | Delete Btn |
       | -------------   |:-------------: | -----:      | -----:   | -----:     |
       | influence       | player-1       | 0           |   Btn    |   Btn      |

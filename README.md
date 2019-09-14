@@ -83,7 +83,15 @@ Additional plans to be implemented in the future would be :
 
 - thread on comments (reply to)
 - Database wise, categories classes could all belong in a single model class with an inner column field called category, along with the other current fields  
-- Profile section to insert detailed data per card created by the user (for ex. accordion or group/ungroup)
+- Profile section 
+  - to insert detailed data per card created by the user (for ex. accordion or group/ungroup)
+  - possibility of an owner to edit the card before any comment applies or delete without the need to make a request to the admin
+    - A table to be created with columns :
+      | Category        | Card_Name      | Comments No | Edit Btn | Delete Btn |
+      | -------------   |:-------------: | -----:      | -----:   | -----:     |
+      | influence       | player-1       | 0           |   Btn    |   Btn      |
+      | creativity      | feature-1      |   2         |   Btn    |   Btn      |
+      | threat          | player-1       |    1        |   Btn    |   Btn      |
 
 ### Features Left to Implement
 
@@ -120,7 +128,7 @@ Additional plans to be implemented in the future would be :
 
 ## Testing
 
-- Django Py Testcase class to test forms, models and views. The automated Test files could be found inside the apps. 
+- Django Py Testcase class to test forms, models and views. The automated Test files could be found inside the apps. Coverage package downloaded to assist. 
   - On bash command, one could press ```python3 manage.py test``` for whole test or ```python3 manage.py test <app name>``` per app specific.
 
 - Jasmine Js Testing for the Categories home page pagination and mock ajax page saved last browsed page (page on pagination).

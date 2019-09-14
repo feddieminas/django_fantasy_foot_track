@@ -9,11 +9,11 @@ import json
 class TestViews(TestCase):
     """ Testid = [test_get_all_threats_page, test_add_threat_page, test_view_threat_views_count_user_has_viewed,
     test_view_threat_usersvote_likeability_and_upvote, test_add_threat_comment_page] """
-    Testid = [0,0,0,0] # def tests
+    Testid = [0,0,0,0,0] # def tests
     
     def goto_delete_objects_or_continue_other_tests(self):
         TestidSum = sum(TestViews.Testid)
-        if TestidSum == 4:
+        if TestidSum == 5:
             self.delete_objects()
         self.client.logout()
         
@@ -42,11 +42,27 @@ class TestViews(TestCase):
         TestViews.Testid[0] = 1
         self.goto_delete_objects_or_continue_other_tests()
     
+    def test_all_threats_template_tags(self):
+        ''' threats not exist '''
+        thr = Threat.objects.get(name="Test2")
+        thr.delete()
+        page = self.client.get("/threats/")
+        self.assertNotContains(page, 'id="showAllThr" class="thr--bg-fontcolor w115"') 
+        self.assertNotContains(page, 'style="color:white;background-color:#2C3E50;')        
+        ''' threats exist '''
+        threat = Threat(motive='player', name="Test2", desc="test2 high description", status="high")
+        threat.save() 
+        page = self.client.get("/threats/")
+        self.assertContains(page, 'id="showAllThr" class="thr--bg-fontcolor w115"') 
+        self.assertContains(page, 'style="color:white;background-color:#2C3E50;')
+        TestViews.Testid[1] = 1
+        self.goto_delete_objects_or_continue_other_tests()    
+    
     def test_add_threat_page(self):
         page = self.client.get("/threats/add/")
         self.assertEqual(page.status_code, 200)
         self.assertTemplateUsed(page, "add_threat.html")
-        TestViews.Testid[1] = 1 
+        TestViews.Testid[2] = 1 
         self.goto_delete_objects_or_continue_other_tests()
     
     def test_view_threat_views_count_user_has_viewed(self):
@@ -56,7 +72,7 @@ class TestViews(TestCase):
         self.client.get("/threats/{0}/view/".format(int(thr.pk)))
         thr = Threat.objects.get(name="Test2")
         self.assertEqual(thr.views, 1)
-        TestViews.Testid[2] = 1 
+        TestViews.Testid[3] = 1 
         self.goto_delete_objects_or_continue_other_tests()
     
     def test_view_threat_usersvote_likeability_and_upvote(self):
@@ -76,7 +92,7 @@ class TestViews(TestCase):
         self.assertRedirects(page,"/threats/{0}/".format(int(thr.pk)))
         likeit = get_object_or_404(Likeability, threat=thr, users_vote=UpVote.objects.get(users_vote=user.id,))
         self.assertEqual(likeit.level, 1)
-        TestViews.Testid[3] = 1 
+        TestViews.Testid[4] = 1 
         self.goto_delete_objects_or_continue_other_tests()
     
     def delete_objects(self): # delete_objects

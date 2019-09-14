@@ -9,11 +9,11 @@ import json
 class TestViews(TestCase):
     """ Testid = [test_get_all_influences_page, test_add_influence_page, test_view_influence_views_count_user_has_viewed,
     test_view_influence_usersvote_likeability_and_upvote, test_add_influence_comment_page] """
-    Testid = [0,0,0,0] # def tests
+    Testid = [0,0,0,0,0] # def tests
     
     def goto_delete_objects_or_continue_other_tests(self):
         TestidSum = sum(TestViews.Testid)
-        if TestidSum == 4:
+        if TestidSum == 5:
             self.delete_objects()
         self.client.logout()        
     
@@ -42,11 +42,27 @@ class TestViews(TestCase):
         TestViews.Testid[0] = 1
         self.goto_delete_objects_or_continue_other_tests()
     
+    def test_all_influences_template_tags(self):
+        ''' influences not exist '''
+        inf = Influence.objects.get(name="Test2")
+        inf.delete()
+        page = self.client.get("/influences/")
+        self.assertNotContains(page, 'id="showAllInfl" class="inf--bg-fontcolor"') 
+        self.assertNotContains(page, 'style="color:black;background-color:#18BC9C;')        
+        ''' influences exist '''
+        influence = Influence(motive='player', name="Test2", desc="test2 low description", status="low")
+        influence.save() 
+        page = self.client.get("/influences/")
+        self.assertContains(page, 'id="showAllInfl" class="inf--bg-fontcolor"') 
+        self.assertContains(page, 'style="color:black;background-color:#18BC9C;')
+        TestViews.Testid[1] = 1
+        self.goto_delete_objects_or_continue_other_tests()     
+    
     def test_add_influence_page(self):
         page = self.client.get("/influences/add/")
         self.assertEqual(page.status_code, 200)
         self.assertTemplateUsed(page, "add_influence.html")
-        TestViews.Testid[1] = 1 
+        TestViews.Testid[2] = 1 
         self.goto_delete_objects_or_continue_other_tests()
     
     def test_view_influence_views_count_user_has_viewed(self):
@@ -56,7 +72,7 @@ class TestViews(TestCase):
         self.client.get("/influences/{0}/view/".format(int(inf.pk)))
         inf = Influence.objects.get(name="Test2")
         self.assertEqual(inf.views, 1)
-        TestViews.Testid[2] = 1 
+        TestViews.Testid[3] = 1 
         self.goto_delete_objects_or_continue_other_tests()
     
     def test_view_influence_usersvote_likeability_and_upvote(self):
@@ -76,7 +92,7 @@ class TestViews(TestCase):
         self.assertRedirects(page,"/influences/{0}/".format(int(inf.pk)))
         likeit = get_object_or_404(Likeability, influence=inf, users_vote=UpVote.objects.get(users_vote=user.id,))
         self.assertEqual(likeit.level, 1)
-        TestViews.Testid[3] = 1 
+        TestViews.Testid[4] = 1 
         self.goto_delete_objects_or_continue_other_tests()
     
     def delete_objects(self): # delete_objects

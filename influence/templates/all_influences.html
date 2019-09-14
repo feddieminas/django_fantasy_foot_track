@@ -127,19 +127,23 @@
     // sticky footer
     $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
     $(".container").css({"flex": "1"});
+    
+    $("#showAllInfl").hover(function() { 
+        $(this).css({'text-decoration' : 'underline','color' : 'blue'}); //hover in
+        }, function() { 
+        $(this).css({'text-decoration' : 'none'}); //hover out
+    });     
 
     $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
     $(".btn-secondary:first").css({'border-color' : 'blue'});    
     
     $(".list-group").css({'border-left': '0.018em solid rgba(0,0,0,0.125)'});
     
-    $("#create-inf-btn").mouseover(function() {
-        $(this).find(".btn-secondary").css({'background-color' : 'rgba(0, 127, 255, 1)'});
-    });    
-    
-    $("#create-inf-btn").mouseleave(function() {
-        $(this).find(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
-    })    
+    $("#create-inf-btn a.btn.btn-secondary").hover(function() { 
+        $(this).css({'background-color' : 'rgba(0, 127, 255, 1)'}); //hover in
+        }, function() { 
+        $(this).css({'background-color' : 'rgba(62, 88, 113, 1)'}); //hover out
+    });     
     
     // Filters per Status and Pagination
     

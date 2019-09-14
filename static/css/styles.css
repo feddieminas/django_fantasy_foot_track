@@ -172,26 +172,11 @@ nav h3 {
     color: rgba(249,100,100, 1);
 }
 
-/* category header tag make it underline for the user to capture that is clickable */
-#showAllInfl:hover, #listingCards_inf .card-link:hover { /* influence */
+/* category card-link that is clickable */
+#listingCards_inf .card-link:hover, #listingCards_cre .card-link:hover, #listingCards_thr .card-link:hover {
     text-decoration: underline;
-    color:blue;
 }
 
-#showAllCrel:hover { /* creativity */
-    text-decoration: underline;
-    color:rgb(158,158,158);
-}
-
-#listingCards_cre .card-link:hover { /* creativity */
-    text-decoration: underline;
-    color:black;    
-}
-
-#showAllThrl:hover, #listingCards_thr .card-link:hover { /* threat */
-    text-decoration: underline;
-    color:rgba(249,100,100, 1);
-}
 
 /* category cards and pagination btns appearance when load page */
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
@@ -227,11 +212,11 @@ nav h3 {
 
 /* page input value */
 #page_input_inf {  /* influence */
-    border: 1px solid #36454f;
+    border: 0.095em solid #36454f;
 }
 
 #page_input_cre {  /* creativity */
-    border: 1px solid #728185;
+    border: 0.095em solid #728185;
 }
 
 #page_input_cre:focus { /* creativity */
@@ -242,7 +227,7 @@ nav h3 {
 }
 
 #page_input_thr {  /* threat */
-    border: 1px solid rgba(249,100,100, 1);
+    border: 0.095em solid rgba(249,100,100, 1);
 }
 
 #page_input_thr:focus { /* threat */

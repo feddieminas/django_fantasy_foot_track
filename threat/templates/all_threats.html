@@ -12,7 +12,7 @@
         <div class="col-7 col-sm-7 col-md-3"> 
         <!-- if threats exist, one will displayed visible all threats on page. If not, due to ex. search filtering results in empty value, one would like that page to get refreshed -->
             {% if threats|Xor:filterquery %}
-                <h3 id="showAllThrl" class="thr--bg-fontcolor w115"><span style="color:black;">Threats</span></h3>
+                <h3 id="showAllThr" class="thr--bg-fontcolor w115"><span style="color:black;">Threats</span></h3>
             {% else %}
                 <h3><a href="{% url 'all_threats' %}" class="thr--bg-fontcolor w115">Threats</a></h3>
             {% endif %}
@@ -128,18 +128,22 @@
     $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
     $(".container").css({"flex": "1"});
 
+    $("#showAllThr").hover(function() { 
+        $(this).css({'text-decoration' : 'underline','color' : 'rgba(249,100,100, 1)'}); //hover in
+        }, function() { 
+        $(this).css({'text-decoration' : 'none'}); //hover out
+    });    
+
     $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
     $(".btn-secondary:first").css({'border-color' : 'rgba(249,100,100, 1)'});    
     
     $(".list-group").css({'border-left': '0.018em solid rgba(0,0,0,0.125)'});
     
-    $("#create-thr-btn").mouseover(function() {
-        $(this).find(".btn-secondary").css({'background-color' : 'rgba(249,100,100,0.18)', 'color' : 'black'});
-    });    
-    
-    $("#create-thr-btn").mouseleave(function() {
-        $(this).find(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'color' : 'white'});
-    })    
+    $("#create-thr-btn a.btn.btn-secondary").hover(function() { 
+        $(this).css({'background-color' : 'rgba(249,100,100,0.18)', 'color' : 'black'}); //hover in
+        }, function() { 
+        $(this).css({'background-color' : 'rgba(62, 88, 113, 1)', 'color' : 'white'}); //hover out
+    }); 
     
     // Filters per Status and Pagination
     
@@ -220,7 +224,7 @@
 //////////////////////////////////////////    
     
     // Filter all
-    $("#showAllThrl").click(function (e) {
+    $("#showAllThr").click(function (e) {
         cardsLength = 0;
         cardHeadElementsJQ.each(function( i ) {
             $(this).parent().css({'display': ''});

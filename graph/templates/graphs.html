@@ -17,11 +17,17 @@
     </div>    
 
     <div class="row">
+        <div class="col-6 offset-2 col-sm-4 offset-sm-3 col-md-7 offset-md-2 mr-0 text-center p-1">
+            <a href="javascript:dc.filterAll(); dc.renderAll();">Reset All</a>
+        </div>        
+    </div>
+    
+    <div class="row">
         <div class="col-md-7 m-auto text-center p-2">
             <div class="col-11 col-sm-11 text-center pl-0 pl-sm-2 mb-3 mb-sm-3">
                 <p class="lh13 txt-pie-graphs-boxshadow fw300" style="display: inline;"><span style="color: black;">User Creator of Category-Card ToView Importance</span></p>
             </div>
-            <div class="col-12 col-sm-12 text-center" id="chart-ring-status"></div>
+            <div class="col-12 col-sm-12 text-center" id="chart-ring-status" style="min-height:280px"></div>
         </div>        
     </div>
 
@@ -60,7 +66,6 @@ $(document).ready(function() {
     let statusRingChart   = dc.pieChart("#chart-ring-status"),
         viewsUpvHistChart  = dc.barChart("#chart-hist-views-upvotes"),
         categoriesRowChart = dc.rowChart("#chart-row-categories");
-    
     
     dc.config.defaultColors(d3.schemeCategory10);
     
@@ -125,7 +130,7 @@ $(document).ready(function() {
             .renderTitle(true)        
             
             .on('renderlet', function(chart) { 
-                chart.select('.x-axis-label').attr("transform", "translate(" + 150 + "," + 313 + ")");
+                chart.select('.x-axis-label').attr("transform", "translate(" + 160 + "," + 313 + ")");
                 chart.select('.x-axis-label').attr("font-size", "14px");
                 chart.select('.y-axis-label').attr("font-size", "13px");
                 let c = chart.selectAll(".bar").nodes();
@@ -188,17 +193,19 @@ $(document).ready(function() {
                         .attr("text-anchor", "middle")
                         .attr("x", (chart.width()/2)-17)
                         .attr("y", chart.height()-3.5)
-                        .text("Total Views in each Category"); 
+                        .text("Total Views in each Category").attr("transform", "translate(" + 0 + "," + 1 + ")"); 
                         
                 chart.select("g").attr("transform", "translate(20,5)")        
             })    
             
             .transitionDuration(800)
-            
+
             .elasticX(true);
             
         dc.renderAll();        
         
+        d3.select("#chart-ring-status").select('svg').attr("transform", "translate(" + 0 + "," + 6 + ")"); // to enable top down arcs not be cut
+        d3.select("#chart-hist-views-upvotes").select('svg').attr("transform", "translate(" + 6 + "," + 0 + ")"); 
     }
     
     /////// rest ///////

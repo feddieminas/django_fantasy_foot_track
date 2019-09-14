@@ -32,6 +32,7 @@ def all_influences(request):
     if query:
         query_list = query.split()
         influences = Influence.objects.filter(
+            reduce(operator.and_, (Q(motive__icontains=q[0:4]) for q in query_list)) |
             reduce(operator.and_, (Q(name__icontains=q) for q in query_list)) |
             reduce(operator.and_, (Q(desc__icontains=q) for q in query_list))
         )
@@ -90,7 +91,7 @@ def add_influence(request, pk=None):
     args = {'form':form}    
     return render(request, 'add_influence.html', args)
 
-   
+@login_required    
 def view_influence(request, pk, view=''):
     """ Return the view_influence.html file. Pk is the category created through the add_category view. """
     

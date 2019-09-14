@@ -45,6 +45,9 @@
 
 {% block body_end_js %}
 <script>
+    // sticky footer
+    $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
+    $(".container").css({"flex": "1"});
 
   /* Horizontal effects - highlight selection when hovering in */
 
@@ -78,18 +81,6 @@
   $("tr th").mouseleave(function(){
     $("tr").children("td").removeClass("tblInf tblCre tblThr tblTot");
   });   
-  
-  // footer responsive stay at bottom
-  $(window).on('resize', function(){
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      if (w >= 320 && h >= 550) {
-          $("footer").css({'position' : 'absolute', 'bottom' : 0});
-      }
-      else {
-          $("footer").css({'position' : 'inherit'});
-      }
-  }).resize();
   
 </script>
 {% endblock body_end_js %}

@@ -22,8 +22,12 @@
   $(window).on('resize', function(){
       const w = window.innerWidth;
       const h = window.innerHeight;
-      if (w >= 350 && h >= 800) {
-          $("footer").css({'position' : 'absolute', 'bottom' : 0});
+      if (w >= 350 && h >= 860) {
+          $("footer").animate({
+            position: "absolute", bottom: "0"
+            }, 500, "linear", function() {
+            $("footer").css({'position' : 'absolute', 'bottom' : 0});
+        });
       }
       else {
           $("footer").css({'position' : 'inherit'});

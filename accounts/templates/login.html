@@ -28,18 +28,8 @@
 
 {% block body_end_js %}
 <script>
-
-  // footer responsive stay at bottom
-  $(window).on('resize', function(){
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      if (w >= 350 && h >= 600) {
-          $("footer").css({'position' : 'absolute', 'bottom' : 0});
-      }
-      else {
-          $("footer").css({'position' : 'inherit'});
-      }
-  }).resize();
-  
+    // sticky footer
+    $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
+    $(".container").css({"flex": "1"});
 </script>
 {% endblock body_end_js %}

@@ -136,6 +136,18 @@ input[type = text].form-control, #id_desc,#id_content {
     color: black;
 }
 
+.inf--bg-create-hover {
+    background-color : rgba(0, 127, 255, 1);   
+}
+
+.cre--bg-create-hover {
+    background-color : rgba(124,139,142,0.18);   
+}
+
+.thr--bg-create-hover {
+    background-color : rgba(249,100,100,0.18);   
+}
+
 /* category status filter [Low, Medium, High] select one option */
 .dot {
   height: 25px;

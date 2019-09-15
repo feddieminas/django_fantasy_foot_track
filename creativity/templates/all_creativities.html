@@ -139,22 +139,16 @@
     
     $(".list-group").css({'border-left': '0.018em solid rgba(0,0,0,0.125)'});
     
-    if ($("#create-cre-btn a.btn").hasClass("cre--bg-create-hover")) {
-        $("#create-cre-btn a.btn").removeClass("cre--bg-create-hover");
-    }
-    
-    $("#create-cre-btn a.btn").css({'background-color' : 'rgba(62, 88, 113, 1)', 'color' : 'white',
-        '-webkit-transition': 'all 0.5s ease-in-out',
-        '-moz-transition': 'all 0.5s ease-in-out',
-        '-o-transition': 'all 0.5s ease-in-out',
-        'transition': 'all 0.5s ease-in-out'
+    $("#create-cre-btn a.btn.btn-secondary").css({'border' : '',
+        '-webkit-transition': 'all 0.35s ease-in-out',
+        '-moz-transition': 'all 0.35s ease-in-out',
+        '-o-transition': 'all 0.35s ease-in-out',
+        'transition': 'all 0.35s ease-in-out'
     });    
     
-    $("#create-cre-btn a.btn").hover(function() { 
-        $(this).removeClass("btn-secondary").addClass("cre--bg-create-hover").css({'background-color' : "", 'color' : 'black'}); //hover in
-        }, function() { 
-        $(this).removeClass("cre--bg-create-hover").addClass("btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'color' : 'white'}); //hover out
-    });
+    $("#create-cre-btn a.btn.btn-secondary").click(function() {
+        $(this).css({'border' : '2px solid rgba(124,139,142,0.18)'});
+    });    
     
     // Filters per Status and Pagination
     

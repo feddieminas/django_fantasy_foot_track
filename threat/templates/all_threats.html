@@ -135,26 +135,20 @@
     });    
 
     $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
-    $(".btn-secondary:first").css({'border-color' : 'rgba(249,100,100, 1)'});    
+    $(".btn-secondary:first").css({'border-color' : 'rgba(249,100,100, 1)'});
     
     $(".list-group").css({'border-left': '0.018em solid rgba(0,0,0,0.125)'});
     
-    if ($("#create-thr-btn a.btn").hasClass("thr--bg-create-hover")) {
-        $("#create-thr-btn a.btn").removeClass("thr--bg-create-hover");
-    }
-    
-    $("#create-thr-btn a.btn").css({'background-color' : 'rgba(62, 88, 113, 1)', 'color' : 'white',
-        '-webkit-transition': 'all 0.5s ease-in-out',
-        '-moz-transition': 'all 0.5s ease-in-out',
-        '-o-transition': 'all 0.5s ease-in-out',
-        'transition': 'all 0.5s ease-in-out'
+    $("#create-inf-btn a.btn.btn-secondary").css({'border' : '',
+        '-webkit-transition': 'all 0.35s ease-in-out',
+        '-moz-transition': 'all 0.35s ease-in-out',
+        '-o-transition': 'all 0.35s ease-in-out',
+        'transition': 'all 0.35s ease-in-out'
     });    
     
-    $("#create-thr-btn a.btn").hover(function() { 
-        $(this).removeClass("btn-secondary").addClass("thr--bg-create-hover").css({'background-color' : "", 'color' : 'black'}); //hover in
-        }, function() { 
-        $(this).removeClass("thr--bg-create-hover").addClass("btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)', 'color' : 'white'}); //hover out
-    });       
+    $("#create-inf-btn a.btn.btn-secondary").click(function() {
+        $(this).css({'border' : '2px solid rgba(249,100,100,0.18)'});
+    });     
     
     // Filters per Status and Pagination
     

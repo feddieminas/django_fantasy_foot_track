@@ -2,8 +2,8 @@ from django.test import TestCase
 from .forms import UserLoginForm, UserRegistrationForm, FilterView
 from django.contrib.auth.models import User
 
-''' Accounts Forms '''
-
+""" Accounts Forms 
+"""
 class TestAccountsForms(TestCase):
     def test_login_field_required(self):
         form = UserLoginForm({'username': 'username'})

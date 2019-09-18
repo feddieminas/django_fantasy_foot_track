@@ -15,7 +15,8 @@ from django.db.models.functions import Coalesce
 from django.template.context_processors import csrf
 
 def index(request):
-    """Return the index.html file. figures calcs all three [low, medium, high] status total counter"""
+    """ Return the index.html file. figures calcs all three [low, medium, high] status total counter
+    """
     if request.method == "POST":
         filterView = FilterView(request.POST)
         if filterView.is_valid() == True:
@@ -40,16 +41,19 @@ def index(request):
     
 @login_required
 def logout(request):
-    """Log the user out"""
+    """ Log the user out
+    """
     auth.logout(request)
     messages.success(request, "You have succesfully been logged out")
     return redirect(reverse('index'))
     
     
 def login(request):
-    """Return a login page"""
-    if request.user.is_authenticated: # not display login page if not logged in
+    """ Return a login page
+    """
+    if request.user.is_authenticated: 
         return redirect(reverse('index'))
+        
     if request.method == "POST":
         login_form = UserLoginForm(request.POST)
         
@@ -78,7 +82,8 @@ def login(request):
     
 
 def registration(request):
-    """Render the registration page"""
+    """ Render the registration page
+    """
     if request.user.is_authenticated:
         return redirect(reverse('index'))
     
@@ -111,10 +116,11 @@ def registration(request):
         
 @login_required        
 def user_profile(request):
-    """The user's profile page"""
+    """ The user's profile page
+    """
     user = User.objects.get(email=request.user.email)
     
-    """ influence stats """
+    # influence stats
     figuresInf = Influence.objects.filter(owner=user).aggregate(
         created=Count('owner'), views=Coalesce(Sum('views'), 0)
     )
@@ -122,7 +128,7 @@ def user_profile(request):
         upvotes=Count('users_vote')
     ))
     
-    """ creativity stats """
+    # creativity stats
     figuresCr = Creativity.objects.filter(owner=user).aggregate(
         created=Count('owner'), views=Coalesce(Sum('views'), 0)
     )
@@ -130,7 +136,7 @@ def user_profile(request):
         upvotes=Count('users_vote')
     ))    
     
-    """ threat stats """
+    # threat stats
     figuresTh = Threat.objects.filter(owner=user).aggregate(
         created=Count('owner'), views=Coalesce(Sum('views'), 0)
     )

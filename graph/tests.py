@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-''' Graphs '''
-
+""" Graphs 
+"""
 class Tests(TestCase):
     
     def test_page_html(self):

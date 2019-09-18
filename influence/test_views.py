@@ -4,12 +4,13 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 import json
 
-''' Influences Views '''
-
+""" Influences Views 
+"""
 class TestViews(TestCase):
     """ Testid = [test_get_all_influences_page, test_add_influence_page, test_view_influence_views_count_user_has_viewed,
-    test_view_influence_usersvote_likeability_and_upvote, test_add_influence_comment_page] """
-    Testid = [0,0,0,0,0] # def tests
+    test_view_influence_usersvote_likeability_and_upvote, test_add_influence_comment_page] 
+    """
+    Testid = [0,0,0,0,0] # def below tests
     
     def goto_delete_objects_or_continue_other_tests(self):
         TestidSum = sum(TestViews.Testid)
@@ -32,24 +33,24 @@ class TestViews(TestCase):
         userlikeNoVote.save()
     
     def test_get_all_influences_page_and_save_curr_page_is_valid(self):
-        ''' all_influences page '''
+        # all_influences page 
         page = self.client.get("/influences/")
         self.assertEqual(page.status_code, 200)
         self.assertTemplateUsed(page, "all_influences.html")
-        ''' save_curr_page response - test to see the view is functioning and returns a valid JSON response '''
+        # save_curr_page response - test to see the view is functioning and returns a valid JSON response
         response = self.client.get('/influences/ajax/save_curr_page/',content_type='application/json')
         self.assertEqual(json.loads(response.content.decode('utf-8')),{'got_saved': False})
         TestViews.Testid[0] = 1
         self.goto_delete_objects_or_continue_other_tests()
     
     def test_all_influences_template_tags(self):
-        ''' influences not exist '''
+        # influences not exist
         inf = Influence.objects.get(name="Test2")
         inf.delete()
         page = self.client.get("/influences/")
         self.assertNotContains(page, 'id="showAllInfl" class="inf--bg-fontcolor"') 
         self.assertNotContains(page, 'style="color:black;background-color:#18BC9C;')        
-        ''' influences exist '''
+        # influences exist
         influence = Influence(motive='player', name="Test2", desc="test2 low description", status="low")
         influence.save() 
         page = self.client.get("/influences/")
@@ -76,7 +77,7 @@ class TestViews(TestCase):
         self.goto_delete_objects_or_continue_other_tests()
     
     def test_view_influence_usersvote_likeability_and_upvote(self):
-        ''' view_influence '''
+        # view_influence
         inf = Influence.objects.get(name="Test2")
         self.the_Session_For_View_Cat()        
         page = self.client.get("/influences/{0}/".format(int(inf.pk)))
@@ -87,7 +88,7 @@ class TestViews(TestCase):
         users_vote, created = UpVote.objects.get_or_create(users_vote=user.id,)
         self.assertFalse(created) # because already has been created when previously loaded the page
     
-        ''' user_upvote '''
+        # user_upvote
         page = self.client.get("/influences/{0}/inf_vote/".format(int(inf.pk)))
         self.assertRedirects(page,"/influences/{0}/".format(int(inf.pk)))
         likeit = get_object_or_404(Likeability, influence=inf, users_vote=UpVote.objects.get(users_vote=user.id,))
@@ -95,7 +96,7 @@ class TestViews(TestCase):
         TestViews.Testid[4] = 1 
         self.goto_delete_objects_or_continue_other_tests()
     
-    def delete_objects(self): # delete_objects
+    def delete_objects(self): 
         try:
             user = User.objects.get(username='username')
             inf = Influence.objects.get(name="Test2")
@@ -106,6 +107,7 @@ class TestViews(TestCase):
             user.delete()
         except:
             print("def test_delete_objects in test_views.py produces an ERROR")
+            
         # print(Influence.objects.all(), UpVote.objects.all(), Likeability.objects.all()) # one can uncomment to see that queryset results to empty
         
 

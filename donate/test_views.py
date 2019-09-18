@@ -4,8 +4,8 @@ from django.contrib import messages
 from django.contrib.messages import get_messages
 from .models import Donate
 
-''' Donate Views '''
-
+""" Donate Views
+"""
 class TestViews(TestCase):
     
     def setUp(self):

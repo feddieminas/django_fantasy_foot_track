@@ -1,9 +1,8 @@
 from django.test import TestCase
 from .forms import CreateInfluenceForm, CreateInfluenceCommentForm
 
-''' Influences Forms '''
-
-# Create your tests here.
+""" Influences Forms 
+"""
 class TestForm(TestCase):
     
     def test_influence_with_required_values(self):

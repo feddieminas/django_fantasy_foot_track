@@ -1,9 +1,8 @@
 from django.test import TestCase
 from .forms import CreateCreativityForm, CreateCreativityCommentForm
 
-''' Creativities Forms '''
-
-# Create your tests here.
+""" Creativities Forms 
+"""
 class TestForm(TestCase):
     
     def test_creativity_with_required_values(self):

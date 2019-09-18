@@ -1,7 +1,8 @@
 from django import forms
 from .models import Influence, Comment
 
-''' add an influence '''
+""" add an influence 
+"""
 class CreateInfluenceForm(forms.ModelForm):
     class Meta:
         model = Influence
@@ -14,7 +15,8 @@ class CreateInfluenceForm(forms.ModelForm):
           'desc': forms.Textarea(attrs={'rows':7, 'cols':25}),
         }              
 
-''' add an influence comment '''        
+""" add an influence comment 
+"""        
 class CreateInfluenceCommentForm(forms.ModelForm):
     class Meta:
         model = Comment

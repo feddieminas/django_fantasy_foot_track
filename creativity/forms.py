@@ -1,7 +1,8 @@
 from django import forms
 from .models import Creativity, Comment
 
-''' add an creativity '''
+""" add a creativity 
+"""
 class CreateCreativityForm(forms.ModelForm):
     class Meta:
         model = Creativity
@@ -14,7 +15,8 @@ class CreateCreativityForm(forms.ModelForm):
           'desc': forms.Textarea(attrs={'rows':7, 'cols':25}),
         }              
 
-''' add an creativity comment '''        
+""" add a creativity comment 
+"""        
 class CreateCreativityCommentForm(forms.ModelForm):
     class Meta:
         model = Comment

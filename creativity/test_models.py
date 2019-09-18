@@ -3,8 +3,8 @@ from .models import Creativity, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
 
-''' Creativities Models '''
-
+""" Creativities Models 
+"""
 class TestModels(TestCase):
     creativity = None
     upvote = None
@@ -40,7 +40,7 @@ class TestModels(TestCase):
             self.assertEqual(TestModels.likeability.users_vote.users_vote, user.pk)
             self.assertEqual(TestModels.likeability.level, 0) 
             
-            """ test meta_class of unique_together in likeability model """
+            # test meta_class of unique_together in likeability model
             try: 
                 with transaction.atomic():
                     Likeability.objects.create(creativity=TestModels.creativity, users_vote=TestModels.upvote, level=0,)

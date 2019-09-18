@@ -1,7 +1,8 @@
 from django import forms
 from .models import Threat, Comment
 
-''' add an creativity '''
+""" add a threat 
+"""
 class CreateThreatForm(forms.ModelForm):
     class Meta:
         model = Threat
@@ -14,7 +15,8 @@ class CreateThreatForm(forms.ModelForm):
           'desc': forms.Textarea(attrs={'rows':7, 'cols':25}),
         }        
 
-''' add an creativity comment '''        
+""" add a threat comment 
+"""        
 class CreateThreatCommentForm(forms.ModelForm):
     class Meta:
         model = Comment

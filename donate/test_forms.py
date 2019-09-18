@@ -1,8 +1,8 @@
 from django.test import TestCase
 from .forms import DonationForm, DonationModelForm
 
-''' Donate Forms '''
-
+""" Donate Forms 
+"""
 class TestForm(TestCase):
     
     def test_donate_form(self):

@@ -42,11 +42,12 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
       - A back button on view category card to return back to categories cards
     - Button submit donate amount
     - Cross filtered charts
-    - Profile section having table user stats (No of categories, status and comments posted)
+    - Profile section showing table individual user stats per category (cards created, views and upvotes receiving numbers)
 
 - The surface plane: 
-  - Colours : home page showing UK colours and each of the three categories having its distinct colour (blue, white, red)  
-  - Semantic : header, nav, section, article, bootswatch (cards, buttons), mark, footer
+  - Colours : home page showing UK colours and each of the three categories having its distinct colour (blue, white, red). Implemented gradient
+    approach on UK colours and donate header Visa symbol.
+  - Semantic : header, nav, section, article, bootswatch (cards, buttons, alert), mark, footer
   - Typography : opens sans google fonts and bootstrap libraries (row, column grid, box model, text centering, flexbox) 
     Iconic and font-awesome icons to assist users to recognize sections 
   - CSS style class helpers, and transitions, animations and opacity for webpage smooth presence and readable text. 
@@ -55,7 +56,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
 
 - As a developer and user:
   - Show all three categories stats on home page to have a brief overview of their popularity
-  - When creating a category card or adding a comment on larger devices, insert a related bg colour thus the input and text area tags are quick easy to target  
+  - When creating a category card on larger devices, insert a related bg colour thus the input and text area tags are quick easy to target  
 
 - As a developer :
   - Used UK flag three colours to differentiate the three categories and show game country location (i.e. UK)
@@ -63,7 +64,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
   - As previous and next buttons have been implemented, use page input value to be inserted by the user to achieve flexibility
 
 - As a user : 
-  - Category cards posted showing the day that has been created (i.e. Today, 3 days ago etc), to enable me understand the trend and recent topics discussed. Similarly implement datetime in each view card section
+  - Category cards posted showing the day that has been created (i.e. Today, 3 days ago etc), to enable me understand the trend and recent topics discussed. Similarly implement datetime in each view card comment section
   - Number of comments show when viewing a card, thus one can see number of public actions at a glance without scrolling 
   - Use mark tag to highlight the two to three key values on a category card overview
 
@@ -82,11 +83,13 @@ A mockup frame of the website, one could find it at the attached pdf file at the
 Additional plans to be implemented in the future would be :
 
 - thread on comments (reply to)
-- Database wise, categories classes could all belong in a single model class with an inner column field called category, along with the other current fields  
+- Database wise, categories classes could all belong in a single model class with an inner column field called category, along with the other current fields.
+  In addition, namespace on top level settings urls to refer to an exact name (ex. save_curr_page (at influence app) to stay as a single name for all 
+  categories apps rather than the current cre_save_curr_page (at creativity app) or thr_save_curr_page view function (at threat app))
 - Profile section 
-  - to insert detailed data per card created by the user (for ex. accordion or group/ungroup)
-  - possibility of an owner to edit the card before any comment applies or delete without the need to make a request to the admin
-    - A table to be created with columns :
+  - Extension of bullet one point in Features Left to Implement
+    - possibility of an owner to edit the card before any comment applies or delete without the need to make a request to the admin
+    - A sample table as an example :
     
       | Category        | Card_Name      | Comments No | Edit Btn | Delete Btn |
       | -------------   |:-------------: | -----:      | -----:   | -----:     |
@@ -96,9 +99,10 @@ Additional plans to be implemented in the future would be :
 
 ### Features Left to Implement
 
+- Profile section to insert detailed data per card created by the user, thus a user to know which are the name of the cards he has created per category (using a table or list).
 - Pagination dropdown form filtering for users to be able to indicate number of category cards displayed per page
 - In each category home page, status filter to be multiple, rather than the current single triggered (Lor or Medium or High)
-- Datetime on each category footer, showing far from days also the hours ago (specifically if two cards are posted Today).
+- Datetime on each category footer, showing far from days also the hours ago (specifically if two cards are posted Today)
 - Admin's action on category cards created after a time period of a month 
   - No comments showed, status importance to be decreased (ex. from medium to low)
   - Several comments appear, status to be incremented (ex. from medium to high) 
@@ -126,13 +130,17 @@ Additional plans to be implemented in the future would be :
 - [D3 JS](https://cdnjs.com/libraries/d3) [DC JS](https://cdnjs.com/libraries/dc)
     - The project uses **D3 - DC JS** for responsive graphs, data type, formats, selecting elements and functions.
 
+- [Stripe Python - JS](https://stripe.com/)
+    - The project uses **Stripe** payment system to enable a user to voluntarily donate.
 
 ## Testing
 
-- Django Py Testcase class to test forms, models and views. The automated Test files could be found inside the apps. Coverage package downloaded to assist. 
+- Django Py Testcase class to test forms, models and views. The automated Test files can be found inside the apps. Coverage package downloaded to assist. 
   - On bash command, one could press ```python3 manage.py test``` for whole test or ```python3 manage.py test <app name>``` per app specific.
 
 - Jasmine Js Testing for the Categories home page pagination and mock ajax page saved last browsed page (page on pagination).
+
+- The stripe payment function has been verified with a test card and transaction following appears on stripe app personal dashboard. 
 
 - Having tested it manually, project looks user friendly and works on different browsers and screen sizes. 
 
@@ -143,6 +151,8 @@ Encountered issues:
 - Cross-browser testing, not all browsers accepted some js selector/style script and switched to jquery selector/style script 
 
 ## Deployment
+
+I worked on the project at AWS Cloud9 environment.
 
 I deployed the project on [Heroku](https://fantasy-foot-track.herokuapp.com/) 
 
@@ -162,7 +172,7 @@ Amend the ALLOWED_HOSTS (ex. os.environ.get("C9_HOST") env variable) to whatever
 ALLOWED_HOSTS = [os.environ.get("C9_HOST"), 'fantasy-foot-track.herokuapp.com']
 ```
 
-Concerning the above, one can create an env.py file and insert the related url link. 
+Concerning the above, one can create an env.py file at the top level folder of his workspace and insert the related ip link. 
 
 ```
 import os
@@ -177,7 +187,7 @@ os.environ.setdefault("C9_HOST", "IP LINK")
 
 - The text for readme sales pitch section Fantasy foot explanation were copied from [Fantasy football (association)](https://en.wikipedia.org/wiki/Fantasy_football_(association) and
   from the [FPL ICT Index](https://www.premierleague.com/news/65567).
-- Other text content are self-inspired.
+- Other text contents are self-inspired.
 
 ### Media
 

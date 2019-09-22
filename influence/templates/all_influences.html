@@ -112,7 +112,7 @@
         <div class="row">
             <div class="col-6 col-sm-4 m-auto d-inline-flex justify-content-center justify-content-sm-center pt-0 pb-2 pb-sm-2 px-2 px-sm-2 fade-in">
                 <label>Go to <input class="text-center" type="text" name="page_input_inf" id="page_input_inf" placeholder="page" value="" style="width: 50px;"></label> <!-- page goto input value -->
-                <a href="#" id="goto_inf" style="margin-left: 5px;">&gt;&gt;</a>
+                <a href="#!" id="goto_inf" style="margin-left: 5px;">&gt;&gt;</a>
             </div>
         </div>	        
     </div>
@@ -361,10 +361,26 @@
         return; 
     }
 
+    var enableAjax = true;
+
     // ajax to be called before leaving a page
-    window.onbeforeunload = function (e) {
-       saveCurrentPage();
-    };
+    window.onbeforeunload = onExit;
+    
+    function onExit(){
+      if(enableAjax){
+        saveCurrentPage();
+        disableAction();
+      }
+    }
+    
+    function disableAction(){
+        enableAjax = false;
+        setTimeout("enableAction()", "100");
+    }
+    
+    function enableAction(){
+        enableAjax = true;
+    }    
   
 </script>
 {% endblock body_end_js %}

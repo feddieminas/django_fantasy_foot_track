@@ -149,6 +149,7 @@ Additional plans to be implemented in the future would be :
 Encountered issues:
 
 - Cross-browser testing, not all browsers accepted some js selector/style script and switched to jquery selector/style script 
+- Save last page viewed on categories page using ajax request, event triggering avoiding duplicate actions as well as any db storage value. 
 
 ## Deployment
 

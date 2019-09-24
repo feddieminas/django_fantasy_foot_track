@@ -290,7 +290,7 @@ div.slide-left {
   overflow:hidden;
 }
 
-div.slide-left h3, div.slide-left h5 {
+div.slide-left h3, div.slide-left p {
   animation: slide-left 3s;
 }
 

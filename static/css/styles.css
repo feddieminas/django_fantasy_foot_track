@@ -159,7 +159,7 @@ nav h3 {
 }
 
 /* category span text links..a link to b coloured similar to its category */
-.span-Inf-link-Text { /* influence */
+.span-Inf-link-Text  { /* influence */
     color:blue;
 }
 
@@ -174,10 +174,20 @@ nav h3 {
 }
 
 /* category card-link that is clickable */
-#listingCards_inf .card-link:hover, #listingCards_cre .card-link:hover, #listingCards_thr .card-link:hover {
+#listingCards_inf .card-link:hover {
     text-decoration: underline;
+    color:blue;
 }
 
+#listingCards_cre .card-link:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+#listingCards_thr .card-link:hover {
+    text-decoration: underline;
+    color: rgba(249,100,100, 1);
+}
 
 /* category cards and pagination btns appearance when load page */
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }

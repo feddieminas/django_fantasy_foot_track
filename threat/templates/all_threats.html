@@ -129,9 +129,9 @@
     $(".container").css({"flex": "1"});
 
     $("#showAllThr").hover(function() { 
-        $(this).css({'text-decoration' : 'underline','color' : 'rgba(249,100,100, 1)'}); //hover in
+        $(this).css({'text-decoration' : 'underline','color' : 'rgba(249,100,100, 1)'}); // hover in
         }, function() { 
-        $(this).css({'text-decoration' : 'none'}); //hover out
+        $(this).css({'text-decoration' : 'none'}); // hover out
     });    
 
     $(".btn-secondary").css({'background-color' : 'rgba(62, 88, 113, 1)'});
@@ -157,7 +157,7 @@
     
 //////////////////////////////////////////    
     
-    //pagination - create per page a dict array of all card indexes according to user filtering or not
+    // pagination - create per page a dict array of all card indexes according to user filtering or not
     function buildMyPages() {
         myPages = {};
         let pager=1;
@@ -186,7 +186,7 @@
           if($(this).text() == "Feature") {
             switch($(this).closest("h3").css("background-color")) {
                 case "rgb(44, 62, 80)":
-                    this.style.backgroundColor="#476481"; //high
+                    this.style.backgroundColor="#476481"; // high
                     break;
                 case "rgb(149, 165, 166)":
                     this.style.backgroundColor="#bfc8c9"; // medium
@@ -198,7 +198,7 @@
         }); 
     }    
     
-    //previous btn
+    // previous btn
     function prevPage()
     {
         if (current_page > 1) {
@@ -207,7 +207,7 @@
         }
     }
 
-    //next btn
+    // next btn
     function nextPage()
     {
         if (current_page < numPages()) {
@@ -216,7 +216,7 @@
         }
     }
     
-    //calc number of pages
+    // calc number of pages
     function numPages()
     {
         return Math.ceil(cardsLength / records_per_page);
@@ -273,10 +273,10 @@
     
 //////////////////////////////////////////
     
-    //build page
+    // build page
     function changePage(page)
     {
-        //pagination attrs [btns,card records,current page show value]
+        // pagination attrs [btns,card records,current page show value]
         let btn_next = document.getElementById("btn_next_thr");
         let btn_prev = document.getElementById("btn_prev_thr");
         let listing_cards = document.getElementById("listingCards_thr");
@@ -287,10 +287,10 @@
         if (page < 1) page = 1;
         if (page > numPages()) page = numPages();
     
-        //check if page dict value exists
+        // check if page dict value exists
         const checkPageExists = Boolean(myPages[String("p" + page)] != null);
     
-        //populate cards per page
+        // populate cards per page
         listing_cards.innerHTML = "";
         if (page_span != null && goto_thr != null) {
             page_span.parent().css({'display': 'none'});

@@ -57,10 +57,10 @@ class TestIndexPostCall(TestCase):
         self.assertEqual(list(page.context['figuresTh'].values()), [0, 0, 0])
     
     
-    """ Login with a user and post data on the dropdown filter form, check whether filter value 
-    posted is equal to the one that is currently selected 
-    """
     def test_main_page_call_post_method_filterViewCatgry(self):
+        """ Login with a user and post data on the dropdown filter form, check whether filter value 
+        posted is equal to the one that is currently selected 
+        """
         post_data = {'group_by': 'all'}
         page = self.client.post(reverse('index'), post_data)
         FilterViewLst = page.context["widget"]['optgroups']

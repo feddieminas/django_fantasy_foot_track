@@ -1,10 +1,11 @@
+""" Creativities Test Models 
+"""
+
 from django.test import TestCase
 from .models import Creativity, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
 
-""" Creativities Models 
-"""
 class TestModels(TestCase):
     creativity = None
     upvote = None

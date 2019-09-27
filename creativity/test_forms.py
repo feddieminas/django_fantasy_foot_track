@@ -1,8 +1,9 @@
+""" Creativities Test Forms 
+"""
+
 from django.test import TestCase
 from .forms import CreateCreativityForm, CreateCreativityCommentForm
 
-""" Creativities Forms 
-"""
 class TestForm(TestCase):
     
     def test_creativity_with_required_values(self):

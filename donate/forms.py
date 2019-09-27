@@ -2,10 +2,9 @@ from django import forms
 from .models import Donate
 import datetime
 
-""" Card Payment
-"""
 class DonationForm(forms.Form):
-    
+    """ Card Payment
+    """
     MONTH_CHOICES = [(i, i) for i in range(1,13)]
     YEAR_CHOICES = [(i, i) for i in range(datetime.datetime.today().year, 2037)]
     
@@ -15,9 +14,9 @@ class DonationForm(forms.Form):
     expiry_year = forms.ChoiceField(label='Year', choices=YEAR_CHOICES, required=False)
     stripe_id = forms.CharField(widget=forms.HiddenInput)
 
-""" Store User Donate value form, label to the user that it counts for Euro currency
-"""
 class DonationModelForm(forms.ModelForm):
+    """ Store User Donate value form, label to the user that it counts for Euro currency
+    """
     class Meta:
         model = Donate
         fields = ('donation',)

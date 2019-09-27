@@ -1,8 +1,9 @@
+""" Threats Test Forms 
+"""
+
 from django.test import TestCase
 from .forms import CreateThreatForm, CreateThreatCommentForm
 
-""" Threats Forms 
-"""
 class TestForm(TestCase):
     
     def test_threat_with_required_values(self):

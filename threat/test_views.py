@@ -1,11 +1,12 @@
+""" Threats Test Views 
+"""
+
 from django.test import TestCase
 from .models import Threat, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 import json
 
-""" Threats Views 
-"""
 class TestViews(TestCase):
     """ Testid = [test_get_all_threats_page, test_add_threat_page, test_view_threat_views_count_user_has_viewed,
     test_view_threat_usersvote_likeability_and_upvote, test_add_threat_comment_page] 

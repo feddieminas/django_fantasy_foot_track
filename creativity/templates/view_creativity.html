@@ -17,8 +17,8 @@
             <h3 class="fw400"><mark class="cremark">{{ creativity.motive | title }}<i class="fa fa-cog ml-1 fs20 fa-cat-header-position"></i></mark></h3>
         </div>
         
-        <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left col-md-8 offset-md-0 text-md-left col-lg-6 offset-lg-0 slide-left"> 
-            <h3 class="mw300 lh15 ml-sm-0 ml-md-0 d-inline-flex fw400"><mark class="cre--bg-fontcolor wordbr">{{ creativity.name | truncatechars:66 | title }}</mark></h3>
+        <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left px-sm-2 col-md-8 offset-md-0 text-md-left col-lg-6 offset-lg-0 ml-lg-1 slide-left"> 
+            <h3 class="mw300 lh15 ml-sm-0 ml-md-0 d-inline-flex fw400"><mark class="cre--bg-fontcolor wordbr">{{ creativity.name | truncatechars:63 | title }}</mark></h3>
         </div>
         
     </div>
@@ -32,37 +32,37 @@
             </a>
         </div>
         
-        <div class="col-12 mt-3 mt-sm-1 col-sm-7 offset-sm-3 text-sm-left col-md-7 offset-md-3 text-md-center pl-md-0 col-lg-7 offset-lg-2 slide-left"> 
-            <p class="mh18 mw300 lh13 wordbr fw300" style="margin-right: 15px;">{{ creativity.desc | title }}</p>
+        <div class="col-12 mt-3 mt-sm-1 col-sm-9 offset-sm-1 col-md-9 offset-md-1 pl-md-0 col-lg-9 offset-lg-1 slide-left"> 
+            <p class="mh18 mw300 lh13 wordbr fs17 fw300 text-left" style="padding-left: 1px;">{{ creativity.desc | title }}</p>
         </div>   
         
     </div>
     
     <!-- status importance, number of upvotes and button to upvote it -->
-    <div class="row mt-1">
+    <div class="row mt-0">
         
-        <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4 offset-sm-5 offset-md-4 offset-lg-4"> 
+        <div class="col-12 mt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4 offset-sm-5 offset-md-4 offset-lg-4"> 
             <h6 class="text-uppercase font-weight-bold">Status</h6>
             <div class="row">
-                <div class="col-xs-8 col-sm-10 py-1">
-                    <mark class="cremark">{{ creativity.status | title }}</mark>
+                <div class="col-8 col-sm-10 px-sm-3 py-1">
+                    <mark class="cremark pl-0 pl-sm-0">{{ creativity.status | title }}</mark>
                 </div>
             </div>
         </div>
         
-        <div class="col-xs-4 pt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4"> 
+        <div class="col-12 mt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4"> 
             <h6 class="text-uppercase font-weight-bold">UpVotes</h6>
             <div class="row py-1">
-                <div class="col-xs-8 col-sm-8 text-sm-center pl-4 pl-sm-4">
+                <div class="col-8 col-sm-8 text-sm-center px-3 pl-sm-4 pl-md-4 pl-lg-4">
                     {{ upvotes_total }}
                 </div>
             </div>        
         </div>    
         
-        <div class="col-xs-4 pt-2 col-sm-3 col-lg-3 mr-md-0 mr-lg-4"> 
+        <div class="col-12 mt-2 col-sm-3 col-lg-3 mr-md-0 mr-lg-4"> 
             {% if user_has_upvote %}
-                <p class="mb-1 mb-sm-1"><a href="" class="btn btn-success disabled">UpVote</a></p>
-                <p class="text-muted">You have Upvoted it</p>
+                <p class="mb-1 mb-sm-1"><a href="#!" class="btn btn-success disabled">UpVote</a></p>
+                <p class="text-muted pl-1">You have Upvoted it</p>
             {% else %}
                 <p><a href="{% url 'cre_user_upvote' creativity.id %}" class="btn btn-success">UpVote</a></p>
             {% endif %}
@@ -75,7 +75,7 @@
     
     <!-- Number of Comments -->
     <div class="row mt-2 mt-sm-3">
-        <div class="col-xs-4 my-1 pl-3 col-sm-4">
+        <div class="col my-1 pl-3 col-sm-4">
             <h5 class="font-weight-light">Comments <span>( {{ comments | length }} )</span></h5>
         </div>
     </div>
@@ -130,7 +130,7 @@
 
     // footer responsive stay at bottom, h3 header font-size change on smaller tablets
     $(window).on('resize', function(){
-        //h3 adjust font
+        // h3 adjust font
         const w = window.innerWidth;
         if(w<=775) {
             $("mark:eq(1)").css({'font-size' : '26px'});
@@ -138,13 +138,24 @@
             $("mark:eq(1)").removeAttr('style');
         }
         
-        if ($("p:first").text().length <= 17) {
-            $("p:first").parent().removeClass("offset-md-3 offset-lg-2").addClass("offset-md-2 offset-lg-1");
-            $("p:first").css({'font-size' : '1.171875rem'});
-        } else {
-            $("p:first").parent().removeClass("offset-md-2 offset-lg-1").addClass("offset-md-3 offset-lg-2"); 
-            $("p:first").css({'font-size' : '17px'});
-        }
+        // description orientate according to width
+        switch (true) { 
+            case (w < 577): 
+                $("p:first").css({'padding-left' : '1px'});
+            	break;
+            case (w < 768): 
+            	$("p:first").css({'padding-left' : '90.5px', 'max-width' : '480px'});
+                break;            		
+            case (w < 992): 
+            	$("p:first").css({'padding-left' : '115.5px', 'max-width' : '550px'});
+            	break;
+            case (w < 1200): 
+            	$("p:first").css({'padding-left' : '175.5px', 'max-width' : '630px'});
+            	break;            		
+            default:
+            	$("p:first").css({'padding-left' : '205.5px', 'max-width' : ''});
+        }  
+        
     }).resize();
 </script>
 {% endblock body_end_js %}

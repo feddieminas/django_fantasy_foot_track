@@ -1,8 +1,8 @@
-from django import template
-register = template.Library()
-
 """ register filters to be able to access inner dicts (created from the views) to the frontend 
 """ 
+
+from django import template
+register = template.Library()
 
 @register.filter()
 def Xor(var1, var2): 

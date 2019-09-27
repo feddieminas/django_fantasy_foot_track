@@ -1,10 +1,11 @@
+""" Influences Test Models
+"""
+
 from django.test import TestCase
 from .models import Influence, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
 
-""" Influences Models
-"""
 class TestModels(TestCase):
     influence = None
     upvote = None

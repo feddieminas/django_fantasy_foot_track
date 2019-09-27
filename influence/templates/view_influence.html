@@ -17,8 +17,8 @@
             <h3 class="fw400"><mark class="infmark">{{ influence.motive | title }}<i class="fa fa-asterisk ml-1 fs20 fa-cat-header-position"></i></mark></h3>
         </div>
         
-        <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left col-md-8 offset-md-0 text-md-left col-lg-6 offset-lg-0 slide-left"> 
-            <h3 class="mw300 lh15 ml-sm-0 ml-md-0 d-inline-flex fw400"><mark class="inf--bg-fontcolor wordbr">{{ influence.name | truncatechars:66 | title }}</mark></h3>
+        <div class="col-12 mt-3 mt-sm-0 col-sm-7 offset-sm-1 text-sm-left px-sm-2 col-md-8 offset-md-0 text-md-left col-lg-6 offset-lg-0 ml-lg-1 slide-left"> 
+            <h3 class="mw300 lh15 ml-sm-0 ml-md-0 d-inline-flex fw400"><mark class="inf--bg-fontcolor wordbr">{{ influence.name | truncatechars:63 | title }}</mark></h3>
         </div>
         
     </div>
@@ -44,8 +44,8 @@
         <div class="col-12 mt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4 offset-sm-5 offset-md-4 offset-lg-4"> 
             <h6 class="text-uppercase font-weight-bold">Status</h6>
             <div class="row">
-                <div class="col-8 col-sm-10 py-1">
-                    <mark class="infmark pl-0 px-sm-1">{{ influence.status | title }}</mark>
+                <div class="col-8 col-sm-10 px-sm-3 py-1">
+                    <mark class="infmark pl-0 pl-sm-0">{{ influence.status | title }}</mark>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
         <div class="col-12 mt-2 col-sm-2 col-lg-1 mr-md-0 mr-lg-4"> 
             <h6 class="text-uppercase font-weight-bold">UpVotes</h6>
             <div class="row py-1">
-                <div class="col-8 col-sm-8 text-sm-center pl-4 pl-sm-4 pl-md-4 pl-lg-4">
+                <div class="col-8 col-sm-8 text-sm-center px-3 pl-sm-4 pl-md-4 pl-lg-4">
                     {{ upvotes_total }}
                 </div>
             </div>        
@@ -139,38 +139,22 @@
         }
         
         // description orientate according to width
-        const descLen = $("p:first").text().length; 
-        
-        if (descLen <= 39) {
-            switch (true) { 
-            	case (w < 577): 
-            		$("p:first").css({'padding-left' : '1px'});
-            		break;
-            	case (w < 768): 
-            	    $("p:first").css({'padding-left' : '95px', 'max-width' : '480px'});
-            		break;            		
-            	case (w < 992): 
-            	    $("p:first").css({'padding-left' : '115px', 'max-width' : '500px'});
-            		break;
-            	case (w < 1200): 
-            	    $("p:first").css({'padding-left' : '178px', 'max-width' : '550px'});
-            		break;            		
-            	default:
-            	    $("p:first").css({'padding-left' : '204px', 'max-width' : '620px'});
-            }              
-        }
-        else {
-            switch (true) { 
-            	case (w < 577): 
-            		$("p:first").css({'padding-left' : '1px'});
-            		break;
-            	case (w < 762): 
-            	    $("p:first").css({'padding-left' : '94px', 'max-width' : '500px'}); 
-            		break;
-            	default:
-            	    $("p:first").css({'padding-left' : '114px', 'max-width' : '620px'}); 
-            }            
-        }
+        switch (true) { 
+            case (w < 577): 
+                $("p:first").css({'padding-left' : '1px'});
+            	break;
+            case (w < 768): 
+            	$("p:first").css({'padding-left' : '90.5px', 'max-width' : '480px'});
+                break;            		
+            case (w < 992): 
+            	$("p:first").css({'padding-left' : '115.5px', 'max-width' : '550px'});
+            	break;
+            case (w < 1200): 
+            	$("p:first").css({'padding-left' : '175.5px', 'max-width' : '630px'});
+            	break;            		
+            default:
+            	$("p:first").css({'padding-left' : '205.5px', 'max-width' : ''});
+        }              
         
     }).resize();
 </script>

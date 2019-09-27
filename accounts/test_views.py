@@ -1,10 +1,11 @@
+""" Accounts Test Views 
+"""
+
 from django.test import TestCase
 from django.urls import reverse
 from creativity.models import Creativity
 from django.contrib.auth.models import User
 
-""" Accounts Views 
-"""
 class TestIndexPostCall(TestCase):
     def setUp(self):
         User.objects.create_user(username='username', email="username@example.com", password='password')

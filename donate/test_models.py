@@ -1,9 +1,10 @@
+""" Donate Test Models
+"""
+
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Donate
 
-""" Donate Models
-"""
 class TestModels(TestCase):
     
     def test__model(self):

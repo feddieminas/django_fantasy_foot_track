@@ -1,10 +1,11 @@
+""" Threats Test Models 
+"""
+
 from django.test import TestCase
 from .models import Threat, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.db import IntegrityError, transaction
 
-""" Threats Models 
-"""
 class TestModels(TestCase):
     threat = None
     upvote = None

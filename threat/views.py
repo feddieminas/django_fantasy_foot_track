@@ -10,7 +10,6 @@ import operator
 from django.utils import timezone
 import datetime
 
-
 def thr_save_curr_page(request):
     """ save current page value from prev next pagination in all_threats.html, 
     to achieve rendering the last page seen after viewing a card from that page 

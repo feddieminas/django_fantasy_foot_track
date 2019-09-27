@@ -1,11 +1,12 @@
+""" Influences Test Views 
+"""
+
 from django.test import TestCase
 from .models import Influence, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 import json
 
-""" Influences Views 
-"""
 class TestViews(TestCase):
     """ Testid = [test_get_all_influences_page, test_add_influence_page, test_view_influence_views_count_user_has_viewed,
     test_view_influence_usersvote_likeability_and_upvote, test_add_influence_comment_page] 

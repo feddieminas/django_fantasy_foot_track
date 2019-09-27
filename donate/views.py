@@ -7,7 +7,6 @@ from .models import Donate
 from django.conf import settings
 import stripe
 
-
 stripe.api_key = settings.STRIPE_SECRET
 
 @login_required

@@ -1,11 +1,12 @@
+""" Creativities Test Views 
+"""
+
 from django.test import TestCase
 from .models import Creativity, UpVote, Likeability
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 import json
 
-""" Creativities Views 
-"""
 class TestViews(TestCase):
     """ Testid = [test_get_all_creativities_page, test_add_creativity_page, test_view_creativity_views_count_user_has_viewed,
     test_view_creativity_usersvote_likeability_and_upvote, test_add_creativity_comment_page] 

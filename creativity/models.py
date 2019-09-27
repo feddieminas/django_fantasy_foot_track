@@ -1,7 +1,3 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
-
 """ Category Creativity
 
 The main first class Creativity has all its field attributes plus the owner that creates it 
@@ -19,6 +15,10 @@ different users.
 No Likeability can have more than a same user voting to the same category card. 
 A user can simply either not upvote (NOVOTE) or upvote (UPVOTE) to one card.
 """
+
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Creativity(models.Model):
     """ Creativity Card

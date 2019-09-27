@@ -1,9 +1,9 @@
 from django import forms
 from .models import Threat, Comment
 
-""" add a threat 
-"""
 class CreateThreatForm(forms.ModelForm):
+    """ add a threat 
+    """
     class Meta:
         model = Threat
         fields = ('motive', 'name', 'desc', 'status')
@@ -15,9 +15,10 @@ class CreateThreatForm(forms.ModelForm):
           'desc': forms.Textarea(attrs={'rows':7, 'cols':25}),
         }        
 
-""" add a threat comment 
-"""        
+       
 class CreateThreatCommentForm(forms.ModelForm):
+    """ add a threat comment 
+    """ 
     class Meta:
         model = Comment
         fields = ('content',)  

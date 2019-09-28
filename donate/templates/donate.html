@@ -59,6 +59,10 @@
 
 {% block body_end_js %}
 <script>
+    // sticky footer
+    $("body").addClass('d-flex flex-column').css({"min-height": "100vh"});
+    $(".container").css({"flex": "1"});
+
     const today = new Date();
     // change value selected into current month
     $('#id_expiry_month option:eq('+today.getMonth()+')').prop('selected', true);
@@ -78,21 +82,6 @@
         $(".messages").parent().addClass('alert').addClass("alert-" + alertVar["result"]);    
     };
 
-    // footer responsive stay at bottom
-    $(window).on('resize', function(){
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        if (w >= 320 && h >= 850) {
-            $("footer").animate({
-              position: "absolute", bottom: "0"
-              }, 500, "linear", function() {
-              $("footer").css({'position' : 'absolute', 'bottom' : 0});
-            });
-        }
-        else {
-            $("footer").css({'position' : 'inherit'});
-        }
-    }).resize();        
 </script>
 {% endblock body_end_js %}
 

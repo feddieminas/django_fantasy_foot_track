@@ -19,7 +19,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
   - Features
     - Registration, Login and User's Profile section
     - An initial home page explanation and browse to the three categories
-    - Three sections with each categories cards published, create, upvotes and comments
+    - Three sections with each categories cards published, cards create, upvotes, comments published, comments create
     - A donate section
     - A graphs section demostrating categories numerical stats
 
@@ -38,8 +38,8 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
     - Four buttons on home page (three categories and charts)
     - Per category 
       - two buttons (add a card and comment) and pagination (prev and next btns)
-      - Three status filtering buttons and a search text input and button submit
-      - A back button on view category card to return back to categories cards
+      - Three status filtering buttons, a search text input with its button submit
+      - An svg backwards arrow button on view category card to return to the categories cards
     - Button submit donate amount
     - Cross filtered charts
     - Profile section showing table individual user stats per category (cards created, views and upvotes receiving numbers)
@@ -50,7 +50,7 @@ After all, FPL Data Scientists can accumulate all these help data to improve pla
   - Semantic : header, nav, section, article, bootswatch (cards, buttons, alert), mark, footer
   - Typography : opens sans google fonts and bootstrap libraries (row, column grid, box model, text centering, flexbox) 
     Iconic and font-awesome icons to assist users to recognize sections 
-  - CSS style class helpers, and transitions, animations and opacity for webpage smooth presence and readable text. 
+  - CSS style class helpers, transitions, animations, shadow and opacity for webpage smooth presence and readable text. 
 
 ##### User Stories list
 
@@ -101,7 +101,7 @@ Additional plans to be implemented in the future would be :
 
 - Profile section to insert detailed data per card created by the user, thus a user to know which are the name of the cards he has created per category (using a table or list).
 - Pagination dropdown form filtering for users to be able to indicate number of category cards displayed per page
-- In each category home page, status filter to be multiple, rather than the current single triggered (Lor or Medium or High)
+- In each category home page, status filter to be multiple, rather than the current single triggered (Low or Medium or High)
 - Datetime on each category footer, showing far from days also the hours ago (specifically if two cards are posted Today)
 - Admin's action on category cards created after a time period of a month 
   - No comments showed, status importance to be decreased (ex. from medium to low)

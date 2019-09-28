@@ -133,6 +133,9 @@ Additional plans to be implemented in the future would be :
 - [Stripe Python - JS](https://stripe.com/)
     - The project uses **Stripe** payment system to enable a user to voluntarily donate.
 
+- [Amazon Web Services](https://aws.amazon.com/)
+    - Used AWS to store static and media files.
+
 ## Testing
 
 - Django Py Testcase class to test forms, models and views. The automated Test files can be found inside the apps. Coverage package downloaded to assist. 
@@ -161,24 +164,47 @@ Worked on Google Chrome and Safari Version.
 
 Setting it up :
 
+Below assumes not setting a virtualenv environment.
+
 ```
 $ git clone https://github.com/feddieminas/django_fantasy_foot_track.git
 
-$ sudo pip3 -r install requirements.txt
+$ sudo pip3 install -r requirements.txt
 ```
 
-Amend the ALLOWED_HOSTS (ex. os.environ.get("C9_HOST") env variable) to whatever IP you're using. ALLOWED_HOSTS is on fantasyfoottrack folder --> settings.py file. 
+- Open fantasyfoottrack folder --> settings.py file
+  - Amend the SECRET_KEY (line 26) and ALLOWED_HOSTS (ex. os.environ.get("C9_HOST") env variable) on line 31
+
+  ```
+  SECRET_KEY = os.environ.get("SECRET_KEY")
+  
+  ALLOWED_HOSTS = [os.environ.get("C9_HOST"), 'fantasy-foot-track.herokuapp.com']
+  ```
+
+  Create an env.py file at your workspace and insert the related secret_key and ip link. 
+
+  ```
+  import os
+  
+  os.environ.setdefault("SECRET_KEY", "choose_a_password")
+  os.environ.setdefault("C9_HOST", "IP LINK")
+  ```
+
+  One can insert to the env.py file any other environmental variables exist on settings.py.
+
+Run the Django Migrations :
 
 ```
-ALLOWED_HOSTS = [os.environ.get("C9_HOST"), 'fantasy-foot-track.herokuapp.com']
+$ python3 manage.py makemigrations
+```
+```
+$ python3 manage.py migrate
 ```
 
-Concerning the above, one can create an env.py file at the top level folder of his workspace and insert the related ip link. 
+Run the app :
 
 ```
-import os
-
-os.environ.setdefault("C9_HOST", "IP LINK")
+$ python3 manage.py runserver 
 ```
 
 ## Credits

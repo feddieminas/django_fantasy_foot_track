@@ -7,7 +7,7 @@ or their perceived contribution on the field of play. The [FPL ICT Index](https:
 and Threat (player's threat on goal). Public users can generate a category card (on either or all of the three key categories) and initiate a discussion. In addition the users insert a Status (Low, Medium, High) to state the degree of importance of that category card.
 Current users as well as other users can upvote the categories cards created. Further to a user inserting a Player as a topic in each category card, one can also insert a Feature (ex. dashboard lineups online presence, add feature fouls called on VAR). 
 
-After all, FPL Data Scientists can accumulate all these help data to improve players indices, features stats (goals, assists etc), as well as, platform's features functionalities, appearance and responsiveness. 
+After all, FPL Data Scientists can accumulate all these help data to improve players indices, features stats (goals, assists etc), as well as, platform's features functionalities, appearance and responsiveness. In addition, a data scientist observes how different users interpret the meaning of each category in their own way.   
 
 ## UX
 

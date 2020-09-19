@@ -1,4 +1,10 @@
+### travis-ci org
+
 [![Build Status](https://travis-ci.org/feddieminas/django_fantasy_foot_track.svg?branch=master)](https://travis-ci.org/feddieminas/django_fantasy_foot_track)
+
+### travis-ci
+
+[![Build Status](https://travis-ci.com/feddieminas/django_fantasy_foot_track.svg?branch=master)](https://travis-ci.com/feddieminas/django_fantasy_foot_track)
 
 # SportAttractor - FPL ICT Index public assist
 

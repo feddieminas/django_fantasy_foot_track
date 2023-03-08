@@ -31,7 +31,7 @@ if "DATABASE_URL" in os.environ:
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = [os.environ.get("C9_HOST"), 'fantasy-foot-track.herokuapp.com']
+ALLOWED_HOSTS = [os.environ.get("C9_HOST"), 'fantasy-foot-track.herokuapp.com', 'web-production-5a78.up.railway.app']
 
 
 # Application definition
